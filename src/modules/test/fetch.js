@@ -6,7 +6,7 @@ export const getItems = async (query, option) => {
   const fetchRes = await fetcher('/hello', itemsResponseKey, {
     ...option,
     method: 'GET',
-    queryString: { ...query },
+    querystring: { ...query },
   });
   return fetchRes;
 };
