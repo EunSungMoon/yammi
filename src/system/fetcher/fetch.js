@@ -58,7 +58,7 @@ export default async function fetcher(url, schemaKey, options = {}) {
   if (url.startsWith('http')) {
     requestUrl = url + buildQuery(params);
   } else {
-    requestUrl = apiHost + '/' + apiVersion + url + buildQuery(params);
+    requestUrl = apiHost + url + buildQuery(params);
   }
   logger(`URL:\t\t\t${requestUrl}`, debugNetwork);
   // URL 조합[E]
@@ -91,42 +91,6 @@ export default async function fetcher(url, schemaKey, options = {}) {
     logger(`AUTHORIZATION:\t${!!options.accessToken}`, debugNetwork);
   }
   // 엑세스토큰 체크 [E]
-
-  // Custom Header [S]
-  if (options[REQUEST_HEADER_COUNTRY_KEY] !== undefined) {
-    mergedOpt.headers = Object.assign(
-      { [REQUEST_HEADER_COUNTRY_KEY]: options[REQUEST_HEADER_COUNTRY_KEY] },
-      mergedOpt.headers,
-    );
-  }
-
-  if (options[REQUEST_HEADER_CURRENCY_KEY] !== undefined) {
-    mergedOpt.headers = Object.assign(
-      { [REQUEST_HEADER_CURRENCY_KEY]: options[REQUEST_HEADER_CURRENCY_KEY] },
-      mergedOpt.headers,
-    );
-  }
-
-  if (options[REQUEST_HEADER_LOCALE_LANGUAGE_KEY] !== undefined) {
-    mergedOpt.headers = Object.assign(
-      {
-        [REQUEST_HEADER_LOCALE_LANGUAGE_KEY]:
-          options[REQUEST_HEADER_LOCALE_LANGUAGE_KEY],
-      },
-      mergedOpt.headers,
-    );
-  }
-
-  if (options[REQUEST_HEADER_LOCALE_COUNTRY_KEY] !== undefined) {
-    mergedOpt.headers = Object.assign(
-      {
-        [REQUEST_HEADER_LOCALE_COUNTRY_KEY]:
-          options[REQUEST_HEADER_LOCALE_COUNTRY_KEY],
-      },
-      mergedOpt.headers,
-    );
-  }
-  // Custom Header [E]
 
   const startTs = Date.now();
   const controller = new AbortController();

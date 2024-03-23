@@ -6,7 +6,8 @@ import MapperError from './mapperError';
 const ajv = new Ajv({
   removeAdditional: true,
 });
-addFormats(ajv);
+// FIXME: 수정 필요
+// addFormats(ajv);
 
 export function addSchema(key, schema, option) {
   // 얘네가 KEY 존재여부도 체크해주고, 유효성 검사도 해준다.

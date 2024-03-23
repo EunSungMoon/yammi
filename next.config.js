@@ -9,6 +9,15 @@ const nextConfig = {
       pure: true,
     },
   },
+  serverRuntimeConfig: {
+    mode: process.env.MODE,
+  },
+  publicRuntimeConfig: {
+    appVersion: process.env.APP_VERSION,
+    mode: process.env.MODE,
+    apiHost: process.env.API_HOST,
+    apiVersion: process.env.API_VERSION,
+  },
 };
 
 module.exports = nextConfig;

@@ -1,5 +1,16 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import mSleep from '@system/mSleep';
 
-export default function handler(req, res) {
-  res.status(200).json({ name: 'John Doe' });
+export default async function handler(req, res) {
+  await mSleep(1000);
+  switch (req.method) {
+    case 'GET':
+      return res.status(200).json({
+        data: {
+          title: 'title',
+          content: 'content',
+        },
+      });
+    default:
+      throw new Error('no supported method');
+  }
 }
