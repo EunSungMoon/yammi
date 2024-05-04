@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 
+import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
 import { atomMapKey } from '../modules/atomMap';
@@ -29,7 +31,14 @@ export default function Home({ initialData }) {
 
   return (
     <>
-      <div>hello world</div>
+      <Wrapper>hello world</Wrapper>
     </>
   );
 }
+
+const Wrapper = styled(Typography).attrs({
+  variant: 'xxxl',
+  fontWeight: 'bold',
+})`
+  color: ${({ theme }) => theme.colors.primary.red300};
+`;

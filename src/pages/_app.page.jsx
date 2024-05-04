@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
+import GlobalStyle from '@styles/GlobalStyle';
+import theme from '@styles/themes';
 import { Constant, CookieGetter } from '@system/cookie';
 
 import { atomHydrator, atomMapKey } from '../modules/atomMap';
@@ -12,7 +15,7 @@ export default function App({ Component, pageProps, initialData }) {
   return (
     <>
       <Head>
-        <title>yammi</title>
+        <title>Ya:ㅁ!</title>
       </Head>
       <RecoilRoot
         initializeState={({ set }) => {
@@ -22,7 +25,10 @@ export default function App({ Component, pageProps, initialData }) {
           });
         }}
       >
-        <Component {...pageProps} />
+        <StyledThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </StyledThemeProvider>
       </RecoilRoot>
     </>
   );

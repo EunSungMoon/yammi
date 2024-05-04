@@ -1,7 +1,3 @@
-/**
- * @copyright Copyright 2021 Corretto, Inc. All rights reserved.
- */
-
 import ServerError from '../serverError';
 
 export default class MapperError extends ServerError {

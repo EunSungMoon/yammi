@@ -60,7 +60,8 @@
       "alias": {
         "map": [
           ["@components", "./src/components"],
-          ["@system", "./src/system"]
+          ["@system", "./src/system"],
+          ["@styles", "./src/styles"]
           // 다른 절대 경로들도 필요하다면 추가해주세요.
         ],
         "extensions": [".js", ".jsx"]

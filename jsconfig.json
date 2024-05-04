@@ -18,7 +18,8 @@
     "baseUrl": "./src",
     "paths": {
       "@components/*": ["components/*"],
-      "@system/*":["system/*"]
+      "@system/*":["system/*"],
+      "@styles/*":["styles/*"],
     }
   },
   "include": ["next-env.d.js", "**/*.js", "**/*.jsx"],
