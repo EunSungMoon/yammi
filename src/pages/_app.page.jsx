@@ -1,6 +1,12 @@
 import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
+
+import { atomHydrator, atomMapKey } from '../modules/atomMap';
+
 export default function App({ Component, pageProps, initialData = {} }) {
+  const { session, initialData: pageInitialData } = pageProps;
+  const hydrates = atomHydrator({ ...initialData, ...pageInitialData });
+  // console.log('🚀 ~ App ~ hydrates:', hydrates);
   return (
     <>
       <Head>

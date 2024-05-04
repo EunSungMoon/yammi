@@ -17,6 +17,7 @@ const nextConfig = {
     mode: process.env.MODE,
     apiHost: process.env.API_HOST,
     apiVersion: process.env.API_VERSION,
+    naverLoginClientId: process.env.NAVER_LOGIN_CLIENT_ID,
   },
 };
 
