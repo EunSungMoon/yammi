@@ -16,7 +16,7 @@ function atomHydrator(initialData) {
     const targetAtom = atomMap[atomMapKey];
 
     if (initialData[atomMapKey] !== undefined) {
-      hydrateTargets.push(initialData[atomMapKey]);
+      hydrateTargets.push([initialData[atomMapKey]]);
     }
   });
   return hydrateTargets;
