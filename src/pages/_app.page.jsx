@@ -1,7 +1,9 @@
 import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
+import { ToastProvider } from '@components/Toast';
 import GlobalStyle from '@styles/GlobalStyle';
 import theme from '@styles/themes';
 import { Constant, CookieGetter } from '@system/cookie';
@@ -27,7 +29,10 @@ export default function App({ Component, pageProps, initialData }) {
       >
         <StyledThemeProvider theme={theme}>
           <GlobalStyle />
-          <Component {...pageProps} />
+          <Toaster />
+          <ToastProvider>
+            <Component {...pageProps} />
+          </ToastProvider>
         </StyledThemeProvider>
       </RecoilRoot>
     </>
