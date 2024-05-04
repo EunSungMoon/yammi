@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import useModal from '@components/hooks/useModal';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
@@ -25,6 +26,8 @@ export default function Home({ initialData }) {
   const item = useRecoilValue(itemAtom);
   const setItem = useSetRecoilState(setItemAtom);
 
+  const { open, close, ModalWrapper } = useModal('sm');
+
   useEffect(() => {
     setItem(initialData.itemAtom);
   }, []);
@@ -32,6 +35,8 @@ export default function Home({ initialData }) {
   return (
     <>
       <Wrapper>hello world</Wrapper>
+      <button onClick={open}>modla</button>
+      <ModalWrapper title={'test'} content={'tes'} />
     </>
   );
 }
