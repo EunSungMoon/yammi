@@ -30,6 +30,21 @@ const Component = createGlobalStyle`
     font-size: 14px;
     color: ${({ theme }) => theme.colors.neutral[800]};
   }
+  
+  @keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu {
+  animation: fadeIn 0.2s ease-in-out;
+}
 `;
 
 export default Component;

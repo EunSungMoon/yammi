@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
+import Form from '@components/Form';
 import useConfirm from '@components/hooks/useConfirm';
+import Select from '@components/Select';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
@@ -26,6 +29,7 @@ export const getServerSideProps = async ({ req }) => {
 export default function Home({ initialData }) {
   const item = useRecoilValue(itemAtom);
   const setItem = useSetRecoilState(setItemAtom);
+  const form = useForm();
 
   const { open, close, ConfirmModalWrapper } = useConfirm('sm');
 
@@ -43,6 +47,17 @@ export default function Home({ initialData }) {
         buttons={[{ label: '닫기', onClick: close }, { label: '닫기' }]}
       />
       <Button label="button" appearance="ghost" />
+      <Form form={form}>
+        <Select
+          name="select"
+          options={[
+            { label: 'a', value: 'a' },
+            { label: 'b', value: 'b' },
+            { label: 'c', value: 'c' },
+            { label: 'd', value: 'd' },
+          ]}
+        />
+      </Form>
     </>
   );
 }
