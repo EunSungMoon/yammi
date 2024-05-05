@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
+import CheckboxGroup from '@components/CheckboxGroup';
 import Form from '@components/Form';
 import useConfirm from '@components/hooks/useConfirm';
 import Input from '@components/Input';
@@ -61,6 +62,13 @@ export default function Home({ initialData }) {
         />
         <Input name="input" placeholder="입력해주세요" />
         <Textarea name="textarea" placeholder="입력해주세요" />
+        <CheckboxGroup
+          name="checkboxGroup"
+          items={[
+            { label: 'a', value: 'a', disabled: true },
+            { label: 'b', value: 'b' },
+          ]}
+        />
       </Form>
     </>
   );
