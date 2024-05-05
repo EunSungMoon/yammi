@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
-import useModal from '@components/hooks/useModal';
+import useConfirm from '@components/hooks/useConfirm';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
@@ -27,7 +27,7 @@ export default function Home({ initialData }) {
   const item = useRecoilValue(itemAtom);
   const setItem = useSetRecoilState(setItemAtom);
 
-  const { open, close, ModalWrapper } = useModal('sm');
+  const { open, close, ConfirmModalWrapper } = useConfirm('sm');
 
   useEffect(() => {
     setItem(initialData.itemAtom);
@@ -37,8 +37,12 @@ export default function Home({ initialData }) {
     <>
       <Wrapper>hello world</Wrapper>
       <button onClick={open}>modla</button>
-      <ModalWrapper title={'test'} content={'tes'} />
-      <Button label="button" appearance="ghost" isLink />
+      <ConfirmModalWrapper
+        title={''}
+        content={'선택하신 댓글을 삭제하시겠습니까?'}
+        buttons={[{ label: '닫기', onClick: close }, { label: '닫기' }]}
+      />
+      <Button label="button" appearance="ghost" />
     </>
   );
 }

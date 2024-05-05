@@ -2,21 +2,15 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
-import ModalContent from './ModalContent';
+import ConfirmModalContent from './ConfirmModalContent';
 import useLockedBody from '../hooks/useScrollLock';
 
 const Component = ({
-  size,
-  title,
   content,
   children,
   buttons,
   isOpen = false,
   onBackdropClick,
-  closeButton,
-  noPadding = false,
-  back,
-  titlePadding = false,
 }) => {
   const [mount, setMount] = useState(false);
   const [, setLocked] = useLockedBody();
@@ -40,19 +34,11 @@ const Component = ({
       isOpen ? (
         <Wrapper>
           <Backdrop onClick={onBackdropClick} />
-          <ModalBox size={size}>
-            <ModalContent
-              title={title}
-              content={content}
-              buttons={buttons}
-              closeButton={closeButton}
-              back={back}
-              noPadding={noPadding}
-              titlePadding={titlePadding}
-            >
+          <ConfirmModalBox>
+            <ConfirmModalContent content={content} buttons={buttons}>
               {children}
-            </ModalContent>
-          </ModalBox>
+            </ConfirmModalContent>
+          </ConfirmModalBox>
         </Wrapper>
       ) : null,
       portalElement,
@@ -88,7 +74,7 @@ const Backdrop = styled.div`
   height: 100%;
 `;
 
-const ModalBox = styled.div`
+const ConfirmModalBox = styled.div`
   width: 300px;
   min-width: 200px;
   position: relative;

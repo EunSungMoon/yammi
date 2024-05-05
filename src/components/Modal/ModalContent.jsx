@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-// import Button from '../Button';
-
+import Button from '../Button';
 import Image from '../Image';
 import Typography from '../Typography';
 
@@ -55,8 +54,7 @@ const Component = ({
         </Content>
       )}
 
-      {/* TODO: 버튼 나오면 수정 필요 */}
-      {/* {buttons.length > 0 && (
+      {buttons.length > 0 && (
         <BottomSection>
           <BtnSection>
             {buttons.map(button => (
@@ -70,7 +68,7 @@ const Component = ({
             ))}
           </BtnSection>
         </BottomSection>
-      )} */}
+      )}
     </Wrapper>
   );
 };
