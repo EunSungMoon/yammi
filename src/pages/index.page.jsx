@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import Button from '@components/Button';
 import useModal from '@components/hooks/useModal';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
@@ -37,6 +38,7 @@ export default function Home({ initialData }) {
       <Wrapper>hello world</Wrapper>
       <button onClick={open}>modla</button>
       <ModalWrapper title={'test'} content={'tes'} />
+      <Button label="button" appearance="ghost" isLink />
     </>
   );
 }
