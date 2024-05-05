@@ -8,6 +8,7 @@ import CheckboxGroup from '@components/CheckboxGroup';
 import Form from '@components/Form';
 import useConfirm from '@components/hooks/useConfirm';
 import Input from '@components/Input';
+import Search from '@components/Search';
 import Select from '@components/Select';
 import Textarea from '@components/Textarea';
 import Typography from '@components/Typography';
@@ -69,6 +70,7 @@ export default function Home({ initialData }) {
             { label: 'b', value: 'b' },
           ]}
         />
+        <Search placeholder="검색어를 입력해주세요" name="search" />
       </Form>
     </>
   );

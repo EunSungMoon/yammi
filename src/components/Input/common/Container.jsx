@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 
-const Component = ({ children, ...props }) => (
-  <StyledContainer {...props}>{children}</StyledContainer>
+const Component = ({ children, isPrimary, ...props }) => (
+  <StyledContainer isPrimary={isPrimary} {...props}>
+    {children}
+  </StyledContainer>
 );
 
 const StyledContainer = styled.div`
@@ -12,7 +14,10 @@ const StyledContainer = styled.div`
   height: 50px;
   padding: 13px 12px;
   border-radius: 6px;
-  border: ${({ theme }) => `1px solid ${theme.colors.neutral[400]}`};
+  border: ${({ theme, isPrimary }) =>
+    isPrimary
+      ? `1px solid ${theme.colors.primary[300]}`
+      : `1px solid ${theme.colors.neutral[400]}`};
   background-color: ${({ theme }) => theme.colors.neutral[0]};
   color: ${({ theme }) => theme.colors.neutral[700]};
   max-width: ${({ maxWidth }) =>
@@ -69,7 +74,10 @@ const StyledContainer = styled.div`
 
     if (isFocused) {
       return css`
-        border: ${({ theme }) => `1px solid ${theme.colors.blue[400]}`};
+        border: ${({ theme, isPrimary }) =>
+          isPrimary
+            ? `1px solid ${theme.colors.primary[300]}`
+            : `1px solid ${theme.colors.blue[400]}`};
       `;
     }
   }}

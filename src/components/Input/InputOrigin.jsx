@@ -8,7 +8,6 @@ const Component = forwardRef(
   (
     {
       type,
-      size = 'sm',
       hasError,
       suffix,
       suffixOnClick,
@@ -28,10 +27,8 @@ const Component = forwardRef(
         isReadOnly={!!inputProps.readOnly}
         hasError={!!hasError}
         maxWidth={maxWidth}
-        size={size}
         noStyle={noStyle}
       >
-        {/* <InputWrapper inputSize={size}> */}
         <input
           {...inputProps}
           type={type}
@@ -46,7 +43,7 @@ const Component = forwardRef(
           }}
           autoComplete="off"
         />
-        {/* </InputWrapper> */}
+
         {(suffix || suffixOnRender) && (
           <Suffix
             title={suffix}
