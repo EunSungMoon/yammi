@@ -30,13 +30,13 @@ const logger = (msg, debugNetwork) => {
   console.log(msg);
 };
 
-export default async function fetcher(url, schemaKey, options = {}) {
+export default async function fetcher(url, options = {}) {
   if (typeof url === 'undefined') {
     throw new NetworkError('URL 값은 필수입니다.');
   }
-  if (typeof schemaKey === 'undefined') {
-    throw new NetworkError('스키마 키 값은 필수입니다.');
-  }
+  // if (typeof schemaKey === 'undefined') {
+  //   throw new NetworkError('스키마 키 값은 필수입니다.');
+  // }
 
   // 오브젝트 새로생성해야합니다.
   const mergedOpt = Object.assign({}, DEFAULT_OPTIONS);
@@ -162,11 +162,11 @@ export default async function fetcher(url, schemaKey, options = {}) {
 
   // 유효성 체크 및 컨버팅 시작
 
-  const isValidated = await ObjectMapper.validate(schemaKey, data.data);
-  if (!isValidated) {
-    // throw new NetworkError('data validate failed');
-  }
-  const convertedObj = ObjectMapper.convert(schemaKey, data.data);
+  // const isValidated = await ObjectMapper.validate(schemaKey, data.data);
+  // if (!isValidated) {
+  //   // throw new NetworkError('data validate failed');
+  // }
+  // const convertedObj = ObjectMapper.convert(schemaKey, data.data);
 
   // 유효성 체크 및 컨버팅 시작 [E]
 
@@ -179,5 +179,6 @@ export default async function fetcher(url, schemaKey, options = {}) {
     logger(`SLEPT:\t\t\t${sleepMs}ms`, debugNetwork);
   }
 
-  return convertedObj;
+  // return convertedObj;
+  return data;
 }

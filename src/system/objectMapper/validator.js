@@ -15,7 +15,7 @@ export function addSchema(key, schema, option) {
     ajv.addSchema(schema, key);
   } catch (e) {
     console.log('TCL ~ file: validator.js:16 ~ addSchema ~ e:', e, key);
-    throw new MapperError('등록에 실패하였습니다', key);
+    // throw new MapperError('등록에 실패하였습니다', key);
   }
 }
 
@@ -23,17 +23,19 @@ export function getSchema(key) {
   const validator = ajv.getSchema(key);
 
   if (typeof validator === 'undefined') {
-    throw new MapperError('해당 키는 존재하지 않습니다.', key);
+    console.log(key);
+    // throw new MapperError('해당 키는 존재하지 않습니다.', key);
   }
-  return validator.schema;
+  // return validator.schema;
 }
 
 export async function validate(key, data) {
   const validator = ajv.getSchema(key);
   if (typeof validator === 'undefined') {
-    throw new MapperError('해당 키는 존재하지 않습니다.', key);
+    console.log(key);
+    // throw new MapperError('해당 키는 존재하지 않습니다.', key);
   }
 
-  console.log(validator(data), 'validator(data)');
-  return validator(data);
+  // console.log(validator(data), 'validator(data)');
+  // return validator(data);
 }

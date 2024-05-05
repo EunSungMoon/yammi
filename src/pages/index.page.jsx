@@ -15,30 +15,31 @@ import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
 import { atomMapKey } from '../modules/atomMap';
+import { categoriesAtom, setCategoriesAtom } from '../modules/category/atom';
+import { getCategories } from '../modules/category/fetch';
 import { itemAtom, setItemAtom } from '../modules/test/atom';
-import { getItems } from '../modules/test/fetch';
 
 export const getServerSideProps = async ({ req }) => {
-  const [item] = await Promise.all([getItems({})]);
+  const [categories] = await Promise.all([getCategories({})]);
 
   return {
     props: {
       initialData: {
-        [atomMapKey.test.itemAtom]: item,
+        [atomMapKey.category.categoriesAtom]: categories.data,
       },
     },
   };
 };
 
 export default function Home({ initialData }) {
-  const item = useRecoilValue(itemAtom);
-  const setItem = useSetRecoilState(setItemAtom);
+  const categories = useRecoilValue(categoriesAtom);
+  const setCategories = useSetRecoilState(setCategoriesAtom);
   const form = useForm();
 
   const { open, close, ConfirmModalWrapper } = useConfirm('sm');
 
   useEffect(() => {
-    setItem(initialData.itemAtom);
+    setCategories(initialData.categoriesAtom);
   }, []);
 
   return (
