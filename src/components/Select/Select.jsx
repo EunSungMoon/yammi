@@ -136,7 +136,7 @@ const SelectBox = ({
         : theme.colors.neutral[900],
       border: state.isFocused
         ? `1px solid ${theme.colors.blue[400]}`
-        : `1px solid ${theme.colors.neutral[300]}`,
+        : `1px solid ${theme.colors.neutral[400]}`,
       borderRadius: '6px',
 
       ':hover': {

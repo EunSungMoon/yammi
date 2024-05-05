@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import Form from '@components/Form';
 import useConfirm from '@components/hooks/useConfirm';
+import Input from '@components/Input';
 import Select from '@components/Select';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
@@ -57,6 +58,7 @@ export default function Home({ initialData }) {
             { label: 'd', value: 'd' },
           ]}
         />
+        <Input name="input" placeholder="placeholder" />
       </Form>
     </>
   );

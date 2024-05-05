@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.3.4",
     "ajv": "^6.12.6",
     "ajv-formats": "^2.1.1",
+    "cleave.js": "^1.6.0",
     "date-fns": "^3.6.0",
     "jwt-decode": "^4.0.0",
     "lottie-react": "^2.4.0",
