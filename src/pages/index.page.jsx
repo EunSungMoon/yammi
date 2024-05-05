@@ -8,6 +8,7 @@ import Form from '@components/Form';
 import useConfirm from '@components/hooks/useConfirm';
 import Input from '@components/Input';
 import Select from '@components/Select';
+import Textarea from '@components/Textarea';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
@@ -58,7 +59,8 @@ export default function Home({ initialData }) {
             { label: 'd', value: 'd' },
           ]}
         />
-        <Input name="input" placeholder="placeholder" />
+        <Input name="input" placeholder="입력해주세요" />
+        <Textarea name="textarea" placeholder="입력해주세요" />
       </Form>
     </>
   );

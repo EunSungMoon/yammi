@@ -31,22 +31,22 @@ const Component = forwardRef(
         size={size}
         noStyle={noStyle}
       >
-        <InputWrapper inputSize={size}>
-          <input
-            {...inputProps}
-            type={type}
-            ref={ref}
-            onFocus={e => {
-              setIsFocused(true);
-              inputProps.onFocus?.(e);
-            }}
-            onBlur={e => {
-              setIsFocused(false);
-              inputProps.onBlur?.(e);
-            }}
-            autoComplete="off"
-          />
-        </InputWrapper>
+        {/* <InputWrapper inputSize={size}> */}
+        <input
+          {...inputProps}
+          type={type}
+          ref={ref}
+          onFocus={e => {
+            setIsFocused(true);
+            inputProps.onFocus?.(e);
+          }}
+          onBlur={e => {
+            setIsFocused(false);
+            inputProps.onBlur?.(e);
+          }}
+          autoComplete="off"
+        />
+        {/* </InputWrapper> */}
         {(suffix || suffixOnRender) && (
           <Suffix
             title={suffix}

@@ -73,6 +73,5 @@ const ErrMsg = styled(Typography).attrs({
 })`
   display: inline-block;
   margin-top: 4px;
-  font-size: 10px;
   color: ${({ theme }) => theme.colors.red[400]};
 `;

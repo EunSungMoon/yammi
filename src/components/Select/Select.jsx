@@ -115,7 +115,7 @@ const SelectBox = ({
       fontFamily: 'Noto Sans KR',
       fontStyle: 'normal',
       fontWeight: '400',
-      fontSize: '14px',
+      fontSize: '16px',
       lineHeight: '16px',
       letterSpacing: '-0.05em',
       cursor: 'pointer',
@@ -136,7 +136,9 @@ const SelectBox = ({
         : theme.colors.neutral[900],
       border: state.isFocused
         ? `1px solid ${theme.colors.blue[400]}`
-        : `1px solid ${theme.colors.neutral[400]}`,
+        : state.isDisabled
+          ? `1px solid ${theme.colors.neutral[300]}`
+          : `1px solid ${theme.colors.neutral[400]}`,
       borderRadius: '6px',
 
       ':hover': {
@@ -158,6 +160,7 @@ const SelectBox = ({
       ...styles,
       zIndex: 10,
       animation: 'fadeIn 0.2s ease-in-out',
+      fontSize: '16px',
     }),
     menuPortal: styles => ({
       ...styles,
@@ -175,13 +178,28 @@ const SelectBox = ({
     indicatorSeparator: () => ({
       display: 'none',
     }),
-    placeholder: styles => ({
+    placeholder: (styles, state) => ({
       ...styles,
-      color: theme.colors.neutral[300],
+      color: state.isDisabled
+        ? theme.colors.neutral[500]
+        : theme.colors.neutral[300],
+      fontSize: '16px',
+      fontFamily: 'inherit',
+      fontWeight: 400,
+      lineHeight: '1.5',
+
+      ':hover': {
+        ...styles[':hover'],
+        color: theme.colors.neutral[600],
+      },
     }),
     singleValue: styles => ({
       ...styles,
       color: disabled && defaultValue ? theme.colors.neutral[700] : 'inherit',
+      fontSize: '16px',
+      fontFamily: 'inherit',
+      fontWeight: 400,
+      lineHeight: '1.5',
     }),
 
     multiValue: styles => ({
@@ -195,7 +213,7 @@ const SelectBox = ({
       color: theme.colors.neutral[700],
       fontStyle: 'normal',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '16px',
       lineHeight: '16px',
       letterSpacing: '-0.05em',
       padding: 0,

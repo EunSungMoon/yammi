@@ -33,6 +33,12 @@ const StyledInputWrapper = styled.div`
   input::placeholder {
     color: ${({ theme }) => theme.colors.neutral[300]};
   }
+
+  :hover {
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.neutral[600]};
+    }
+  }
   /* input-styles */
   & > input {
     display: block;
