@@ -1,4 +1,3 @@
-import useModal from 'hooks/useModal';
 import { useRouter } from 'next/router';
 import { FiChevronLeft, FiX } from 'react-icons/fi';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -8,6 +7,8 @@ import Button from '@components/Button';
 import Image from '@components/Image';
 import Search from '@components/Search';
 import Typography from '@components/Typography';
+
+import useModal from '../../hooks/useModal';
 
 const Component = ({
   isBack,

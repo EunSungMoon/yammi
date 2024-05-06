@@ -1,17 +1,17 @@
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Bnb from '@components/Bnb';
-import Form from '@components/Form';
-import Gnb from '@components/Gnb';
 
 const Component = ({ children }) => {
-  const form = useForm();
+  const router = useRouter();
+
   return (
     <Wrapper>
       <ContentsWrapper>
         <Content>{children}</Content>
-        <Bnb />
+        {router.pathname !== '/login' ? <Bnb /> : null}
       </ContentsWrapper>
     </Wrapper>
   );
