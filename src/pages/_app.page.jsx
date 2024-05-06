@@ -8,11 +8,14 @@ import GlobalStyle from '@styles/GlobalStyle';
 import theme from '@styles/themes';
 import { Constant, CookieGetter } from '@system/cookie';
 
+import useLayoutDispenser from '../hooks/useLayoutDispenser';
 import { atomHydrator, atomMapKey } from '../modules/atomMap';
 
 export default function App({ Component, pageProps, initialData }) {
   const { session, initialData: pageInitialData } = pageProps;
   const hydrates = atomHydrator({ ...initialData, ...pageInitialData });
+
+  const { LayoutComponent } = useLayoutDispenser();
 
   return (
     <>
@@ -31,7 +34,9 @@ export default function App({ Component, pageProps, initialData }) {
           <GlobalStyle />
           <Toaster />
           <ToastProvider>
-            <Component {...pageProps} />
+            <LayoutComponent>
+              <Component {...pageProps} />
+            </LayoutComponent>
           </ToastProvider>
         </StyledThemeProvider>
       </RecoilRoot>

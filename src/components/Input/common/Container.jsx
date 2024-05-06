@@ -11,8 +11,8 @@ const StyledContainer = styled.div`
   align-items: stretch;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  padding: 13px 12px;
+  height: ${({ isPrimary }) => (isPrimary ? '40px' : '50px')};
+  padding: ${({ isPrimary }) => (isPrimary ? '8px 12px' : '13px 12px')};
   border-radius: 6px;
   border: ${({ theme, isPrimary }) =>
     isPrimary

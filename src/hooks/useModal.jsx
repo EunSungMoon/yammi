@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 
-import ConfirmModal from '../ConfirmModal';
+import Modal from '../components/Modal';
 
-export default function useConfirm(size = 'sm', closeCallback) {
+export default function useModal(size = 'sm', closeCallback) {
   const [isOpen, setOpen] = useState(false);
 
   const open = useCallback(() => {
@@ -27,19 +27,36 @@ export default function useConfirm(size = 'sm', closeCallback) {
    * @param {{onClick: function(), label: string, loading: boolean, appearance: 'primary' | 'warning' | 'danger' | 'gray' | 'subtle'}[]} props.buttons
    * @returns
    */
-  const ConfirmModalWrapper = useCallback(
-    ({ content, buttons = [], children }) => (
-      <ConfirmModal
+  const ModalWrapper = useCallback(
+    ({
+      title,
+      content,
+      buttons = [],
+      children,
+      back,
+      closeButton,
+      noPadding,
+      titlePadding,
+      isFull,
+    }) => (
+      <Modal
+        size={size}
+        title={title}
         content={content}
         buttons={buttons}
         onBackdropClick={handleBackdropClick}
         isOpen={isOpen}
+        closeButton={closeButton && close}
+        back={back}
+        noPadding={noPadding}
+        titlePadding={titlePadding}
+        isFull={isFull}
       >
         {children}
-      </ConfirmModal>
+      </Modal>
     ),
     [isOpen, close],
   );
 
-  return { open, close, isOpen, ConfirmModalWrapper };
+  return { open, close, isOpen, ModalWrapper };
 }

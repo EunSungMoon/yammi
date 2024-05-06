@@ -61,7 +61,9 @@ const Component = ({ name, hasError, maxWidth, type, ...inputProps }) => {
 
 export default Component;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const IconWrapper = styled.div`
   margin-right: 13px;

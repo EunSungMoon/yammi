@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import ModalContent from './ModalContent';
-import useLockedBody from '../hooks/useScrollLock';
+import useLockedBody from '../../hooks/useScrollLock';
 
 const Component = ({
   size,
@@ -17,6 +17,7 @@ const Component = ({
   noPadding = false,
   back,
   titlePadding = false,
+  isFull,
 }) => {
   const [mount, setMount] = useState(false);
   const [, setLocked] = useLockedBody();
@@ -38,9 +39,9 @@ const Component = ({
 
     return createPortal(
       isOpen ? (
-        <Wrapper>
+        <Wrapper isFull={isFull}>
           <Backdrop onClick={onBackdropClick} />
-          <ModalBox size={size}>
+          <ModalBox size={size} isFull={isFull}>
             <ModalContent
               title={title}
               content={content}
@@ -49,6 +50,7 @@ const Component = ({
               back={back}
               noPadding={noPadding}
               titlePadding={titlePadding}
+              isFull={isFull}
             >
               {children}
             </ModalContent>
@@ -75,6 +77,14 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${({ isFull }) => {
+    if (isFull) {
+      return css`
+        padding: 0;
+      `;
+    }
+  }}
 `;
 
 const Backdrop = styled.div`
@@ -95,4 +105,14 @@ const ModalBox = styled.div`
   z-index: 10002;
   background-color: #fff;
   border-radius: 20px;
+
+  ${({ isFull }) => {
+    if (isFull) {
+      return css`
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      `;
+    }
+  }}
 `;

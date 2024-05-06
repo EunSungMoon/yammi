@@ -9,6 +9,7 @@ const Component = createGlobalStyle`
     line-height: 1;
   }
 
+
   #__next, body {
     position: relative;
     z-index: 0;
@@ -28,7 +29,8 @@ const Component = createGlobalStyle`
   body {
     font-family: 'Noto Sans KR';
     font-size: 14px;
-    color: ${({ theme }) => theme.colors.neutral[800]};
+    color: ${({ theme }) => theme.colors.neutral[900]};
+    margin: 0;
   }
   
   @keyframes fadeIn {

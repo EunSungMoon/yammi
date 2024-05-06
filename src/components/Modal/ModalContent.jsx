@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Button from '../Button';
 import Image from '../Image';
@@ -13,6 +13,7 @@ const Component = ({
   closeButton,
   noPadding = false,
   titlePadding = false,
+  isFull,
 }) => {
   return (
     <Wrapper>
@@ -45,7 +46,7 @@ const Component = ({
       </TitleWrapper>
       {children}
       {content && (
-        <Content $noPadding={noPadding}>
+        <Content $noPadding={noPadding} isFull={isFull}>
           {typeof content === 'string' ? (
             <ContentLabel>{content}</ContentLabel>
           ) : (
@@ -85,8 +86,15 @@ const Title = styled(Typography).attrs({ variant: 'h1' })`
 const Content = styled.div`
   margin-top: ${({ $noPadding }) => ($noPadding ? '0' : '24px')};
   padding: ${({ $noPadding }) => ($noPadding ? '0' : '0 24px')};
-  @media screen and (max-width: 720px) {
-  }
+  ${({ isFull }) => {
+    if (isFull) {
+      return css`
+        padding: 0;
+        margin: 0;
+        border-top: ${({ theme }) => `1px solid ${theme.colors.neutral[300]}`};
+      `;
+    }
+  }}
 `;
 
 const ContentLabel = styled(Typography).attrs({ variant: 'h400' })`
@@ -129,7 +137,7 @@ const H6Typo = styled(Typography).attrs({
 const TitleWrapper = styled.div`
   position: relative;
   padding: ${({ $titlePadding }) =>
-    $titlePadding ? '20px 24px 12px' : '20px 24px'};
+    $titlePadding ? '20px 24px 12px' : '18px 16px'};
 `;
 
 const IconWrapper = styled.div`

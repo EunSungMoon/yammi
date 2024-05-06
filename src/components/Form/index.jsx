@@ -13,10 +13,6 @@ function Component({ children, form, onSubmit, onError, id }) {
 
 const Form = styled.form`
   width: 100%;
-
-  & > * {
-    margin-bottom: 24px;
-  }
 `;
 
 export default Component;

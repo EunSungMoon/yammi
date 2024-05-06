@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import CheckboxGroup from '@components/CheckboxGroup';
 import Form from '@components/Form';
-import useConfirm from '@components/hooks/useConfirm';
 import Input from '@components/Input';
 import Search from '@components/Search';
 import Select from '@components/Select';
@@ -14,6 +13,7 @@ import Textarea from '@components/Textarea';
 import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
+import useConfirm from '../hooks/useConfirm';
 import { atomMapKey } from '../modules/atomMap';
 import { categoriesAtom, setCategoriesAtom } from '../modules/category/atom';
 import { getCategories } from '../modules/category/fetch';

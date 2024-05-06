@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
 import ConfirmModalContent from './ConfirmModalContent';
-import useLockedBody from '../hooks/useScrollLock';
+import useLockedBody from '../../hooks/useScrollLock';
 
 const Component = ({
   content,
