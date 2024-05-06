@@ -12,6 +12,11 @@ const nextConfig = {
   serverRuntimeConfig: {
     mode: process.env.MODE,
   },
+  images: {
+    domains: ['picsum.photos', '15.165.20.225'],
+    deviceSizes: [576, 768, 992, 1200, 1600],
+    imageSizes: [16, 32, 64, 128, 256],
+  },
   publicRuntimeConfig: {
     appVersion: process.env.APP_VERSION,
     mode: process.env.MODE,

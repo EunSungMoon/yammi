@@ -59,6 +59,9 @@ const Wrapper = styled.div`
   margin: 0 auto;
   z-index: 100;
   width: 375px;
+  ${({ theme }) => theme.responsive('sm')} {
+    width: 100%;
+  }
 `;
 
 const Container = styled.div`

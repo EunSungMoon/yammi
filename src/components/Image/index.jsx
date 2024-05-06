@@ -8,8 +8,6 @@ const Image = ({ alt, src, noS3 = false, ...props }) => {
       ? src
       : `${s3Host}/${src}`;
 
-  // alert(assembledSrc);
-
   return (
     <NextImage className="lazyimage" src={assembledSrc} {...props} alt={alt} />
   );

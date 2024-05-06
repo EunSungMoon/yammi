@@ -64,6 +64,12 @@ export default function handler(req, res) {
           },
           {
             id: 11,
+            name: '기타',
+            image:
+              'http://15.165.20.225:8000/media/default_catgory_ivErm6c.png',
+          },
+          {
+            id: 12,
             name: '전체',
             image:
               'http://15.165.20.225:8000/media/default_catgory_q3AZPa3.png',

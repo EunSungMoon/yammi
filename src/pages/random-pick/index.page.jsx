@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
@@ -6,32 +7,22 @@ import styled from 'styled-components';
 import Gnb from '@components/Gnb';
 
 import PageComponent from './Page';
-import { atomMapKey } from '../modules/atomMap';
-import { setCategoriesAtom } from '../modules/category/atom';
-import { getCategories } from '../modules/category/fetch';
+import { atomMapKey } from '../../modules/atomMap';
 
 export const getServerSideProps = async ({ req }) => {
-  const [categories] = await Promise.all([getCategories({})]);
-
   return {
     props: {
-      initialData: {
-        [atomMapKey.category.categoriesAtom]: categories.data,
-      },
+      initialData: {},
     },
   };
 };
 
 const Page = ({ initialData }) => {
-  const setCategories = useSetRecoilState(setCategoriesAtom);
-
-  useEffect(() => {
-    setCategories(initialData.categoriesAtom);
-  }, []);
+  const rotuer = useRouter();
 
   return (
     <Wrapper>
-      <Gnb isMenu isLogo />
+      <Gnb isBack title="랜덤 맛집 뽑기" />
       <PageComponent />
     </Wrapper>
   );

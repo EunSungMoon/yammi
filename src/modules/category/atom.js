@@ -4,13 +4,7 @@ import * as Fetch from './fetch';
 
 export const categoriesAtom = atom({
   key: 'CATEGORIES',
-  default: [
-    {
-      id: '',
-      name: '',
-      image: '',
-    },
-  ],
+  default: [],
 });
 
 export const setCategoriesAtom = selector({

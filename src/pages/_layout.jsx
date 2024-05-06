@@ -10,9 +10,6 @@ const Component = ({ children }) => {
   return (
     <Wrapper>
       <ContentsWrapper>
-        <Form form={form}>
-          <Gnb isMenu isLogo />
-        </Form>
         <Content>{children}</Content>
         <Bnb />
       </ContentsWrapper>
@@ -25,6 +22,10 @@ const ContentsWrapper = styled.div`
   width: 375px;
   background-color: ${({ theme }) => theme.colors.neutral[0]};
   margin: 0 auto;
+
+  ${({ theme }) => theme.responsive('sm')} {
+    width: 100%;
+  }
 `;
 const Content = styled.main`
   width: 100%;
@@ -33,6 +34,10 @@ const Content = styled.main`
   box-shadow:
     10px 0 10px -16px rgba(0, 0, 0, 0.5),
     -10px 0 10px -16px rgba(0, 0, 0, 0.5);
+
+  ${({ theme }) => theme.responsive('sm')} {
+    box-shadow: none;
+  }
 `;
 
 export default Component;

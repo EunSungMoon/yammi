@@ -9,7 +9,6 @@ export const getCurrencyAmount = (
   })
     .format(amount)
     .replace(/\D00(?=\D*$)/, '');
-  // console.log({ formattedAmount });
   return formattedAmount;
 };
 
@@ -32,6 +31,5 @@ export const getCurrencySymbol = (locale, currency) => {
   });
   const formatted = formatter.format(1);
   const symbol = formatted.replace(/\d/g, '').trim();
-  // console.log({ symbol });
   return symbol;
 };
