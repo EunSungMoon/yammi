@@ -155,7 +155,6 @@ const Wrapper = styled.div`
   height: 56px;
   display: flex;
   align-items: center;
-  width: 100%;
 `;
 
 const Flex = styled.div`

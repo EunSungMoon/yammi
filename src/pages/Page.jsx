@@ -16,6 +16,8 @@ const Component = () => {
   const categories = useRecoilValue(categoriesAtom);
   const categoryForm = useForm();
   const valueCategory = categoryForm.getValues('category');
+  const queryCategory =
+    valueCategory?.length > 0 ? { category: valueCategory.join(', ') } : null;
 
   return (
     <Wrapper>
@@ -40,14 +42,13 @@ const Component = () => {
           label="뽑기"
           appearance="primary"
           block
-          onClick={() =>
+          onClick={() => {
+            console.log(queryCategory);
             router.push({
               pathname: '/random-pick',
-              query: {
-                category: valueCategory.join(', '),
-              },
-            })
-          }
+              query: queryCategory,
+            });
+          }}
         />
       </RandomPickWrapper>
     </Wrapper>
@@ -57,6 +58,7 @@ const Component = () => {
 export default Component;
 const Wrapper = styled.div`
   padding: 24px 16px;
+  margin-bottom: 100px;
 `;
 const Banner = styled.div`
   position: relative;

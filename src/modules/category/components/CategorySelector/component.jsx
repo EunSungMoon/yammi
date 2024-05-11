@@ -39,6 +39,7 @@ export default Component;
 const CategoryListWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 21px;
 
   flex-flow: row wrap;

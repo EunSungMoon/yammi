@@ -56,9 +56,12 @@ const Wrapper = styled.div`
   position: fixed;
   width: 100%;
   bottom: 0;
-  margin: 0 auto;
+
   z-index: 100;
   width: 375px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translate(-50%);
   ${({ theme }) => theme.responsive('sm')} {
     width: 100%;
   }
@@ -68,7 +71,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: ${({ theme }) => `1px solid ${theme.colors.neutral[30]}`};
   background-color: #fff;
 
   height: 82px;

@@ -17,7 +17,9 @@ const Component = ({ children }) => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+`;
 const ContentsWrapper = styled.div`
   width: 375px;
   background-color: ${({ theme }) => theme.colors.neutral[0]};

@@ -61,7 +61,12 @@ const Component = () => {
         callbackUrl={'http://localhost:3000'}
         render={({ onClick }) => (
           <NaverButton onClick={onClick}>
-            <Image src={'/images/naverlogo.svg'} width={16} height={16} />
+            <Image
+              src={'/images/naverlogo.svg'}
+              width={16}
+              height={16}
+              alt={''}
+            />
             <ButtonLabel>네이버로 로그인</ButtonLabel>
           </NaverButton>
         )}

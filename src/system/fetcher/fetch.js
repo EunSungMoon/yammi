@@ -2,7 +2,6 @@ import getConfig from 'next/config';
 
 import NetworkError from './networkError';
 import mSleep from '../mSleep';
-import * as ObjectMapper from '../objectMapper';
 import buildQuery from '../stringUtils/buildQuery';
 
 const { apiHost, apiVersion } = getConfig().publicRuntimeConfig;
@@ -34,9 +33,6 @@ export default async function fetcher(url, options = {}) {
   if (typeof url === 'undefined') {
     throw new NetworkError('URL 값은 필수입니다.');
   }
-  // if (typeof schemaKey === 'undefined') {
-  //   throw new NetworkError('스키마 키 값은 필수입니다.');
-  // }
 
   // 오브젝트 새로생성해야합니다.
   const mergedOpt = Object.assign({}, DEFAULT_OPTIONS);
@@ -123,11 +119,6 @@ export default async function fetcher(url, options = {}) {
   if (!response.ok) {
     console.error(JSON.stringify(response));
     throw new NetworkError('E5000000');
-    // if (Array.isArray(data.errors)) {
-    //   throw new NetworkError(data.errors[0].code, data.errors[0].id);
-    // } else {
-    //   throw new NetworkError('UNKNOWN', 'E5000000');
-    // }
   }
   // JSON전 에러체크[E]
 
@@ -160,16 +151,6 @@ export default async function fetcher(url, options = {}) {
     debugNetwork,
   );
 
-  // 유효성 체크 및 컨버팅 시작
-
-  // const isValidated = await ObjectMapper.validate(schemaKey, data.data);
-  // if (!isValidated) {
-  //   // throw new NetworkError('data validate failed');
-  // }
-  // const convertedObj = ObjectMapper.convert(schemaKey, data.data);
-
-  // 유효성 체크 및 컨버팅 시작 [E]
-
   // 총 걸린시간을 기준으로 나머지 시간만큼 잠깐 잤다가 리턴한다.
   const diff = Date.now() - startTs;
   logger(`REQUESTED:\t\t${diff}ms`, debugNetwork);
@@ -179,6 +160,5 @@ export default async function fetcher(url, options = {}) {
     logger(`SLEPT:\t\t\t${sleepMs}ms`, debugNetwork);
   }
 
-  // return convertedObj;
   return data;
 }

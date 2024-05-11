@@ -2,24 +2,49 @@ import { atom, selector, selectorFamily } from 'recoil';
 
 import * as Fetch from './fetch';
 
-export const categoriesAtom = atom({
-  key: 'CATEGORIES',
-  default: [
-    {
-      id: '',
+export const randomResturantAtom = atom({
+  key: 'RANDOM_RESTURANT',
+  default: {
+    id: 0,
+    average_star: null,
+    review_count: 0,
+    category1: {
+      id: 0,
       name: '',
-      image: '',
     },
-  ],
+    category2: null,
+    name: '',
+    image: '',
+    address: '',
+    counter: 0,
+  },
 });
 
-export const setCategoriesAtom = selector({
-  key: 'SET_CATEGORIES',
+export const setRandomResturantAtom = selector({
+  key: 'SET__RANDOM_RESTURANT',
   get: ({ get }) => {
-    const categories = get(categoriesAtom);
-    return item;
+    const randomResturant = get(randomResturantAtom);
+    // return randomResturant;
   },
   set: ({ get, set }, newValue) => {
-    set(categoriesAtom, newValue);
+    set(randomResturantAtom, newValue);
   },
+});
+
+export const getRandomResturantAtom = selectorFamily({
+  key: 'GET__RANDOM_RESTURANT',
+  get:
+    query =>
+    async ({ get }, option) => {
+      try {
+        const response = await Fetch.getRandomResturant(query);
+
+        return response;
+      } catch (err) {
+        throw err;
+      }
+    },
+  set:
+    id =>
+    ({ set, get }, newValue) => {},
 });

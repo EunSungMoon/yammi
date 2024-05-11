@@ -8,7 +8,7 @@ export const categoriesAtom = atom({
 });
 
 export const setCategoriesAtom = selector({
-  key: 'SET_CATEGORIES',
+  key: 'SET__CATEGORIES',
   get: ({ get }) => {
     const categories = get(categoriesAtom);
     return item;

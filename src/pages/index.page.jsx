@@ -37,8 +37,6 @@ const Page = ({ initialData }) => {
   );
 };
 
-const Wrapper = styled.div`
-  position: relative;
-`;
+const Wrapper = styled.div``;
 
 export default Page;

@@ -82,9 +82,16 @@ const Wrapper = styled.div`
     if (isFull) {
       return css`
         padding: 0;
+        width: 375px;
+        left: 50%;
+        transform: translate(-50%);
       `;
     }
   }}
+
+  ${({ theme }) => theme.responsive('sm')} {
+    width: 100%;
+  }
 `;
 
 const Backdrop = styled.div`

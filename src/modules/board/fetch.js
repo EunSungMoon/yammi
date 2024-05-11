@@ -10,7 +10,7 @@ export const getResturantList = async (query, option) => {
 };
 
 export const getRandomResturant = async (query, option) => {
-  const fetchRes = await fetcher(`/board/radom_rest`, {
+  const fetchRes = await fetcher(`/board/random_rest`, {
     ...option,
     method: 'GET',
     querystring: query,

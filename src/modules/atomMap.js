@@ -1,18 +1,18 @@
+import { randomResturantAtom } from './board/atom';
 import { categoriesAtom } from './category/atom';
-import { getItemAtom, itemAtom } from './test/atom';
 
 const atomMapKey = Object.freeze({
-  test: {
-    itemAtom: 'itemAtom',
-  },
   category: {
     categoriesAtom: 'categoriesAtom',
+  },
+  board: {
+    randomResturantAtom: 'randomResturantAtom',
   },
 });
 
 const atomMap = Object.freeze({
-  [atomMapKey.test.itemAtom]: itemAtom,
   [atomMapKey.category.categoriesAtom]: categoriesAtom,
+  [atomMapKey.board.randomResturantAtom]: randomResturantAtom,
 });
 
 function atomHydrator(initialData) {

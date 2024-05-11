@@ -137,7 +137,8 @@ const H6Typo = styled(Typography).attrs({
 const TitleWrapper = styled.div`
   position: relative;
   padding: ${({ $titlePadding }) =>
-    $titlePadding ? '20px 24px 12px' : '18px 16px'};
+    $titlePadding ? '20px 24px 12px' : '14px 16px'};
+  height: 56px;
 `;
 
 const IconWrapper = styled.div`

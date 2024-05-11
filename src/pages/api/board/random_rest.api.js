@@ -4,15 +4,15 @@ export default function handler(req, res) {
       return res.status(200).json({
         data: {
           id: 2,
-          average_star: null,
-          review_count: 0,
+          average_star: 4.5,
+          review_count: 10,
           category1: {
             id: 3,
             name: '한식',
           },
-          category2: null,
+          category2: '국밥',
           name: '김밥천국',
-          image: 'http://127.0.0.1:8000/media/main.jpeg',
+          image: 'https://picsum.photos/200',
           address: '서울 강남구 광평로 280 지하2층 137호',
           counter: 0,
         },
