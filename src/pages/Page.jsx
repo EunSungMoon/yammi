@@ -15,7 +15,7 @@ const Component = () => {
   const router = useRouter();
   const categories = useRecoilValue(categoriesAtom);
   const categoryForm = useForm();
-  const valueCategory = categoryForm.getValues('category');
+  const valueCategory = categoryForm.watch('category');
   const queryCategory =
     valueCategory?.length > 0 ? { category: valueCategory.join(', ') } : null;
 

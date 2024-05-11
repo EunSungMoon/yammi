@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import Image from '@components/Image';
 import Typography from '@components/Typography';
-import { NetworkError } from '@system/fetcher';
+import withComma from '@system/stringUtils/withComma';
 
 import { useToast } from '../../hooks/useToast';
 import {
@@ -33,26 +33,11 @@ const Component = () => {
   } = randomResturant;
 
   const handleClick = useRecoilCallback(({ snapshot, set }) => async () => {
-    // 클릭 이벤트 핸들러 내에서 getRandomResturantAtom 호출
-    try {
-      const response = await snapshot.getPromise(
-        getRandomResturantAtom(router.query.category),
-      );
+    const response = await snapshot.getPromise(
+      getRandomResturantAtom(router.query.category),
+    );
 
-      set(randomResturantAtom, response.data);
-    } catch (err) {
-      if (err instanceof NetworkError) {
-        addToast({
-          title: err,
-          appearance: 'error',
-        });
-      } else {
-        addToast({
-          title: '에러가 발생했습니다.',
-          appearance: 'warn',
-        });
-      }
-    }
+    set(randomResturantAtom, response.data);
   });
 
   return (
@@ -62,18 +47,14 @@ const Component = () => {
         <InfoLabel>사진을 클릭하면 해당 가게 페이지로 이동합니다.</InfoLabel>
       </InfoBox>
       <ResturantBox>
-        <ImageWrapper>
-          {image === '' ? (
-            '-'
-          ) : (
-            <Image
-              src={image}
-              width={1}
-              height={1}
-              layout="responsive"
-              alt={name}
-            />
-          )}
+        <ImageWrapper onClick={() => router.push(`/resturant/${id}`)}>
+          <Image
+            src={image || 'https://picsum.photos/200'}
+            width={1}
+            height={1}
+            layout="responsive"
+            alt={name}
+          />
         </ImageWrapper>
         <Flex>
           <TypoXS>{category1.name}</TypoXS>
@@ -85,7 +66,7 @@ const Component = () => {
         <Flex>
           <TypoXS>{average_star || '-'}</TypoXS>
           <TypoXS>|</TypoXS>
-          <TypoXS>{review_count}</TypoXS>
+          <TypoXS>{withComma(review_count)}</TypoXS>
         </Flex>
       </ResturantBox>
       <Button
@@ -102,6 +83,7 @@ export default Component;
 
 const Wrapper = styled.div`
   padding: 24px 16px;
+  margin-bottom: 100px;
 `;
 
 const InfoBox = styled.div`
@@ -126,6 +108,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 16px;
+  cursor: pointer;
   img {
     aspect-ratio: 1/1;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[400]}`};

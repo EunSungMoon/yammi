@@ -1,5 +1,6 @@
 import fetcher from '@system/fetcher';
 
+//카테고리별 식당 리스트
 export const getResturantList = async (query, option) => {
   const fetchRes = await fetcher(`/board/rest_cate_list`, {
     ...option,

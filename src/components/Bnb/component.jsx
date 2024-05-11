@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 import Image from '@components/Image';
@@ -10,7 +10,7 @@ const Component = () => {
   const BnbItems = useMemo(
     () => [
       {
-        link: '/category',
+        link: '/categories',
         icon: 'map-pin',
       },
       {
@@ -33,13 +33,31 @@ const Component = () => {
     [],
   );
 
+  const focusState = useCallback(
+    item => {
+      if (
+        (router.pathname === '/' || router.pathname === '/random-pick') &&
+        item.link === '/'
+      ) {
+        return true;
+      }
+      if (
+        router.pathname.startsWith('/categories') &&
+        item.link === '/categories'
+      ) {
+        return true;
+      }
+    },
+    [router],
+  );
+
   return (
     <Wrapper>
       <Container>
         {BnbItems.map(item => (
-          <IconWrapper key={item.icon}>
+          <IconWrapper key={item.icon} onClick={() => router.push(item.link)}>
             <Image
-              src={`/images/${item.icon}${router.pathname === item.link ? '_clicked' : ''}.svg`}
+              src={`/images/${item.icon}${focusState(item) ? '_clicked' : ''}.svg`}
               alt={item.icon}
               width={28}
               height={28}
