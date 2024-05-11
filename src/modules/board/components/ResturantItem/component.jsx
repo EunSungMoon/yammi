@@ -29,7 +29,7 @@ const Component = ({ item, isLast }) => {
           <Flex $gap={'4px'}>
             <TypoXS>{category1.name}</TypoXS>
             <TypoXS>|</TypoXS>
-            <TypoXS>{category2.name}</TypoXS>
+            <TypoXS>{category2 || '-'}</TypoXS>
           </Flex>
           <Name>{name}</Name>
           <Flex $gap={'8px'}>

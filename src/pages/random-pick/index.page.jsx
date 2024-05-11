@@ -11,7 +11,7 @@ import { getRandomResturant } from '../../modules/board/fetch';
 
 export const getServerSideProps = async ({ req, query }) => {
   const [randomResturant] = await Promise.all([
-    getRandomResturant({ query: query.category }),
+    getRandomResturant({ category: query.category }),
   ]);
 
   return {
@@ -33,7 +33,7 @@ const Page = ({ initialData }) => {
   return (
     <Wrapper>
       <Gnb isBack title="랜덤 맛집 뽑기" />
-      <PageComponent />
+      {/* <PageComponent /> */}
     </Wrapper>
   );
 };

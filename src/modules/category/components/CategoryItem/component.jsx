@@ -25,11 +25,11 @@ const CategoryImageWrapper = styled.div`
   height: 70px;
   position: relative;
 
-  border: ${({ theme, $clicked }) =>
-    `1px solid ${$clicked ? theme.colors.primary[300] : theme.colors.neutral[200]}`};
   border-radius: 8px;
   img {
     border-radius: 8px;
+    border: ${({ theme, $clicked }) =>
+      `1px solid ${$clicked ? theme.colors.primary[300] : theme.colors.neutral[200]}`};
   }
 `;
 

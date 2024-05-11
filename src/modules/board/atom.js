@@ -35,10 +35,7 @@ export const resturantListAtom = atom({
           id: 0,
           name: '',
         },
-        category2: {
-          id: 0,
-          name: '',
-        },
+        category2: null,
         name: '',
         image: '',
         address: '',
@@ -63,9 +60,13 @@ export const getRandomResturantAtom = selectorFamily({
   get:
     query =>
     async ({ get }, option) => {
-      const response = await Fetch.getRandomResturant(query);
+      try {
+        const response = await Fetch.getRandomResturant(query);
 
-      return response;
+        return response;
+      } catch (err) {
+        throw err;
+      }
     },
   set:
     id =>

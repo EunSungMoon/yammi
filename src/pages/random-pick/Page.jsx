@@ -33,11 +33,15 @@ const Component = () => {
   } = randomResturant;
 
   const handleClick = useRecoilCallback(({ snapshot, set }) => async () => {
-    const response = await snapshot.getPromise(
-      getRandomResturantAtom(router.query.category),
-    );
+    try {
+      const response = await snapshot.getPromise(
+        getRandomResturantAtom({ category: router.query.category }),
+      );
 
-    set(randomResturantAtom, response.data);
+      set(randomResturantAtom, response.data);
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   return (

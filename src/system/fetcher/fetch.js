@@ -11,9 +11,7 @@ const DEFAULT_OPTIONS = {
   timeoutMs: 30000,
   delayMs: 150,
   headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-    Expires: '-1',
-    Pragma: 'no-cache',
+    'Content-Type': 'application/json',
   },
   pagination: undefined,
   querystring: undefined,
@@ -65,8 +63,6 @@ export default async function fetcher(url, options = {}) {
       mergedOpt.headers = {
         // 안보내면 알아서 넣어준다. 오히려 넣으면 boundary 설정이 안되서 동작하지 않음.
         // 'Content-Type': 'multipart/form-data;',
-        Expires: '-1',
-        Pragma: 'no-cache',
       };
     }
     mergedOpt.body = options.body;
