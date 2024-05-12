@@ -91,6 +91,7 @@ export default class Setter {
       }
 
       // 서버에서 req로부터 쿠키를 갖고오게 되는 경우 변경된 쿠키로 사용할 수 있게 한다.
+
       if (this._option.req !== undefined) {
         const cookies = this._option.req.headers.cookie?.split('; ') || [];
         let searchedIdx = -1;

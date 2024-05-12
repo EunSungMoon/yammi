@@ -1,6 +1,15 @@
 import getConfig from 'next/config';
+import { useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
 
+import Button from '@components/Button';
+import Form from '@components/Form';
+import Input from '@components/Input';
 import NaverLogin from '@components/NaverLogin';
+import { Constant, CookieSetter } from '@system/cookie';
+
+import { setAccessTokenAtom } from '../modules/auth/atom';
+import { login } from '../modules/auth/fetch';
 
 export const getServerSideProps = async ({ req }) => {
   return {
@@ -11,7 +20,9 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 export default function Home({ initialData }) {
+  const form = useForm();
   const { naverLoginClientId } = getConfig().publicRuntimeConfig;
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   const handleNaverLogin = async data => {
     // const { id, email, nickname, mobile, gender, name } = data;
@@ -56,8 +67,26 @@ export default function Home({ initialData }) {
     }
   };
 
+  const handleClick = async body => {
+    const response = await login(body);
+    setAccessToken(response.data.accessToken);
+    const setter = new CookieSetter();
+    setter.set(Constant.USER_ACCESS_TOKEN, response.data.accessToken, {
+      expries: '',
+    });
+  };
+
   return (
     <>
+      <Form form={form}>
+        <Input name="username" />
+        <Button
+          label="login"
+          onClick={form.handleSubmit(handleClick)}
+          appearance="primary"
+          type="button"
+        />
+      </Form>
       <NaverLogin
         clientId={naverLoginClientId}
         callbackUrl={'http://localhost:3000'}

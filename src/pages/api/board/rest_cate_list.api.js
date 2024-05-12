@@ -15,10 +15,8 @@ export default function handler(req, res) {
                 id: 3,
                 name: '한식',
               },
-              category2: {
-                id: 2,
-                name: '햄치피',
-              },
+              category2: '햄치피',
+
               name: '도마다리감자탕',
               image: 'https://picsum.photos/200',
               address: '경기도 광주시 오포읍 능평로 193',
@@ -32,10 +30,8 @@ export default function handler(req, res) {
                 id: 3,
                 name: '한식',
               },
-              category2: {
-                id: 2,
-                name: '햄치피',
-              },
+              category2: '햄치피',
+
               name: '김밥천국',
               image: 'https://picsum.photos/200',
               address: '서울 강남구 광평로 280 지하2층 137호',

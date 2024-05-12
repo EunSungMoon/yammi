@@ -1,24 +1,27 @@
 import { useRouter } from 'next/router';
 import { FiAlertCircle } from 'react-icons/fi';
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
 import Image from '@components/Image';
 import Typography from '@components/Typography';
+import { NetworkError } from '@system/fetcher';
 import withComma from '@system/stringUtils/withComma';
 
 import { useToast } from '../../hooks/useToast';
 import {
-  getRandomResturantAtom,
   randomResturantAtom,
+  setRandomResturantAtom,
 } from '../../modules/board/atom';
+import { getRandomResturant } from '../../modules/board/fetch';
 
 const Component = () => {
   const router = useRouter();
-  const addToast = useToast();
+  const { addToast } = useToast();
 
   const randomResturant = useRecoilValue(randomResturantAtom);
+  const setRandomResturant = useSetRecoilState(setRandomResturantAtom);
 
   const {
     id,
@@ -32,17 +35,27 @@ const Component = () => {
     counter,
   } = randomResturant;
 
-  const handleClick = useRecoilCallback(({ snapshot, set }) => async () => {
+  const handleClick = async () => {
     try {
-      const response = await snapshot.getPromise(
-        getRandomResturantAtom({ category: router.query.category }),
-      );
-
-      set(randomResturantAtom, response.data);
+      const response = await getRandomResturant({
+        category: router.query.category,
+      });
+      setRandomResturant(response.data);
     } catch (err) {
+      if (err instanceof NetworkError) {
+        addToast({
+          title: err.message,
+          appearance: 'error',
+        });
+      } else {
+        addToast({
+          title: '에러가 발생했습니다.',
+          appearance: 'warn',
+        });
+      }
       console.log(err);
     }
-  });
+  };
 
   return (
     <Wrapper>

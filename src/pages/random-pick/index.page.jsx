@@ -33,7 +33,7 @@ const Page = ({ initialData }) => {
   return (
     <Wrapper>
       <Gnb isBack title="랜덤 맛집 뽑기" />
-      {/* <PageComponent /> */}
+      <PageComponent />
     </Wrapper>
   );
 };
