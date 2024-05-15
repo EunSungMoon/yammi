@@ -6,7 +6,7 @@ import Tab from '@components/Tab';
 
 import { restaurantListAtom } from '../../../modules/board/atom';
 import { categoriesAtom } from '../../../modules/category/atom';
-import RestaurantItemList from '../../../modules/category/components/CategoryItemList';
+import RestaurantItemList from '../../../modules/category/components/ResturantItemList';
 
 const Component = () => {
   const categories = useRecoilValue(categoriesAtom);
@@ -24,7 +24,7 @@ const Component = () => {
     <Wrapper>
       <Tab items={tabList} id={'categoryId'} isRouter />
       <Content>
-        <RestaurantItemList categories={restaurantList.results} />
+        <RestaurantItemList list={restaurantList.results} />
       </Content>
     </Wrapper>
   );
