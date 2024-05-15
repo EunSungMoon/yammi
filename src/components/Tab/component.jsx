@@ -1,28 +1,34 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Element, Link } from 'react-scroll';
 import styled, { css } from 'styled-components';
 
 import Typography from '@components/Typography';
 
-const Component = ({ items, id }) => {
+const Component = ({ items, id, isRouter }) => {
   const router = useRouter();
   const queryName = router.query[id];
-  const [isFocused, setIsFocused] = useState(Number(queryName));
+  const [isFocused, setIsFocused] = useState(
+    Number(queryName) || router.pathname,
+  );
 
   return (
     <Wrapper>
       <Tabs>
         {items.map(item => (
-          <TabItem
-            key={item.value}
-            onClick={() => {
-              router.push(item.link);
-              setIsFocused(item.value);
-            }}
-            $isFocused={item.value === isFocused}
-          >
-            <TabItemLabel>{item.label}</TabItemLabel>
-          </TabItem>
+          <Link key={item.value} to={item.value} smooth={true} duration={500}>
+            <TabItem
+              onClick={() => {
+                if (isRouter) {
+                  router.push(item.link);
+                }
+                setIsFocused(item.value);
+              }}
+              $isFocused={item.value === isFocused || item.link === isFocused}
+            >
+              <TabItemLabel>{item.label}</TabItemLabel>
+            </TabItem>
+          </Link>
         ))}
       </Tabs>
     </Wrapper>

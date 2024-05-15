@@ -3,26 +3,30 @@ import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Gnb from '@components/Gnb';
+import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
-import { setResturantListAtom } from '../../../modules/board/atom';
-import { getResturantList } from '../../../modules/board/fetch';
+import { setRestaurantListAtom } from '../../../modules/board/atom';
+import { getRestaurantList } from '../../../modules/board/fetch';
 import { setCategoriesAtom } from '../../../modules/category/atom';
 import { getCategories } from '../../../modules/category/fetch';
 
 export const getServerSideProps = async ({ req, query }) => {
+  const cookieGetter = new CookieGetter({ req });
+  const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+
   const { categoryId } = query;
-  const [categories, resturantList] = await Promise.all([
+  const [categories, restaurantList] = await Promise.all([
     getCategories({}),
-    getResturantList({ category: categoryId }),
+    getRestaurantList({ category: categoryId }),
   ]);
 
   return {
     props: {
       initialData: {
         [atomMapKey.category.categoriesAtom]: categories.data,
-        [atomMapKey.board.resturantListAtom]: resturantList.data,
+        [atomMapKey.board.restaurantListAtom]: restaurantList.data,
       },
     },
   };
@@ -30,11 +34,11 @@ export const getServerSideProps = async ({ req, query }) => {
 
 const Page = ({ initialData }) => {
   const setCategories = useSetRecoilState(setCategoriesAtom);
-  const setResturantList = useSetRecoilState(setResturantListAtom);
+  const setRestaurantList = useSetRecoilState(setRestaurantListAtom);
 
   useEffect(() => {
     setCategories(initialData.categoriesAtom);
-    setResturantList(initialData.resturantListAtom);
+    setRestaurantList(initialData.restaurantListAtom);
   }, []);
 
   return (

@@ -6,28 +6,28 @@ import Gnb from '@components/Gnb';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../modules/atomMap';
-import { setRandomResturantAtom } from '../../modules/board/atom';
-import { getRandomResturant } from '../../modules/board/fetch';
+import { setRandomRestaurantAtom } from '../../modules/board/atom';
+import { getRandomRestaurant } from '../../modules/board/fetch';
 
 export const getServerSideProps = async ({ req, query }) => {
-  const [randomResturant] = await Promise.all([
-    getRandomResturant({ category: query.category }),
+  const [randomRestaurant] = await Promise.all([
+    getRandomRestaurant({ category: query.category }),
   ]);
 
   return {
     props: {
       initialData: {
-        [atomMapKey.board.randomResturantAtom]: randomResturant.data,
+        [atomMapKey.board.randomRestaurantAtom]: randomRestaurant.data,
       },
     },
   };
 };
 
 const Page = ({ initialData }) => {
-  const setRandomResturant = useSetRecoilState(setRandomResturantAtom);
+  const setRandomRestaurant = useSetRecoilState(setRandomRestaurantAtom);
 
   useEffect(() => {
-    setRandomResturant(initialData.randomResturantAtom);
+    setRandomRestaurant(initialData.randomRestaurantAtom);
   }, []);
 
   return (

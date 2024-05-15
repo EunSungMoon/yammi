@@ -43,7 +43,6 @@ const Component = () => {
           appearance="primary"
           block
           onClick={() => {
-            console.log(queryCategory);
             router.push({
               pathname: '/random-pick',
               query: queryCategory,

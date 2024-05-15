@@ -22,11 +22,11 @@ const Component = () => {
         icon: 'home',
       },
       {
-        link: '/',
+        link: '/favorites/bookmarks',
         icon: 'star',
       },
       {
-        link: '/',
+        link: '/my-page',
         icon: 'user',
       },
     ],
@@ -44,6 +44,12 @@ const Component = () => {
       if (
         router.pathname.startsWith('/categories') &&
         item.link === '/categories'
+      ) {
+        return true;
+      }
+      if (
+        router.pathname.startsWith('/favorites') &&
+        item.link === '/favorites/bookmarks'
       ) {
         return true;
       }

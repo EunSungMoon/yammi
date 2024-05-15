@@ -2,8 +2,8 @@ import { atom, selector, selectorFamily } from 'recoil';
 
 import * as Fetch from './fetch';
 
-export const randomResturantAtom = atom({
-  key: 'RANDOM_RESTURANT',
+export const randomRestaurantAtom = atom({
+  key: 'RANDOM_RESTAURANT',
   default: {
     id: 0,
     average_star: null,
@@ -20,8 +20,8 @@ export const randomResturantAtom = atom({
   },
 });
 
-export const resturantListAtom = atom({
-  key: 'RESTURANT',
+export const restaurantListAtom = atom({
+  key: 'RESTAURANT',
   default: {
     count: 0,
     next: null,
@@ -45,23 +45,79 @@ export const resturantListAtom = atom({
   },
 });
 
-export const setRandomResturantAtom = selector({
-  key: 'SET__RANDOM_RESTURANT',
-  get: ({ get }) => {
-    const randomResturant = get(randomResturantAtom);
-  },
-  set: ({ get, set }, newValue) => {
-    set(randomResturantAtom, newValue);
+export const myBookmarkedListAtom = atom({
+  key: 'MY_BOOKMARKED_LIST',
+  default: {
+    count: 0,
+    next: null,
+    previous: null,
+    results: [
+      {
+        id: 0,
+        restaurant: {
+          category1: {
+            id: 0,
+            name: '',
+          },
+          category2: null,
+          name: '',
+          image: 'https://picsum.photos/200',
+          address: '',
+          counter: 0,
+        },
+      },
+    ],
   },
 });
 
-export const getRandomResturantAtom = selectorFamily({
-  key: 'GET__RANDOM_RESTURANT',
+export const myReviewListAtom = atom({
+  key: 'MY_REVIEWED_LIST',
+  default: {
+    count: 0,
+    next: null,
+    previous: null,
+    results: [
+      {
+        id: 0,
+        restaurant: {
+          id: 0,
+          category1: {
+            id: 0,
+            name: '',
+          },
+          category2: null,
+          name: '',
+          image: 'https://picsum.photos/200',
+          address: '',
+          counter: 0,
+        },
+        comment: '',
+        star: 0,
+        created_date: '',
+        updated_date: '',
+        user: 0,
+      },
+    ],
+  },
+});
+
+export const setRandomRestaurantAtom = selector({
+  key: 'SET__RANDOM_RESTAURANT',
+  get: ({ get }) => {
+    const randomRestaurant = get(randomRestaurantAtom);
+  },
+  set: ({ get, set }, newValue) => {
+    set(randomRestaurantAtom, newValue);
+  },
+});
+
+export const getRandomRestaurantAtom = selectorFamily({
+  key: 'GET__RANDOM_RESTAURANT',
   get:
     query =>
     async ({ get }, option) => {
       try {
-        const response = await Fetch.getRandomResturant(query);
+        const response = await Fetch.getRandomRestaurant(query);
 
         return response;
       } catch (err) {
@@ -73,12 +129,32 @@ export const getRandomResturantAtom = selectorFamily({
     ({ set, get }, newValue) => {},
 });
 
-export const setResturantListAtom = selector({
-  key: 'SET__RESTURANT',
+export const setRestaurantListAtom = selector({
+  key: 'SET__RESTAURANT',
   get: ({ get }) => {
-    const resturantList = get(resturantListAtom);
+    const restaurantList = get(restaurantListAtom);
   },
   set: ({ get, set }, newValue) => {
-    set(resturantListAtom, newValue);
+    set(restaurantListAtom, newValue);
+  },
+});
+
+export const setMyBookmarkedListAtom = selector({
+  key: 'SET__MY_BOOKMARKED_LIST',
+  get: ({ get }) => {
+    const myBookmarkedList = get(myBookmarkedListAtom);
+  },
+  set: ({ get, set }, newValue) => {
+    set(myBookmarkedListAtom, newValue);
+  },
+});
+
+export const setMyReviewedListAtom = selector({
+  key: 'SET__MY_REVIEWED_LIST',
+  get: ({ get }) => {
+    const myReviewList = get(myReviewListAtom);
+  },
+  set: ({ get, set }, newValue) => {
+    set(myReviewListAtom, newValue);
   },
 });

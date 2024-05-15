@@ -11,17 +11,17 @@ import withComma from '@system/stringUtils/withComma';
 
 import { useToast } from '../../hooks/useToast';
 import {
-  randomResturantAtom,
-  setRandomResturantAtom,
+  randomRestaurantAtom,
+  setRandomRestaurantAtom,
 } from '../../modules/board/atom';
-import { getRandomResturant } from '../../modules/board/fetch';
+import { getRandomRestaurant } from '../../modules/board/fetch';
 
 const Component = () => {
   const router = useRouter();
   const { addToast } = useToast();
 
-  const randomResturant = useRecoilValue(randomResturantAtom);
-  const setRandomResturant = useSetRecoilState(setRandomResturantAtom);
+  const randomRestaurant = useRecoilValue(randomRestaurantAtom);
+  const setRandomRestaurant = useSetRecoilState(setRandomRestaurantAtom);
 
   const {
     id,
@@ -33,14 +33,14 @@ const Component = () => {
     image,
     address,
     counter,
-  } = randomResturant;
+  } = randomRestaurant;
 
   const handleClick = async () => {
     try {
-      const response = await getRandomResturant({
+      const response = await getRandomRestaurant({
         category: router.query.category,
       });
-      setRandomResturant(response.data);
+      setRandomRestaurant(response.data);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -63,8 +63,8 @@ const Component = () => {
         <FiAlertCircle size={20} />
         <InfoLabel>사진을 클릭하면 해당 가게 페이지로 이동합니다.</InfoLabel>
       </InfoBox>
-      <ResturantBox>
-        <ImageWrapper onClick={() => router.push(`/resturant/${id}`)}>
+      <RestaurantBox>
+        <ImageWrapper onClick={() => router.push(`/restaurant/${id}`)}>
           <Image
             src={image || 'https://picsum.photos/200'}
             width={1}
@@ -85,7 +85,7 @@ const Component = () => {
           <TypoXS>|</TypoXS>
           <TypoXS>{withComma(review_count)}</TypoXS>
         </Flex>
-      </ResturantBox>
+      </RestaurantBox>
       <Button
         label={'다시 뽑기'}
         appearance="primary"
@@ -133,7 +133,7 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const ResturantBox = styled.div`
+const RestaurantBox = styled.div`
   margin: 24px 0;
 `;
 

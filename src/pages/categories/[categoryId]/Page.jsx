@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 import Tab from '@components/Tab';
 
-import { resturantListAtom } from '../../../modules/board/atom';
-import ResturantItemList from '../../../modules/board/components/ResturantItemList';
+import { restaurantListAtom } from '../../../modules/board/atom';
 import { categoriesAtom } from '../../../modules/category/atom';
+import RestaurantItemList from '../../../modules/category/components/CategoryItemList';
 
 const Component = () => {
   const categories = useRecoilValue(categoriesAtom);
-  const resturantList = useRecoilValue(resturantListAtom);
+  const restaurantList = useRecoilValue(restaurantListAtom);
 
   const tabList = useMemo(() => {
     return categories.map(category => ({
@@ -22,9 +22,9 @@ const Component = () => {
 
   return (
     <Wrapper>
-      <Tab items={tabList} id={'categoryId'} />
+      <Tab items={tabList} id={'categoryId'} isRouter />
       <Content>
-        <ResturantItemList list={resturantList.results} />
+        <RestaurantItemList categories={restaurantList.results} />
       </Content>
     </Wrapper>
   );

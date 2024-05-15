@@ -20,7 +20,7 @@ const Component = ({ item, isLast }) => {
   } = item;
 
   return (
-    <Wrapper $isLast={isLast} onClick={() => router.push(`/resturant/${id}`)}>
+    <Wrapper $isLast={isLast} onClick={() => router.push(`/restaurant/${id}`)}>
       <Flex $gap={'16px'}>
         <ImageWrapper>
           <Image src={image || 'https://picsum.photos/200'} fill alt={''} />

@@ -1,7 +1,7 @@
 import fetcher from '@system/fetcher';
 
 //카테고리별 식당 리스트
-export const getResturantList = async (query, option) => {
+export const getRestaurantList = async (query, option) => {
   const fetchRes = await fetcher(`/board/rest_cate_list`, {
     ...option,
     method: 'GET',
@@ -10,7 +10,7 @@ export const getResturantList = async (query, option) => {
   return fetchRes;
 };
 
-export const getRandomResturant = async (query, option) => {
+export const getRandomRestaurant = async (query, option) => {
   const fetchRes = await fetcher(`/board/random_rest`, {
     ...option,
     method: 'GET',
@@ -19,7 +19,7 @@ export const getRandomResturant = async (query, option) => {
   return fetchRes;
 };
 
-export const getResturant = async (params, option) => {
+export const getRestaurant = async (params, option) => {
   const { id } = params;
   const fetchRes = await fetcher(`/board/rest_detail/${id}`, {
     ...option,
@@ -28,7 +28,7 @@ export const getResturant = async (params, option) => {
   return fetchRes;
 };
 
-export const getResturantListSearch = async (query, option) => {
+export const getRestaurantListSearch = async (query, option) => {
   const fetchRes = await fetcher(`/board/search_list`, {
     ...option,
     method: 'GET',
@@ -70,6 +70,31 @@ export const deleteReview = async (params, option) => {
   const fetchRes = await fetcher(`/board/review_delete/${id}`, {
     ...option,
     method: 'DELETE',
+  });
+  return fetchRes;
+};
+
+export const getMyBookmarkedList = async (query, option) => {
+  const fetchRes = await fetcher(`/board/user/mybookmark_list`, {
+    ...option,
+    method: 'GET',
+  });
+  return fetchRes;
+};
+
+export const getMyReviewList = async (query, option) => {
+  const fetchRes = await fetcher(`/board/user/myreviewed_list`, {
+    ...option,
+    method: 'GET',
+  });
+  return fetchRes;
+};
+
+export const postFavorite = async (body, option) => {
+  const fetchRes = await fetcher(`/board/user/bookmarkupdate`, {
+    ...option,
+    method: 'POST',
+    body: JSON.stringify(body),
   });
   return fetchRes;
 };

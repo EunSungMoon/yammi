@@ -7,7 +7,11 @@ const Component = ({ category, onClick, clicked }) => {
   return (
     <CategoryItem onClick={onClick}>
       <CategoryImageWrapper $clicked={clicked}>
-        <Image src={category.image} fill alt={category.name} />
+        <Image
+          src={category.image || 'https://picsum.photos/200'}
+          fill
+          alt={category.name}
+        />
       </CategoryImageWrapper>
       <CatgegoryName>{category.name}</CatgegoryName>
     </CategoryItem>
