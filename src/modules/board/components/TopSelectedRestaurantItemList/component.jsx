@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-import FavoriteItem from '../FavoriteItem';
+import TopSelectedRestaurantItem from '../TopSelectedRestaurantItem';
 
-const Component = ({ list, isReview }) => {
+const Component = ({ list }) => {
   return (
     <Wrapper>
       {list.map((item, index) => (
-        <FavoriteItem
-          item={item}
+        <TopSelectedRestaurantItem
           key={item.id}
+          item={item}
           isLast={list.length === index + 1}
-          isReview={isReview}
+          rank={index + 1}
         />
       ))}
     </Wrapper>

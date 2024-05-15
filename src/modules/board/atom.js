@@ -45,33 +45,31 @@ export const restaurantListAtom = atom({
   },
 });
 
-export const myBookmarkedListAtom = atom({
-  key: 'MY_BOOKMARKED_LIST',
-  default: {
-    count: 0,
-    next: null,
-    previous: null,
-    results: [
-      {
+export const topSelectedRestaurantListAtom = atom({
+  key: 'TOP_SELECTED_RESTAURANT_LIST',
+  default: [
+    {
+      id: 0,
+      average_star: 0,
+      review_count: 0,
+      category1: {
         id: 0,
-        restaurant: {
-          category1: {
-            id: 0,
-            name: '',
-          },
-          category2: null,
-          name: '',
-          image: 'https://picsum.photos/200',
-          address: '',
-          counter: 0,
-        },
+        name: '',
       },
-    ],
-  },
+      category2: {
+        id: 0,
+        name: '',
+      },
+      name: '',
+      image: 'https://picsum.photos/200',
+      address: '',
+      counter: 0,
+    },
+  ],
 });
 
-export const myReviewListAtom = atom({
-  key: 'MY_REVIEWED_LIST',
+export const searchResultListAtom = atom({
+  key: 'SEARCH_RESULT_LIST',
   default: {
     count: 0,
     next: null,
@@ -79,23 +77,20 @@ export const myReviewListAtom = atom({
     results: [
       {
         id: 0,
-        restaurant: {
-          id: 0,
-          category1: {
-            id: 0,
-            name: '',
-          },
-          category2: null,
+        average_star: null,
+        review_count: 0,
+        category1: {
+          id: 1,
           name: '',
-          image: 'https://picsum.photos/200',
-          address: '',
-          counter: 0,
         },
-        comment: '',
-        star: 0,
-        created_date: '',
-        updated_date: '',
-        user: 0,
+        category2: {
+          id: 1,
+          name: '',
+        },
+        name: '',
+        image: 'https://picsum.photos/200',
+        address: '',
+        counter: 0,
       },
     ],
   },
@@ -139,22 +134,18 @@ export const setRestaurantListAtom = selector({
   },
 });
 
-export const setMyBookmarkedListAtom = selector({
-  key: 'SET__MY_BOOKMARKED_LIST',
-  get: ({ get }) => {
-    const myBookmarkedList = get(myBookmarkedListAtom);
-  },
+export const setTopSelectedRestaurantListAtom = selector({
+  key: 'SET__TOP_SELECTED_RESTAURANT',
+  get: ({ get }) => {},
   set: ({ get, set }, newValue) => {
-    set(myBookmarkedListAtom, newValue);
+    set(topSelectedRestaurantListAtom, newValue);
   },
 });
 
-export const setMyReviewedListAtom = selector({
-  key: 'SET__MY_REVIEWED_LIST',
-  get: ({ get }) => {
-    const myReviewList = get(myReviewListAtom);
-  },
+export const setSearchResultLisAtom = selector({
+  key: 'SET__SEARCH_RESULT_LIST',
+  get: ({ get }) => {},
   set: ({ get, set }, newValue) => {
-    set(myReviewListAtom, newValue);
+    set(searchResultListAtom, newValue);
   },
 });

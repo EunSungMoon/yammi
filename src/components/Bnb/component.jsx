@@ -56,6 +56,9 @@ const Component = () => {
       if (router.pathname.startsWith('/my-page') && item.link === '/my-page') {
         return true;
       }
+      if (router.pathname.startsWith('/search') && item.link === '/search') {
+        return true;
+      }
     },
     [router],
   );

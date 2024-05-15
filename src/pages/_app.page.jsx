@@ -47,19 +47,19 @@ export default function App({ Component, pageProps, initialData }) {
 
 App.getInitialProps = async appContext => {
   let vmInitialData = {};
-  const cookie = new CookieGetter(appContext.ctx);
+  // const cookie = new CookieGetter(appContext.ctx);
 
-  const accessToken = cookie.get(Constant.USER_ACCESS_TOKEN);
+  // const accessToken = cookie.get(Constant.USER_ACCESS_TOKEN);
 
-  if (accessToken) {
-    vmInitialData = {
-      // [atomMapKey.auth.accessTokenAtom]: accessToken,
-    };
-  } else {
-    vmInitialData = {
-      [atomMapKey.auth.accessTokenAtom]: null,
-    };
-  }
+  // if (accessToken) {
+  //   vmInitialData = {
+  //     [atomMapKey.auth.accessTokenAtom]: accessToken,
+  //   };
+  // } else {
+  //   vmInitialData = {
+  //     [atomMapKey.auth.accessTokenAtom]: null,
+  //   };
+  // }
 
   let appProps;
   try {
