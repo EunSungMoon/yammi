@@ -19,7 +19,7 @@ const Component = ({ item, isLast, rank }) => {
     counter,
   } = item;
   return (
-    <Wrapper $isLast={isLast}>
+    <Wrapper $isLast={isLast} onClick={() => router.push(`/restaurant/${id}`)}>
       <Flex $gap={'16px'}>
         <Rank>{rank}</Rank>
         <InfoBox>
@@ -32,9 +32,7 @@ const Component = ({ item, isLast, rank }) => {
               />
             </ImageWrapper>
             <Box>
-              <Name onClick={() => router.push(`/restaurant/${id}`)}>
-                {name}
-              </Name>
+              <Name>{name}</Name>
               <Flex $gap={'8px'}>
                 <Flex $gap={'2px'}>
                   <Image
@@ -58,6 +56,7 @@ const Component = ({ item, isLast, rank }) => {
 export default Component;
 
 const Wrapper = styled.div`
+  cursor: pointer;
   ${({ theme, $isLast }) => {
     if (!$isLast) {
       return css`
@@ -104,7 +103,6 @@ const Name = styled(Typography).attrs({
   fontWeight: 'bold',
 })`
   margin-bottom: 4px;
-  cursor: pointer;
 `;
 
 const TypoXS = styled(Typography).attrs({

@@ -27,7 +27,7 @@ const Component = ({ item, isLast }) => {
               </>
             ) : null}
           </Flex>
-          <Name onClick={() => router.push(`/restaurant/${id}`)}>
+          <Name onClick={() => router.push(`/restaurant/${item.id}`)}>
             {item.name}
           </Name>
 
@@ -93,25 +93,6 @@ const TypoXS = styled(Typography).attrs({
   color: ${({ theme }) => theme.colors.neutral[600]};
   margin-bottom: ${({ $marginBottom }) =>
     $marginBottom ? $marginBottom : '0'};
-`;
-
-const Comment = styled(TypoXS)`
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  max-width: 200px;
-`;
-
-const FavoriteButton = styled.div`
-  border: ${({ theme }) => `1px solid ${theme.colors.neutral[100]}`};
-  border-radius: 4px;
-  padding: 4px;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
 `;
 
 const Box = styled.div``;

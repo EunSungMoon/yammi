@@ -80,7 +80,7 @@ const Component = ({ item, isLast, isReview }) => {
             ) : null}
           </Flex>
           {isReview ? (
-            <Flex $gap={'8px'} $margin={'4px 0 0'}>
+            <Flex $gap={'8px'} $margin={'4px 0 0'} $flex>
               <Flex $gap={'2px'}>
                 <StarImageWrapper>
                   <Image
@@ -115,6 +115,7 @@ const Flex = styled.div`
     $justifyContent ? $justifyContent : 'initial'};
 
   margin: ${({ $margin }) => ($margin ? $margin : '0')};
+  flex: ${({ $flex }) => ($flex ? '1' : 'initial')};
 `;
 
 const ImageWrapper = styled.div`
@@ -132,7 +133,6 @@ const Name = styled(Typography).attrs({
   fontWeight: 'bold',
 })`
   margin-bottom: 2px;
-  min-width: 200;
   cursor: pointer;
 `;
 
@@ -152,7 +152,7 @@ const Comment = styled(TypoXS)`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   display: -webkit-box;
-  max-width: 200px;
+  flex: 1;
 `;
 
 const FavoriteButton = styled.div`
@@ -164,7 +164,9 @@ const FavoriteButton = styled.div`
   height: 30px;
 `;
 
-const Box = styled.div``;
+const Box = styled.div`
+  flex: 1;
+`;
 
 const StarImageWrapper = styled.div`
   width: 16px;

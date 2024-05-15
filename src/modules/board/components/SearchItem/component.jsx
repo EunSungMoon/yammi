@@ -19,7 +19,7 @@ const Component = ({ item, isLast }) => {
   } = item;
   const router = useRouter();
   return (
-    <Wrapper $isLast={isLast}>
+    <Wrapper $isLast={isLast} onClick={() => router.push(`/restaurant/${id}`)}>
       <Flex $gap={'16px'}>
         <ImageWrapper>
           <Image src={image || 'https://picsum.photos/200'} fill alt={name} />
@@ -34,7 +34,7 @@ const Component = ({ item, isLast }) => {
               </>
             ) : null}
           </Flex>
-          <Name onClick={() => router.push(`/restaurant/${id}`)}>{name}</Name>
+          <Name>{name}</Name>
           <Flex $gap={'8px'}>
             <Flex $gap={'2px'}>
               <StarImagWrapper>
@@ -58,6 +58,7 @@ const Component = ({ item, isLast }) => {
 export default Component;
 const Wrapper = styled.div`
   margin-bottom: ${({ $isLast }) => ($isLast ? '0' : '16px')};
+  cursor: pointer;
 `;
 const Flex = styled.div`
   display: flex;
@@ -87,7 +88,6 @@ const Name = styled(Typography).attrs({
   fontWeight: 'bold',
 })`
   margin: 2px 0 4px;
-  cursor: pointer;
 `;
 
 const StarImagWrapper = styled.div`
