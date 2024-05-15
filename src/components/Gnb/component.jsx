@@ -38,15 +38,15 @@ const Component = ({
     },
     {
       label: '카테고리',
-      link: '/category',
+      link: '/categories',
     },
     {
       label: '즐겨찾기',
-      link: '/',
+      link: '/favorites/bookmarks',
     },
     {
       label: '마이페이지',
-      link: '/',
+      link: '/my-page',
     },
   ];
 

@@ -7,8 +7,8 @@ import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
-import { setMyReviewedListAtom } from '../../../modules/board/atom';
-import { getMyReviewList } from '../../../modules/board/fetch';
+import { setMyReviewedListAtom } from '../../../modules/user/atom';
+import { getMyReviewList } from '../../../modules/user/fetch';
 
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
@@ -19,7 +19,7 @@ export const getServerSideProps = async ({ req }) => {
   return {
     props: {
       initialData: {
-        [atomMapKey.board.myReviewedListAtom]: myReviewList.data,
+        [atomMapKey.user.myReviewedListAtom]: myReviewList.data,
       },
     },
   };

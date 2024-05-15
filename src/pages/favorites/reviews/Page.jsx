@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import Tab from '@components/Tab';
 
-import { myReviewListAtom } from '../../../modules/board/atom';
-import FavoriteItemList from '../../../modules/board/components/FavoriteItemList';
+import { myReviewListAtom } from '../../../modules/user/atom';
+import FavoriteItemList from '../../../modules/user/components/FavoriteItemList';
 
 const Component = () => {
   const myReviewList = useRecoilValue(myReviewListAtom);

@@ -75,7 +75,7 @@ export const deleteReview = async (params, option) => {
 };
 
 export const getMyBookmarkedList = async (query, option) => {
-  const fetchRes = await fetcher(`/board/user/mybookmark_list`, {
+  const fetchRes = await fetcher(`/user/mybookmark_list`, {
     ...option,
     method: 'GET',
   });
@@ -83,7 +83,7 @@ export const getMyBookmarkedList = async (query, option) => {
 };
 
 export const getMyReviewList = async (query, option) => {
-  const fetchRes = await fetcher(`/board/user/myreviewed_list`, {
+  const fetchRes = await fetcher(`/user/myreviewed_list`, {
     ...option,
     method: 'GET',
   });
@@ -91,7 +91,7 @@ export const getMyReviewList = async (query, option) => {
 };
 
 export const postFavorite = async (body, option) => {
-  const fetchRes = await fetcher(`/board/user/bookmarkupdate`, {
+  const fetchRes = await fetcher(`/user/bookmarkupdate`, {
     ...option,
     method: 'POST',
     body: JSON.stringify(body),

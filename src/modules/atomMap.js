@@ -1,20 +1,23 @@
-import {
-  myBookmarkedListAtom,
-  myReviewListAtom,
-  randomRestaurantAtom,
-  restaurantListAtom,
-} from './board/atom';
+import { accessTokenAtom } from './auth/atom';
+import { randomRestaurantAtom, restaurantListAtom } from './board/atom';
 import { categoriesAtom } from './category/atom';
+import { myBookmarkedListAtom, myReviewListAtom, userAtom } from './user/atom';
 
 const atomMapKey = Object.freeze({
+  auth: {
+    accessTokenAtom: 'accessTokenAtom',
+  },
   category: {
     categoriesAtom: 'categoriesAtom',
   },
   board: {
     randomRestaurantAtom: 'randomRestaurantAtom',
     restaurantListAtom: 'restaurantListAtom',
+  },
+  user: {
     myBookmarkedListAtom: 'myBookmarkedListAtom',
     myReviewedListAtom: 'myReviewedListAtom',
+    userAtom: 'userAtom',
   },
 });
 
@@ -22,8 +25,10 @@ const atomMap = Object.freeze({
   [atomMapKey.category.categoriesAtom]: categoriesAtom,
   [atomMapKey.board.randomRestaurantAtom]: randomRestaurantAtom,
   [atomMapKey.board.restaurantListAtom]: restaurantListAtom,
-  [atomMapKey.board.myBookmarkedListAtom]: myBookmarkedListAtom,
-  [atomMapKey.board.myReviewedListAtom]: myReviewListAtom,
+  [atomMapKey.user.myBookmarkedListAtom]: myBookmarkedListAtom,
+  [atomMapKey.user.myReviewedListAtom]: myReviewListAtom,
+  [atomMapKey.user.userAtom]: userAtom,
+  [atomMapKey.auth.accessTokenAtom]: accessTokenAtom,
 });
 
 function atomHydrator(initialData) {

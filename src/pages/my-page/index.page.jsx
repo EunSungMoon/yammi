@@ -6,40 +6,43 @@ import Gnb from '@components/Gnb';
 import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
-import { atomMapKey } from '../../../modules/atomMap';
-import { setMyBookmarkedListAtom } from '../../../modules/user/atom';
-import { getMyBookmarkedList } from '../../../modules/user/fetch';
+import { atomMapKey } from '../../modules/atomMap';
+import { setAccessTokenAtom } from '../../modules/auth/atom';
+import { setUserAtom } from '../../modules/user/atom';
+import { getUser } from '../../modules/user/fetch';
 
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
 
-  const [myBookmarkedList] = await Promise.all([
-    getMyBookmarkedList({ accessToken }),
-  ]);
-
+  const [user] = await Promise.all([getUser({ accessToken })]);
   return {
     props: {
       initialData: {
-        [atomMapKey.user.myBookmarkedListAtom]: myBookmarkedList.data,
+        [atomMapKey.user.userAtom]: user.data,
+        [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },
   };
 };
 
 const Page = ({ initialData }) => {
-  const setMyBookmarkedList = useSetRecoilState(setMyBookmarkedListAtom);
+  const setUser = useSetRecoilState(setUserAtom);
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setMyBookmarkedList(initialData.myBookmarkedListAtom);
+    setUser(initialData.userAtom);
+    setAccessToken(initialData.accessTokenAtom);
   }, []);
 
   return (
     <Wrapper>
-      <Gnb title="즐겨찾기" isMenu />
+      <Gnb title="마이페이지" isMenu />
       <PageComponent />
     </Wrapper>
   );
 };
+
 export default Page;
+
 const Wrapper = styled.div``;

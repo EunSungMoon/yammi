@@ -1,6 +1,7 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { ToastProvider } from '@components/Toast';
@@ -49,18 +50,14 @@ App.getInitialProps = async appContext => {
   const cookie = new CookieGetter(appContext.ctx);
 
   const accessToken = cookie.get(Constant.USER_ACCESS_TOKEN);
-  const idToken = cookie.get(Constant.USER_STRINGIFIED_PROFILE);
 
-  if (accessToken && idToken) {
-    const decodedIdToken = JSON.parse(idToken);
+  if (accessToken) {
     vmInitialData = {
       // [atomMapKey.auth.accessTokenAtom]: accessToken,
-      // [atomMapKey.auth.decodedIdTokenAtom]: decodedIdToken,
     };
   } else {
     vmInitialData = {
-      // [atomMapKey.auth.accessTokenAtom]: null,
-      // [atomMapKey.auth.decodedIdTokenAtom]: null,
+      [atomMapKey.auth.accessTokenAtom]: null,
     };
   }
 
