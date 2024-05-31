@@ -5,18 +5,24 @@ import styled, { css } from 'styled-components';
 
 import Typography from '@components/Typography';
 
-const Component = ({ items, id, isRouter }) => {
+const Component = ({ items, id, isRouter, isCenter }) => {
   const router = useRouter();
   const queryName = router.query[id];
   const [isFocused, setIsFocused] = useState(
-    Number(queryName) || router.pathname,
+    isRouter ? Number(queryName) || router.pathname : items[0].value,
   );
 
   return (
     <Wrapper>
-      <Tabs>
+      <Tabs $isCenter={isCenter}>
         {items.map(item => (
-          <Link key={item.value} to={item.value} smooth={true} duration={500}>
+          <Link
+            key={item.value}
+            to={item.value}
+            smooth={true}
+            duration={500}
+            offset={-100}
+          >
             <TabItem
               onClick={() => {
                 if (isRouter) {
@@ -25,6 +31,7 @@ const Component = ({ items, id, isRouter }) => {
                 setIsFocused(item.value);
               }}
               $isFocused={item.value === isFocused || item.link === isFocused}
+              $isCenter={isCenter}
             >
               <TabItemLabel>{item.label}</TabItemLabel>
             </TabItem>
@@ -36,11 +43,15 @@ const Component = ({ items, id, isRouter }) => {
 };
 
 export default Component;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutral[0]};
+`;
 const Tabs = styled.div`
   border-bottom: ${({ theme }) => `1px solid ${theme.colors.neutral[100]}`};
   display: flex;
   align-items: center;
+  justify-content: ${({ $isCenter }) =>
+    $isCenter ? 'space-around' : 'initial'};
   padding: 0 16px;
 
   flex-flow: nowrap;
@@ -56,7 +67,7 @@ const Tabs = styled.div`
 `;
 const TabItem = styled.div`
   cursor: pointer;
-  padding: 12px 16px;
+  padding: ${({ $isCenter }) => ($isCenter ? '12px 0' : '12px 16px')};
   position: relative;
   ${({ theme, $isFocused }) => {
     if ($isFocused) {

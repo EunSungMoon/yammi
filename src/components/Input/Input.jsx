@@ -22,8 +22,7 @@ const Component = ({
   transform = 'none',
   ...rest
 }) => {
-  const { control, register, formState } = useFormContext();
-
+  const { control, register, formState, watch } = useFormContext();
   const dv = get(
     control._defaultValues,
     name,

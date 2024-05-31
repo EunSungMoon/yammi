@@ -61,11 +61,9 @@ export const myReviewListAtom = atom({
 export const userAtom = atom({
   key: 'USER',
   default: {
-    data: {
-      email: '',
-      nickname: '',
-      last_update: '',
-    },
+    email: '',
+    nickname: '',
+    last_update: '',
   },
 });
 

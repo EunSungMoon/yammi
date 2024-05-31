@@ -96,6 +96,54 @@ export const searchResultListAtom = atom({
   },
 });
 
+export const restaurantDetailAtom = atom({
+  key: 'RESTAURANT_DETAIL',
+  default: {
+    id: 0,
+    category1: {
+      id: 0,
+      name: '',
+    },
+    category2: null,
+    bookmark: false,
+    bookmark_count: 0,
+    menu: [
+      {
+        id: 0,
+        name: '',
+        description: '',
+        price: 0,
+        image: null,
+        restaurant: 0,
+      },
+    ],
+    average_star: 0,
+    name: '',
+    image: 'https://picsum.photos/200',
+    address: '',
+    counter: 0,
+  },
+});
+
+export const reviewListAtom = atom({
+  key: 'REVIEW_LIST',
+  default: [
+    {
+      id: 0,
+      user: {
+        id: 0,
+        nickname: '',
+      },
+      isOwner: false,
+      comment: '',
+      star: 0,
+      created_date: '',
+      updated_date: '',
+      restaurant: 1,
+    },
+  ],
+});
+
 export const setRandomRestaurantAtom = selector({
   key: 'SET__RANDOM_RESTAURANT',
   get: ({ get }) => {
@@ -147,5 +195,21 @@ export const setSearchResultLisAtom = selector({
   get: ({ get }) => {},
   set: ({ get, set }, newValue) => {
     set(searchResultListAtom, newValue);
+  },
+});
+
+export const setRestaurantDetailAtom = selector({
+  key: 'SET__RESTRUANT_DETAIL',
+  get: ({ get }) => {},
+  set: ({ get, set }, newValue) => {
+    set(restaurantDetailAtom, newValue);
+  },
+});
+
+export const setReviewListAtom = selector({
+  key: 'SET__REVIEWLIST',
+  get: ({ get }) => {},
+  set: ({ get, set }, newValue) => {
+    set(reviewListAtom, newValue);
   },
 });

@@ -46,7 +46,7 @@ export const getReviewList = async (params, option) => {
   return fetchRes;
 };
 
-export const createReivew = async (body, option) => {
+export const createReview = async (body, option) => {
   const fetchRes = await fetcher(`/board/review_create`, {
     ...option,
     method: 'POST',

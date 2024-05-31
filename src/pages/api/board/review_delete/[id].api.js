@@ -1,7 +1,7 @@
 export default function handler(req, res) {
   switch (req.method) {
-    case 'DELTET':
-      return res.status(204).json({
+    case 'DELETE':
+      return res.status(200).json({
         data: {},
       });
 

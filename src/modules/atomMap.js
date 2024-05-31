@@ -1,7 +1,9 @@
 import { accessTokenAtom } from './auth/atom';
 import {
   randomRestaurantAtom,
+  restaurantDetailAtom,
   restaurantListAtom,
+  reviewListAtom,
   searchResultListAtom,
   topSelectedRestaurantListAtom,
 } from './board/atom';
@@ -20,6 +22,8 @@ const atomMapKey = Object.freeze({
     restaurantListAtom: 'restaurantListAtom',
     topSelectedRestaurantListAtom: 'topSelectedRestaurantListAtom',
     searchResultListAtom: 'searchResultListAtom',
+    restaurantDetailAtom: 'restaurantDetailAtom',
+    reviewListAtom: 'reviewListAtom',
   },
   user: {
     myBookmarkedListAtom: 'myBookmarkedListAtom',
@@ -36,6 +40,8 @@ const atomMap = Object.freeze({
   [atomMapKey.board.topSelectedRestaurantListAtom]:
     topSelectedRestaurantListAtom,
   [atomMapKey.board.searchResultListAtom]: searchResultListAtom,
+  [atomMapKey.board.restaurantDetailAtom]: restaurantDetailAtom,
+  [atomMapKey.board.reviewListAtom]: reviewListAtom,
 
   [atomMapKey.user.myBookmarkedListAtom]: myBookmarkedListAtom,
   [atomMapKey.user.myReviewedListAtom]: myReviewListAtom,

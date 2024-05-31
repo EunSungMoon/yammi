@@ -1,6 +1,6 @@
 // import ajvResolver from '@hookform/resolvers/ajv';
 import { differenceInDays } from 'date-fns';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
@@ -23,10 +23,8 @@ const Component = () => {
 
   //TODO: resolver 확인!
   const { addToast } = useToast();
+
   const form = useForm({
-    defaultValues: {
-      nickname: user.nickname,
-    },
     // resolver: ajvResolver({
     //   type: 'object',
     //   properties: {
@@ -77,6 +75,10 @@ const Component = () => {
       }
     }
   };
+
+  useEffect(() => {
+    form.setValue('nickname', user.nickname);
+  }, [user]);
 
   return (
     <Wrapper>

@@ -80,5 +80,5 @@ const ConfirmModalBox = styled.div`
   position: relative;
   z-index: 10002;
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 8px;
 `;

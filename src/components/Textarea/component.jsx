@@ -44,7 +44,9 @@ const Component = (
 };
 
 export default forwardRef(Component);
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const Textarea = styled.textarea`
   appearance: none;

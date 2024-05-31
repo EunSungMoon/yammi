@@ -5,6 +5,7 @@ export default function handler(req, res) {
         data: [
           {
             id: 1,
+            isOwner: true,
             user: {
               id: 2,
               nickname: '말괄량이 용우',
@@ -17,6 +18,7 @@ export default function handler(req, res) {
           },
           {
             id: 2,
+            isOwner: false,
             user: {
               id: 2,
               nickname: '말괄량이 용우',
@@ -29,6 +31,7 @@ export default function handler(req, res) {
           },
           {
             id: 3,
+            isOwner: false,
             user: {
               id: 2,
               nickname: '말괄량이 용우',
@@ -41,6 +44,7 @@ export default function handler(req, res) {
           },
           {
             id: 4,
+            isOwner: false,
             user: {
               id: 2,
               nickname: '말괄량이 용우',
@@ -53,6 +57,7 @@ export default function handler(req, res) {
           },
           {
             id: 5,
+            isOwner: false,
             user: {
               id: 1,
               nickname: '검무산',
