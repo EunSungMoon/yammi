@@ -15,7 +15,9 @@ export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
 
-  const [myReviewList] = await Promise.all([getMyReviewList({ accessToken })]);
+  const [myReviewList] = await Promise.all([
+    getMyReviewList({}, { accessToken }),
+  ]);
 
   return {
     props: {

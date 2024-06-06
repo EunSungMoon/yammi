@@ -56,6 +56,7 @@ const Component = ({ reviewTotal }) => {
         appearance: 'success',
       });
     } catch (err) {
+      console.log(err);
       if (err instanceof NetworkError) {
         addToast({
           title: err.message,

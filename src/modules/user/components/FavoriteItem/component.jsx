@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Image from '@components/Image';
@@ -7,13 +8,20 @@ import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 
 import { useToast } from '../../../../hooks/useToast';
-import { postFavorite } from '../../fetch';
+import { accessTokenAtom } from '../../../../modules/auth/atom';
+import { setMyBookmarkedListAtom } from '../../atom';
+import { getMyBookmarkedList, postFavorite } from '../../fetch';
 
 const Component = ({ item, isLast, isReview }) => {
   const { id, restaurant } = item;
   const { addToast } = useToast();
   const router = useRouter();
+
   const [clicked, setClicked] = useState({ id: id, isClicked: true });
+
+  const accessToken = useRecoilValue(accessTokenAtom);
+
+  const setMyBookmarkedList = useSetRecoilState(setMyBookmarkedListAtom);
 
   const handleFavorite = async () => {
     try {
@@ -29,6 +37,8 @@ const Component = ({ item, isLast, isReview }) => {
         title: `저장된 맛집 ${!clicked.isClicked ? '등록' : '삭제'} 성공했습니다.`,
         appearance: 'success',
       });
+      const response = await getMyBookmarkedList({}, { accessToken });
+      setMyBookmarkedList(response.data);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({

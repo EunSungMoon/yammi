@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Element } from 'react-scroll';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
@@ -18,11 +18,12 @@ import { accessTokenAtom } from '../../../modules/auth/atom';
 import {
   restaurantDetailAtom,
   reviewListAtom,
+  setReviewListAtom,
 } from '../../../modules/board/atom';
 import MenuItemList from '../../../modules/board/components/MenuItemList';
 import RestuarantDetail from '../../../modules/board/components/RestuarantDetail';
 import ReviewItemList from '../../../modules/board/components/ReviewItemList';
-import { createReview } from '../../../modules/board/fetch';
+import { createReview, getReviewList } from '../../../modules/board/fetch';
 
 const Component = () => {
   const form = useForm();
@@ -31,6 +32,8 @@ const Component = () => {
   const reviewList = useRecoilValue(reviewListAtom);
   const restaurantDetail = useRecoilValue(restaurantDetailAtom);
   const accessToken = useRecoilValue(accessTokenAtom);
+
+  const setReviewList = useSetRecoilState(setReviewListAtom);
 
   const slicedMenuList = restaurantDetail.menu.slice(0, 3);
   const slicedReviewList = reviewList.slice(0, 3);
@@ -64,6 +67,9 @@ const Component = () => {
         title: '리뷰가 작성되었습니다.',
         appearance: 'success',
       });
+
+      const response = await getReviewList({}, { accessToken });
+      setReviewList(response.data);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({

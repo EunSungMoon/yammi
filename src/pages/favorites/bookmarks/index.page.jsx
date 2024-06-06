@@ -16,7 +16,7 @@ export const getServerSideProps = async ({ req }) => {
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
 
   const [myBookmarkedList] = await Promise.all([
-    getMyBookmarkedList({ accessToken }),
+    getMyBookmarkedList({}, { accessToken }),
   ]);
 
   return {

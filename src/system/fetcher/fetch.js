@@ -77,7 +77,7 @@ export default async function fetcher(url, options = {}) {
   if (options.accessToken !== undefined) {
     // 토큰 expires확인
     mergedOpt.headers = Object.assign(
-      { Authorization: 'Bearer ' + options.accessToken },
+      { Authorization: 'Token ' + options.accessToken },
       mergedOpt.headers,
     );
     logger(`AUTHORIZATION:\t${!!options.accessToken}`, debugNetwork);

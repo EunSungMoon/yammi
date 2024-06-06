@@ -24,7 +24,6 @@ import Typography from '../Typography';
  */
 
 const Toast = ({ transitionStatus, dismiss, parameters, isColored, id }) => {
-  console.log('🚀 ~ Toast ~ parameters:', parameters);
   const { placement, transitionDuration } = useContext(ToastContext);
   const theme = useTheme();
 

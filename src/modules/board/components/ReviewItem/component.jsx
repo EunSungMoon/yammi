@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
@@ -14,10 +14,16 @@ import { dateFormatter } from '@system/stringUtils/date';
 import useConfirm from '../../../../hooks/useConfirm';
 import { useToast } from '../../../../hooks/useToast';
 import { accessTokenAtom } from '../../../auth/atom';
-import { deleteReview, updateReview } from '../../../board/fetch';
+import {
+  deleteReview,
+  getReviewList,
+  updateReview,
+} from '../../../board/fetch';
+import { setReviewListAtom } from '../../atom';
 
 const Component = ({ item, isLast }) => {
   const accessToken = useRecoilValue(accessTokenAtom);
+  const setReviewList = useSetRecoilState(setReviewListAtom);
 
   const {
     comment,
@@ -47,6 +53,7 @@ const Component = ({ item, isLast }) => {
     return starCount.concat(array);
   }, [item]);
 
+  //하나로 합칠까....
   const handleDeleteReview = async () => {
     try {
       await deleteReview({
@@ -54,8 +61,10 @@ const Component = ({ item, isLast }) => {
       });
       addToast({
         title: '리뷰 삭제 성공했습니다.',
-        appearance: 'error',
+        appearance: 'success',
       });
+      const response = await getReviewList({}, { accessToken });
+      setReviewList(response.data);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -69,7 +78,6 @@ const Component = ({ item, isLast }) => {
         });
       }
     } finally {
-      //TODO:리뷰 다시 불러오는 방법 생각해보기
       closeDelete();
     }
   };
@@ -84,8 +92,10 @@ const Component = ({ item, isLast }) => {
       );
       addToast({
         title: '리뷰 수정 성공했습니다.',
-        appearance: 'error',
+        appearance: 'success',
       });
+      const response = await getReviewList({}, { accessToken });
+      setReviewList(response.data);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -99,7 +109,6 @@ const Component = ({ item, isLast }) => {
         });
       }
     } finally {
-      //TODO:수정된 리뷰 목록 다시 불러오기
       setClicked(!clicked);
     }
   };
@@ -211,6 +220,7 @@ const TextButton = styled(Typography).attrs({
 })`
   color: ${({ theme }) => theme.colors.neutral[700]};
   padding: 0 8px;
+  cursor: pointer;
 `;
 
 const DateTime = styled(TypoXS)`
