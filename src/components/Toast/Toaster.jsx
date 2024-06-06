@@ -42,7 +42,7 @@ const ToasterContainer = styled.div`
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-  padding: 8px;
+  padding: 16px;
   z-index: 10002;
   pointer-events: ${({ hasChildren }) => (hasChildren ? 'auto' : 'none')};
   ${({ placement }) => placements[placement]};

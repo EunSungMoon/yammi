@@ -6,6 +6,7 @@ import Button from '@components/Button';
 import Form from '@components/Form';
 import Input from '@components/Input';
 import NaverLogin from '@components/NaverLogin';
+import Toast from '@components/Toast/Toast';
 import { Constant, CookieSetter } from '@system/cookie';
 
 import { setAccessTokenAtom } from '../modules/auth/atom';
@@ -78,6 +79,7 @@ export default function Home({ initialData }) {
 
   return (
     <>
+      <Toast parameters={{ title: 'test', appearance: 'success' }} />
       <Form form={form}>
         <Input name="username" />
         <Button

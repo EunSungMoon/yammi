@@ -41,36 +41,15 @@ export function getAppearanceWrapperStyle(appearance) {
   switch (appearance) {
     case 'success':
       return css`
-        background-color: ${({ theme }) => theme.colors.neutral[500]};
-        color: ${({ theme }) => theme.colors.neutral[0]};
-      `;
-    case 'check':
-      return css`
-        background-color: ${({ theme }) => theme.colors.neutral[500]};
-        color: ${({ theme }) => theme.colors.neutral[0]};
+        border-left: 2px solid ${({ theme }) => theme.colors.blue[300]};
       `;
     case 'error':
       return css`
-        background-color: ${({ theme }) => theme.colors.neutral[500]};
-        color: ${({ theme }) => theme.colors.neutral[0]};
+        border-left: 2px solid ${({ theme }) => theme.colors.red[300]};
       `;
     case 'warn':
       return css`
-        background-color: ${({ theme }) => theme.colors.neutral[500]};
-        color: ${({ theme }) => theme.colors.neutral[0]};
+        border-left: 2px solid ${({ theme }) => theme.colors.yellow[300]};
       `;
-    case 'info':
-      return css`
-        background-color: ${({ theme }) => theme.colors.neutral[0]};
-        color: ${({ theme }) => theme.colors.neutral[500]};
-        border: 1px solid ${({ theme }) => theme.colors.neutral[20]};
-      `;
-    case 'info-colored':
-      return css`
-        background-color: ${({ theme }) => theme.colors.neutral[500]};
-        color: ${({ theme }) => theme.colors.neutral[0]};
-      `;
-    default:
-      return css``;
   }
 }

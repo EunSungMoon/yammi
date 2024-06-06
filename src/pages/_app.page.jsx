@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }) {
         <Toaster />
         <ToastProvider>
           <LayoutComponent>
-            {loading ? <div>loading</div> : <Component {...pageProps} />}
+            <Component {...pageProps} />
           </LayoutComponent>
         </ToastProvider>
       </ThemeProvider>

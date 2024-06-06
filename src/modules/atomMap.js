@@ -51,7 +51,6 @@ const atomMap = {
 };
 
 const atomHydrator = ({ initialData, recoilSetter }) => {
-  console.log('🚀 ~ atomHydrator ~ initialData:', initialData);
   Object.keys(atomMap).forEach(key => {
     if (initialData[key] !== undefined) {
       recoilSetter(atomMap[key], initialData[key]);
