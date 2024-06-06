@@ -31,8 +31,8 @@ const Page = ({ initialData }) => {
   const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setUser(initialData.userAtom);
-    setAccessToken(initialData.accessTokenAtom);
+    setUser(initialData[atomMapKey.user.userAtom]);
+    setAccessToken(atomMapKey.auth.accessTokenAtom);
   }, []);
 
   return (

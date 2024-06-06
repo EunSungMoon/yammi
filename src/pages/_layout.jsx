@@ -1,5 +1,5 @@
+'use client';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Bnb from '@components/Bnb';

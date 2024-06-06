@@ -1,6 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
-
-import * as Fetch from './fetch';
+import { atom, selector } from 'recoil';
 
 export const categoriesAtom = atom({
   key: 'CATEGORIES',

@@ -13,8 +13,10 @@ import CategorySelector from '../modules/category/components/CategorySelector';
 
 const Component = () => {
   const router = useRouter();
-  const categories = useRecoilValue(categoriesAtom);
   const categoryForm = useForm();
+
+  const categories = useRecoilValue(categoriesAtom);
+
   const valueCategory = categoryForm.watch('category');
   const queryCategory =
     valueCategory?.length > 0 ? { category: valueCategory.join(', ') } : null;

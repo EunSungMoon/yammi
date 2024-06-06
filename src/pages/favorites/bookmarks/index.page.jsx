@@ -7,6 +7,7 @@ import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
+import { setAccessTokenAtom } from '../../../modules/auth/atom';
 import { setMyBookmarkedListAtom } from '../../../modules/user/atom';
 import { getMyBookmarkedList } from '../../../modules/user/fetch';
 
@@ -22,6 +23,7 @@ export const getServerSideProps = async ({ req }) => {
     props: {
       initialData: {
         [atomMapKey.user.myBookmarkedListAtom]: myBookmarkedList.data,
+        [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },
   };
@@ -29,9 +31,11 @@ export const getServerSideProps = async ({ req }) => {
 
 const Page = ({ initialData }) => {
   const setMyBookmarkedList = useSetRecoilState(setMyBookmarkedListAtom);
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setMyBookmarkedList(initialData.myBookmarkedListAtom);
+    setMyBookmarkedList(initialData[atomMapKey.user.myBookmarkedListAtom]);
+    setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
   return (

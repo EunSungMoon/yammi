@@ -50,9 +50,9 @@ const Page = ({ initialData }) => {
   const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setRestaurantDetail(initialData.restaurantDetailAtom);
-    setReviewList(initialData.reviewListAtom);
-    setAccessToken(initialData.accessTokenAtom);
+    setRestaurantDetail(initialData[atomMapKey.board.restaurantDetailAtom]);
+    setReviewList(initialData[atomMapKey.board.reviewListAtom]);
+    setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
   const restaurant = useRecoilValue(restaurantDetailAtom);

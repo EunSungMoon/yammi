@@ -7,6 +7,7 @@ import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
+import { setAccessTokenAtom } from '../../../modules/auth/atom';
 import { setRestaurantListAtom } from '../../../modules/board/atom';
 import { getRestaurantList } from '../../../modules/board/fetch';
 import { setCategoriesAtom } from '../../../modules/category/atom';
@@ -18,8 +19,8 @@ export const getServerSideProps = async ({ req, query }) => {
 
   const { categoryId } = query;
   const [categories, restaurantList] = await Promise.all([
-    getCategories({}),
-    getRestaurantList({ category: categoryId }),
+    getCategories({}, { accessToken }),
+    getRestaurantList({ category: categoryId }, { accessToken }),
   ]);
 
   return {
@@ -27,6 +28,7 @@ export const getServerSideProps = async ({ req, query }) => {
       initialData: {
         [atomMapKey.category.categoriesAtom]: categories.data,
         [atomMapKey.board.restaurantListAtom]: restaurantList.data,
+        [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },
   };
@@ -35,10 +37,12 @@ export const getServerSideProps = async ({ req, query }) => {
 const Page = ({ initialData }) => {
   const setCategories = useSetRecoilState(setCategoriesAtom);
   const setRestaurantList = useSetRecoilState(setRestaurantListAtom);
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setCategories(initialData.categoriesAtom);
-    setRestaurantList(initialData.restaurantListAtom);
+    setCategories(initialData[atomMapKey.category.categoriesAtom]);
+    setRestaurantList(initialData[atomMapKey.board.restaurantListAtom]);
+    setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
   return (

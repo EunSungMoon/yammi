@@ -7,31 +7,28 @@ import Image from '@components/Image';
 const Component = () => {
   const router = useRouter();
 
-  const BnbItems = useMemo(
-    () => [
-      {
-        link: '/categories',
-        icon: 'map-pin',
-      },
-      {
-        link: '/search',
-        icon: 'search',
-      },
-      {
-        link: '/',
-        icon: 'home',
-      },
-      {
-        link: '/favorites/bookmarks',
-        icon: 'star',
-      },
-      {
-        link: '/my-page',
-        icon: 'user',
-      },
-    ],
-    [],
-  );
+  const BnbItems = [
+    {
+      link: '/categories',
+      icon: 'map-pin',
+    },
+    {
+      link: '/search',
+      icon: 'search',
+    },
+    {
+      link: '/',
+      icon: 'home',
+    },
+    {
+      link: '/favorites/bookmarks',
+      icon: 'star',
+    },
+    {
+      link: '/my-page',
+      icon: 'user',
+    },
+  ];
 
   const focusState = useCallback(
     item => {

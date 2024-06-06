@@ -10,6 +10,7 @@ import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../modules/atomMap';
+import { setAccessTokenAtom } from '../../modules/auth/atom';
 import {
   setSearchResultLisAtom,
   setTopSelectedRestaurantListAtom,
@@ -21,12 +22,12 @@ import {
 
 export const getServerSideProps = async ({ req, query }) => {
   const { keyword } = query;
-  // const cookieGetter = new CookieGetter({ req });
-  // const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
-  // console.log('🚀 ~ getServerSideProps ~ accessToken:', accessToken);
+  const cookieGetter = new CookieGetter({ req });
+  const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+
   const [topSelectedRestaurantList, searchList] = await Promise.all([
-    getRestaurantListSearch({}),
-    getSearchResult({ keyword: keyword }),
+    getRestaurantListSearch({}, { accessToken }),
+    getSearchResult({ keyword: keyword }, { accessToken }),
   ]);
   return {
     props: {
@@ -34,6 +35,7 @@ export const getServerSideProps = async ({ req, query }) => {
         [atomMapKey.board.topSelectedRestaurantListAtom]:
           topSelectedRestaurantList.data,
         [atomMapKey.board.searchResultListAtom]: searchList.data,
+        [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },
   };
@@ -47,10 +49,14 @@ const Page = ({ initialData }) => {
     setTopSelectedRestaurantListAtom,
   );
   const setSearchResult = useSetRecoilState(setSearchResultLisAtom);
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setTopSelectedRestaurantList(initialData.topSelectedRestaurantListAtom);
-    setSearchResult(initialData.searchResultListAtom);
+    setTopSelectedRestaurantList(
+      initialData[atomMapKey.board.topSelectedRestaurantListAtom],
+    );
+    setSearchResult(initialData[atomMapKey.board.searchResultListAtom]);
+    setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
   const handleSearch = async data => {

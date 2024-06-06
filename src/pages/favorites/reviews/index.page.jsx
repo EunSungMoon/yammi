@@ -7,6 +7,7 @@ import { Constant, CookieGetter } from '@system/cookie';
 
 import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
+import { setAccessTokenAtom } from '../../../modules/auth/atom';
 import { setMyReviewedListAtom } from '../../../modules/user/atom';
 import { getMyReviewList } from '../../../modules/user/fetch';
 
@@ -20,6 +21,7 @@ export const getServerSideProps = async ({ req }) => {
     props: {
       initialData: {
         [atomMapKey.user.myReviewedListAtom]: myReviewList.data,
+        [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },
   };
@@ -27,9 +29,11 @@ export const getServerSideProps = async ({ req }) => {
 
 const Page = ({ initialData }) => {
   const setMyReviewList = useSetRecoilState(setMyReviewedListAtom);
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   useEffect(() => {
-    setMyReviewList(initialData.myReviewedListAtom);
+    setMyReviewList(initialData[atomMapKey.user.myReviewedListAtom]);
+    setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
   return (

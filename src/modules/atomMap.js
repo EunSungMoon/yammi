@@ -12,27 +12,27 @@ import { myBookmarkedListAtom, myReviewListAtom, userAtom } from './user/atom';
 
 const atomMapKey = Object.freeze({
   auth: {
-    accessTokenAtom: 'accessTokenAtom',
+    accessTokenAtom: accessTokenAtom.key,
   },
   category: {
-    categoriesAtom: 'categoriesAtom',
+    categoriesAtom: categoriesAtom.key,
   },
   board: {
-    randomRestaurantAtom: 'randomRestaurantAtom',
-    restaurantListAtom: 'restaurantListAtom',
-    topSelectedRestaurantListAtom: 'topSelectedRestaurantListAtom',
-    searchResultListAtom: 'searchResultListAtom',
-    restaurantDetailAtom: 'restaurantDetailAtom',
-    reviewListAtom: 'reviewListAtom',
+    randomRestaurantAtom: randomRestaurantAtom.key,
+    restaurantListAtom: restaurantListAtom.key,
+    topSelectedRestaurantListAtom: topSelectedRestaurantListAtom.key,
+    searchResultListAtom: searchResultListAtom.key,
+    restaurantDetailAtom: restaurantDetailAtom.key,
+    reviewListAtom: reviewListAtom.key,
   },
   user: {
-    myBookmarkedListAtom: 'myBookmarkedListAtom',
-    myReviewedListAtom: 'myReviewedListAtom',
-    userAtom: 'userAtom',
+    myBookmarkedListAtom: myBookmarkedListAtom.key,
+    myReviewedListAtom: myReviewListAtom.key,
+    userAtom: userAtom.key,
   },
 });
 
-const atomMap = Object.freeze({
+const atomMap = {
   [atomMapKey.category.categoriesAtom]: categoriesAtom,
 
   [atomMapKey.board.randomRestaurantAtom]: randomRestaurantAtom,
@@ -48,19 +48,17 @@ const atomMap = Object.freeze({
   [atomMapKey.user.userAtom]: userAtom,
 
   [atomMapKey.auth.accessTokenAtom]: accessTokenAtom,
-});
+};
 
-function atomHydrator(initialData) {
-  const hydrateTargets = [];
-  Object.keys(atomMap).forEach(atomMapKey => {
-    const targetAtom = atomMap[atomMapKey];
-
-    if (initialData[atomMapKey] !== undefined) {
-      hydrateTargets.push([initialData[atomMapKey]]);
+const atomHydrator = ({ initialData, recoilSetter }) => {
+  console.log('🚀 ~ atomHydrator ~ initialData:', initialData);
+  Object.keys(atomMap).forEach(key => {
+    if (initialData[key] !== undefined) {
+      recoilSetter(atomMap[key], initialData[key]);
     }
   });
-  return hydrateTargets;
-}
+};
 
 export { atomHydrator, atomMapKey };
+
 export default atomMap;
