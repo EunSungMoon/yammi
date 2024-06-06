@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import EmptyState from '@components/EmptyState';
 import Tab from '@components/Tab';
 
 import { myReviewListAtom } from '../../../modules/user/atom';
@@ -18,7 +19,25 @@ const Component = () => {
     <Wrapper>
       <Tab items={tabList} id={'reviews'} isRouter />
       <Content>
-        <FavoriteItemList list={myReviewList.results} isReview />
+        {myReviewList.results.length > 0 ? (
+          <FavoriteItemList list={myReviewList.results} isReview />
+        ) : (
+          <EmptyStateWrapper>
+            <EmptyState
+              isIcon
+              title={'평가한 맛집이 없습니다'}
+              description={'지금 바로 맛집을 평가해보세요'}
+              buttons={[
+                {
+                  label: '맛집 평가하러 가기',
+                  appearance: 'primary',
+                  onClick: () => router.push('/categories'),
+                  block: true,
+                },
+              ]}
+            />
+          </EmptyStateWrapper>
+        )}
       </Content>
     </Wrapper>
   );
@@ -32,4 +51,8 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 20px 16px;
+`;
+
+const EmptyStateWrapper = styled.div`
+  padding: 40px 0;
 `;

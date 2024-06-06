@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { FiChevronLeft, FiX } from 'react-icons/fi';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
@@ -9,6 +10,8 @@ import Search from '@components/Search';
 import Typography from '@components/Typography';
 
 import useModal from '../../hooks/useModal';
+import { accessTokenAtom } from '../../modules/auth/atom';
+import { userAtom } from '../../modules/user/atom';
 
 const Component = ({
   isBack,
@@ -22,6 +25,8 @@ const Component = ({
   const { open, close, ModalWrapper } = useModal();
 
   const router = useRouter();
+  const accessToken = useRecoilValue(accessTokenAtom);
+  const user = useRecoilValue(userAtom);
 
   const handleBack = () => {
     router.back();
@@ -106,22 +111,27 @@ const Component = ({
         }
         content={
           <div>
-            {/* <ButtonWrapper>
-              <Button
-                label="로그인"
-                appearance="primary"
-                onClick={() => {
-                  router.push('/login');
-                  close();
-                }}
-              />
-            </ButtonWrapper> */}
-            <UserWrapper>
-              <TypoSPrimary>반갑습니다!</TypoSPrimary>
-              <UserName>
-                의정부 불주먹<TypoL>님</TypoL>
-              </UserName>
-            </UserWrapper>
+            {accessToken ? (
+              <UserWrapper>
+                <TypoSPrimary>반갑습니다!</TypoSPrimary>
+                <UserName>
+                  {user.nickname}
+                  <TypoL>님</TypoL>
+                </UserName>
+              </UserWrapper>
+            ) : (
+              <ButtonWrapper>
+                <Button
+                  label="로그인"
+                  appearance="primary"
+                  onClick={() => {
+                    router.push('/login');
+                    close();
+                  }}
+                />
+              </ButtonWrapper>
+            )}
+
             <Menus>
               {MENUS.map(item => (
                 <MenuItem

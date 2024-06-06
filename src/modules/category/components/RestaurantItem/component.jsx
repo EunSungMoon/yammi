@@ -41,7 +41,7 @@ const Component = ({ item, isLast }) => {
                   alt={'star'}
                 />
               </StarImageWrapper>
-              <TypoXS>{item.average_star}</TypoXS>
+              <TypoXS>{item.average_star || '평가없음'}</TypoXS>
             </Flex>
             <TypoXS>리뷰 {withComma(item.review_count)}</TypoXS>
           </Flex>

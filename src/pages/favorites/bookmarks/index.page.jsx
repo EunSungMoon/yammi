@@ -9,20 +9,22 @@ import PageComponent from './Page';
 import { atomMapKey } from '../../../modules/atomMap';
 import { setAccessTokenAtom } from '../../../modules/auth/atom';
 import { setMyBookmarkedListAtom } from '../../../modules/user/atom';
-import { getMyBookmarkedList } from '../../../modules/user/fetch';
+import { getMyBookmarkedList, getUser } from '../../../modules/user/fetch';
 
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
 
-  const [myBookmarkedList] = await Promise.all([
+  const [myBookmarkedList, user] = await Promise.all([
     getMyBookmarkedList({}, { accessToken }),
+    getUser({ accessToken }),
   ]);
 
   return {
     props: {
       initialData: {
         [atomMapKey.user.myBookmarkedListAtom]: myBookmarkedList.data,
+        [atomMapKey.user.userAtom]: user.data,
         [atomMapKey.auth.accessTokenAtom]: accessToken,
       },
     },

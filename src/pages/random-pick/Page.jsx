@@ -75,13 +75,17 @@ const Component = () => {
         </ImageWrapper>
         <Flex>
           <TypoXS>{category1.name}</TypoXS>
-          <TypoXS>|</TypoXS>
-          <TypoXS>{category2 || '-'}</TypoXS>
+          {category2 !== null ? (
+            <>
+              <TypoXS>|</TypoXS>
+              <TypoXS>{category2 || '-'}</TypoXS>
+            </>
+          ) : null}
         </Flex>
         <Name>{name}</Name>
         <Address>{address}</Address>
         <Flex>
-          <TypoXS>{average_star || '-'}</TypoXS>
+          <TypoXS>{average_star || '평가없음'}</TypoXS>
           <TypoXS>|</TypoXS>
           <TypoXS>{withComma(review_count)}</TypoXS>
         </Flex>

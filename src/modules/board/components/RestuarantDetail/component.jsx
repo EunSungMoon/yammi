@@ -30,6 +30,7 @@ const Component = ({ reviewTotal }) => {
     menu,
     name,
   } = restuarant;
+  console.log('🚀 ~ Component ~ restuarant:', restuarant);
   const [clicked, setClicked] = useState(bookmark);
 
   const averageStar = Math.ceil(average_star);
@@ -123,7 +124,7 @@ const Component = ({ reviewTotal }) => {
                 </StarIconWrapper>
               ))}
             </Flex>
-            <TypoXS>{average_star} / 5</TypoXS>
+            <TypoXS>{average_star || '0'} / 5</TypoXS>
           </Flex>
           <Address>{address}</Address>
         </TopSection>

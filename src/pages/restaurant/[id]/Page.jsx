@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
+import EmptyState from '@components/EmptyState';
 import Form from '@components/Form';
 import Image from '@components/Image';
 import Tab from '@components/Tab';
@@ -97,19 +98,26 @@ const Component = () => {
       <Element name="menu">
         <Content>
           <Title>메뉴</Title>
-          <MenuItemList
-            list={isMore ? slicedMenuList : restaurantDetail.menu}
-          />
-          <Button
-            label={
-              <>
-                <ButtonLabel>메뉴</ButtonLabel> {isMore ? '더보기' : '숨기기'}
-              </>
-            }
-            block
-            appearance="subtle"
-            onClick={() => setIsMore(!isMore)}
-          />
+          {restaurantDetail.menu.length > 0 ? (
+            <>
+              <MenuItemList
+                list={isMore ? slicedMenuList : restaurantDetail.menu}
+              />
+              <Button
+                label={
+                  <>
+                    <ButtonLabel>메뉴</ButtonLabel>{' '}
+                    {isMore ? '더보기' : '숨기기'}
+                  </>
+                }
+                block
+                appearance="subtle"
+                onClick={() => setIsMore(!isMore)}
+              />
+            </>
+          ) : (
+            <EmptyState title={'메뉴가 없습니다.'} />
+          )}
         </Content>
       </Element>
       <Divider />
@@ -117,18 +125,31 @@ const Component = () => {
         {/* TODO: 인기순, 최근순 */}
         <Content>
           <Title>리뷰 {withComma(reviewList.length)}개</Title>
-          <ReviewItemList list={isMoreReview ? slicedReviewList : reviewList} />
-          <Button
-            label={
-              <>
-                <ButtonLabel>리뷰</ButtonLabel>{' '}
-                {isMoreReview ? '더보기' : '숨기기'}
-              </>
-            }
-            block
-            appearance="subtle"
-            onClick={() => setIsMoreReview(!isMoreReview)}
-          />
+          {reviewList.length > 0 ? (
+            <>
+              <ReviewItemList
+                list={isMoreReview ? slicedReviewList : reviewList}
+              />
+              <Button
+                label={
+                  <>
+                    <ButtonLabel>리뷰</ButtonLabel>{' '}
+                    {isMoreReview ? '더보기' : '숨기기'}
+                  </>
+                }
+                block
+                appearance="subtle"
+                onClick={() => setIsMoreReview(!isMoreReview)}
+              />
+            </>
+          ) : (
+            <EmptyState
+              isIcon
+              title={'등록된 리뷰가 없습니다.'}
+              description={'리뷰를 작성해주세요!'}
+            />
+          )}
+
           {accessToken ? (
             <>
               <Title $marginTop={'14px'}>리뷰 작성하기</Title>
