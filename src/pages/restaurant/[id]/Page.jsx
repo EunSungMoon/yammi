@@ -1,3 +1,4 @@
+import { ajvResolver } from '@hookform/resolvers/ajv';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Element } from 'react-scroll';
@@ -8,7 +9,6 @@ import Button from '@components/Button';
 import ChipGroup from '@components/ChipGroup';
 import EmptyState from '@components/EmptyState';
 import Form from '@components/Form';
-import Image from '@components/Image';
 import Tab from '@components/Tab';
 import Textarea from '@components/Textarea';
 import Typography from '@components/Typography';
@@ -25,10 +25,15 @@ import {
 import MenuItemList from '../../../modules/board/components/MenuItemList';
 import RestuarantDetail from '../../../modules/board/components/RestuarantDetail';
 import ReviewItemList from '../../../modules/board/components/ReviewItemList';
+import StarSelector from '../../../modules/board/components/StarSelector';
 import { createReview, getReviewList } from '../../../modules/board/fetch';
+import getReviewDto from '../../../modules/board/models/ReviewValidation';
 
 const Component = () => {
-  const form = useForm();
+  const form = useForm({
+    resolver: ajvResolver(getReviewDto()),
+  });
+
   const { addToast } = useToast();
 
   const reviewList = useRecoilValue(reviewListAtom);
@@ -66,20 +71,31 @@ const Component = () => {
 
   const handleCreateReview = async data => {
     try {
-      await createReview(
-        {
-          comment: data.comment,
-          restaurant: restaurantDetail.id,
-        },
-        { accessToken },
-      );
-      addToast({
-        title: '리뷰가 작성되었습니다.',
-        appearance: 'success',
-      });
+      if (data.star === 0) {
+        addToast({
+          title: '식당의 점수를 선택해주세요.',
+          appearance: 'warn',
+        });
+      } else {
+        await createReview(
+          {
+            star: data.star,
+            comment: data.comment,
+            restaurant: restaurantDetail.id,
+          },
+          { accessToken },
+        );
+        addToast({
+          title: '리뷰가 작성되었습니다.',
+          appearance: 'success',
+        });
 
-      const response = await getReviewList({}, { accessToken });
-      setReviewList(response.data);
+        const response = await getReviewList(
+          { id: restaurantDetail.id },
+          { accessToken },
+        );
+        setReviewList(response.data);
+      }
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -94,6 +110,7 @@ const Component = () => {
       }
     } finally {
       form.setValue('comment', '');
+      form.setValue('star', 0);
     }
   };
 
@@ -174,7 +191,7 @@ const Component = () => {
             <>
               <Title $marginTop={'14px'}>리뷰 작성하기</Title>
               <Form form={form} onSubmit={handleCreateReview}>
-                {/* TODO: 별점 */}
+                <StarSelector name="star" />
                 <Flex>
                   <Textarea
                     name="comment"
@@ -208,7 +225,7 @@ const TabWrapper = styled.div`
 
 const Flex = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   button {
     height: 104px;

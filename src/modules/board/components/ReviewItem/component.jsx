@@ -1,3 +1,4 @@
+import { ajvResolver } from '@hookform/resolvers/ajv';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -20,6 +21,7 @@ import {
   updateReview,
 } from '../../../board/fetch';
 import { setReviewListAtom } from '../../atom';
+import getReviewDto from '../../models/ReviewValidation';
 
 const Component = ({ item, isLast }) => {
   const accessToken = useRecoilValue(accessTokenAtom);
@@ -45,6 +47,7 @@ const Component = ({ item, isLast }) => {
   } = useConfirm();
   const form = useForm({
     defaultValues: { comment: comment },
+    resolver: ajvResolver(getReviewDto()),
   });
 
   const renderStar = useMemo(() => {
@@ -126,7 +129,7 @@ const Component = ({ item, isLast }) => {
         ) : null}
       </Flex>
       <Flex $margin={'0 0 8px'} $gap={'8px'}>
-        <Flex>
+        <Flex $gap={'4px'}>
           {renderStar.map((item, index) => (
             <StarWrapper key={index}>
               <Image
@@ -135,8 +138,8 @@ const Component = ({ item, isLast }) => {
                     ? '/images/star_filled.svg'
                     : '/images/star_filled_gray.svg'
                 }
-                width={16}
-                height={16}
+                width={13}
+                height={13}
                 alt={''}
               />
             </StarWrapper>
@@ -197,7 +200,7 @@ const Flex = styled.div`
 
 const FormFlex = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   button {
     height: 104px;
@@ -207,7 +210,6 @@ const FormFlex = styled.div`
 const StarWrapper = styled.div`
   width: 16px;
   height: 16px;
-  padding: 1px;
 `;
 
 const TypoXS = styled(Typography).attrs({
