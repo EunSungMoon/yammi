@@ -120,6 +120,7 @@ const Component = ({ item, isLast }) => {
         {accessToken && isOwner ? (
           <Flex $gap={'4px'}>
             <TextButton onClick={() => setClicked(!clicked)}>수정</TextButton>
+            <Divider />
             <TextButton onClick={openDelete}>삭제</TextButton>
           </Flex>
         ) : null}
@@ -231,3 +232,9 @@ const Comment = styled(Typography).attrs({
   variant: 'm',
   fontWeight: 'regular',
 })``;
+
+const Divider = styled.div`
+  width: 1px;
+  height: 12px;
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
+`;

@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
+import ChipGroup from '@components/ChipGroup';
 import EmptyState from '@components/EmptyState';
 import Form from '@components/Form';
 import Image from '@components/Image';
@@ -53,6 +54,14 @@ const Component = () => {
       label: '위치',
       value: 'map',
     },
+  ];
+
+  const reviewQueryOptions = [
+    {
+      label: '인기순',
+      value: 'favorite',
+    },
+    { label: '최근순', value: 'desc' },
   ];
 
   const handleCreateReview = async data => {
@@ -127,6 +136,13 @@ const Component = () => {
           <Title>리뷰 {withComma(reviewList.length)}개</Title>
           {reviewList.length > 0 ? (
             <>
+              <ChipWrapper>
+                <ChipGroup
+                  options={reviewQueryOptions}
+                  defaultValue={reviewQueryOptions[0].value}
+                  onClick={value => console.log(value)}
+                />
+              </ChipWrapper>
               <ReviewItemList
                 list={isMoreReview ? slicedReviewList : reviewList}
               />
@@ -223,4 +239,7 @@ const ButtonLabel = styled(Typography).attrs({
   component: 'span',
 })`
   color: inherit;
+`;
+const ChipWrapper = styled.div`
+  margin-bottom: 20px;
 `;

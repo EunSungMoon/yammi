@@ -30,7 +30,6 @@ const Component = ({ reviewTotal }) => {
     menu,
     name,
   } = restuarant;
-  console.log('🚀 ~ Component ~ restuarant:', restuarant);
   const [clicked, setClicked] = useState(bookmark);
 
   const averageStar = Math.ceil(average_star);
