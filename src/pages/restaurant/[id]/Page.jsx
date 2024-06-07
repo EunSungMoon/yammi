@@ -97,6 +97,10 @@ const Component = () => {
     }
   };
 
+  const handleQuery = value => {
+    console.log(value);
+  };
+
   return (
     <Wrapper>
       <RestuarantDetail reviewTotal={reviewList.length} />
@@ -140,7 +144,7 @@ const Component = () => {
                 <ChipGroup
                   options={reviewQueryOptions}
                   defaultValue={reviewQueryOptions[0].value}
-                  onClick={value => console.log(value)}
+                  onClick={value => handleQuery(value)}
                 />
               </ChipWrapper>
               <ReviewItemList
