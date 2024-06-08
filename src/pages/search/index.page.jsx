@@ -12,6 +12,7 @@ import PageComponent from './Page';
 import { atomMapKey } from '../../modules/atomMap';
 import { setAccessTokenAtom } from '../../modules/auth/atom';
 import {
+  setSearchHistoriesAtom,
   setSearchResultLisAtom,
   setTopSelectedRestaurantListAtom,
 } from '../../modules/board/atom';
@@ -20,6 +21,8 @@ import {
   getSearchResult,
 } from '../../modules/board/fetch';
 import { getUser } from '../../modules/user/fetch';
+
+export const LOCAL_STORAGE_SEARCH_HISTORIES = 'search-histories';
 
 export const getServerSideProps = async ({ req, query }) => {
   const { keyword } = query;
@@ -65,6 +68,34 @@ const Page = ({ initialData }) => {
   );
   const setSearchResult = useSetRecoilState(setSearchResultLisAtom);
   const setAccessToken = useSetRecoilState(setAccessTokenAtom);
+  const setSearchHistories = useSetRecoilState(setSearchHistoriesAtom);
+
+  const handleSearch = async data => {
+    const defaultValue = JSON.stringify([]);
+    const resultItem = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_SEARCH_HISTORIES) || defaultValue,
+    );
+    const set = new Set([data.keyword, ...resultItem]);
+    const unique = [...set];
+    let slicedArray = [];
+
+    if (unique.length > 5) {
+      slicedArray = unique.slice(0, 5);
+    } else {
+      slicedArray = unique;
+    }
+
+    localStorage.setItem(
+      LOCAL_STORAGE_SEARCH_HISTORIES,
+      JSON.stringify(slicedArray),
+    );
+    router.push({
+      pathname: '/search',
+      query: {
+        keyword: data.keyword,
+      },
+    });
+  };
 
   useEffect(() => {
     setTopSelectedRestaurantList(
@@ -74,14 +105,12 @@ const Page = ({ initialData }) => {
     setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
   }, []);
 
-  const handleSearch = async data => {
-    router.push({
-      pathname: '/search',
-      query: {
-        keyword: data.keyword,
-      },
-    });
-  };
+  useEffect(() => {
+    const storedSearchHistories =
+      JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_HISTORIES)) || [];
+
+    setSearchHistories(storedSearchHistories);
+  }, [router]);
 
   return (
     <Wrapper>

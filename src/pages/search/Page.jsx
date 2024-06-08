@@ -1,12 +1,16 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import Tags from '@components/Tags';
 import Typography from '@components/Typography';
 
+import { LOCAL_STORAGE_SEARCH_HISTORIES } from './index.page';
 import {
+  searchHistoriesAtom,
   searchResultListAtom,
+  setSearchHistoriesAtom,
   topSelectedRestaurantListAtom,
 } from '../../modules/board/atom';
 import SearchItemList from '../../modules/board/components/SearchItemList';
@@ -18,6 +22,10 @@ const Component = () => {
     topSelectedRestaurantListAtom,
   );
   const searchResult = useRecoilValue(searchResultListAtom);
+  const searchHistories = useRecoilValue(searchHistoriesAtom);
+
+  const setSearchHistories = useSetRecoilState(setSearchHistoriesAtom);
+
   const { keyword } = router.query;
 
   const showTopSelectedList = useMemo(() => {
@@ -29,6 +37,24 @@ const Component = () => {
       return true;
     }
   }, [router, searchResult]);
+
+  const handleDeleteSearchHistories = item => {
+    const defaultValue = JSON.stringify([]);
+    const histories =
+      JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_HISTORIES)) ||
+      defaultValue;
+    const deletedHistories = histories.filter(h => h !== item);
+    localStorage.setItem(
+      LOCAL_STORAGE_SEARCH_HISTORIES,
+      JSON.stringify(deletedHistories),
+    );
+    setSearchHistories(deletedHistories);
+  };
+
+  const handleDeleteAll = () => {
+    localStorage.setItem(LOCAL_STORAGE_SEARCH_HISTORIES, []);
+    setSearchHistories([]);
+  };
 
   return (
     <Wrapper>
@@ -45,11 +71,31 @@ const Component = () => {
         <EmptyState>검색 결과가 없습니다.</EmptyState>
       )}
       {showTopSelectedList ? (
-        <TopSelectedBox>
-          <TopTitle>TOP 5</TopTitle>
-          <TopDescriptoin>Ya:ㅁ! 이용자가 직접 선택한 TOP 5!</TopDescriptoin>
-          <TopSelectedRestaurantItemList list={topSelectedRestaurantList} />
-        </TopSelectedBox>
+        <>
+          {searchHistories.length > 0 && (
+            <>
+              <SearchHistoriesTitle>
+                <Title>최근 검색어</Title>
+                <DeleteButton onClick={() => handleDeleteAll()}>
+                  전체 삭제
+                </DeleteButton>
+              </SearchHistoriesTitle>
+              <TagWrapper>
+                <Tags
+                  list={searchHistories}
+                  onClick={item => handleDeleteSearchHistories(item)}
+                />
+              </TagWrapper>
+              <Divider />
+            </>
+          )}
+
+          <TopSelectedBox>
+            <Title>TOP 5</Title>
+            <TopDescriptoin>Ya:ㅁ! 이용자가 직접 선택한 TOP 5!</TopDescriptoin>
+            <TopSelectedRestaurantItemList list={topSelectedRestaurantList} />
+          </TopSelectedBox>
+        </>
       ) : null}
     </Wrapper>
   );
@@ -65,7 +111,7 @@ const TopSelectedBox = styled.div`
   padding: 24px 16px;
 `;
 
-const TopTitle = styled(Typography).attrs({
+const Title = styled(Typography).attrs({
   variant: 'l',
   fontWeight: 'bold',
 })``;
@@ -97,4 +143,37 @@ const SearchTotalSpan = styled(Typography).attrs({
   component: 'span',
 })`
   color: ${({ theme }) => theme.colors.neutral[600]};
+`;
+const SearchHistoriesTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 16px 20px;
+`;
+const DeleteButton = styled(Typography).attrs({
+  type: 'text',
+  size: 'm',
+  fontWeight: 'regular',
+  component: 'button',
+})`
+  border: none;
+  background: none;
+  color: ${({ theme }) => theme.colors.neutral[700]};
+  padding: 0 8px;
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.colors.neutral[600]};
+  }
+
+  &:active {
+    color: ${({ theme }) => theme.colors.neutral[900]};
+  }
+`;
+const TagWrapper = styled.div`
+  padding: 0 16px 20px;
+`;
+const Divider = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: ${({ theme }) => theme.colors.neutral[200]};
 `;

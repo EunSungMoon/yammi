@@ -144,6 +144,11 @@ export const reviewListAtom = atom({
   ],
 });
 
+export const searchHistoriesAtom = atom({
+  key: 'SEARCH_HISTORIES',
+  default: [],
+});
+
 export const setRandomRestaurantAtom = selector({
   key: 'SET__RANDOM_RESTAURANT',
   get: ({ get }) => {
@@ -195,6 +200,13 @@ export const setSearchResultLisAtom = selector({
   get: ({ get }) => {},
   set: ({ get, set }, newValue) => {
     set(searchResultListAtom, newValue);
+  },
+});
+export const setSearchHistoriesAtom = selector({
+  key: 'SET__SEARCH_HISTORIES_LIST',
+  get: ({ get }) => {},
+  set: ({ get, set }, newValue) => {
+    set(searchHistoriesAtom, newValue);
   },
 });
 
