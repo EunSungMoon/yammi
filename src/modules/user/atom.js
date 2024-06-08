@@ -11,17 +11,15 @@ export const myBookmarkedListAtom = atom({
     results: [
       {
         id: 0,
-        restaurant: {
-          category1: {
-            id: 0,
-            name: '',
-          },
-          category2: null,
+        category1: {
+          id: 0,
           name: '',
-          image: 'https://picsum.photos/200',
-          address: '',
-          counter: 0,
         },
+        category2: null,
+        name: '',
+        image: 'https://picsum.photos/200',
+        address: '',
+        counter: 0,
       },
     ],
   },

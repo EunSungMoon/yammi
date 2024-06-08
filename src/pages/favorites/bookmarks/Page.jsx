@@ -11,7 +11,6 @@ import FavoriteItemList from '../../../modules/user/components/FavoriteItemList'
 const Component = () => {
   const router = useRouter();
   const myBookmarkList = useRecoilValue(myBookmarkedListAtom);
-  console.log('🚀 ~ Component ~ myBookmarkList:', myBookmarkList);
 
   const tabList = [
     { label: '저장된 맛집', value: 'BOOKMARKED', link: '/favorites/bookmarks' },
@@ -23,7 +22,11 @@ const Component = () => {
       <Tab items={tabList} id={'bookmarks'} isRouter />
       <Content>
         {myBookmarkList.results.length > 0 ? (
-          <FavoriteItemList list={myBookmarkList.results} />
+          <FavoriteItemList
+            list={myBookmarkList.results.map(item => ({
+              restaurant: { ...item },
+            }))}
+          />
         ) : (
           <EmptyStateWrapper>
             <EmptyState

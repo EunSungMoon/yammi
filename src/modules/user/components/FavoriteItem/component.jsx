@@ -13,11 +13,14 @@ import { setMyBookmarkedListAtom } from '../../atom';
 import { getMyBookmarkedList, postFavorite } from '../../fetch';
 
 const Component = ({ item, isLast, isReview }) => {
-  const { id, restaurant } = item;
+  const { restaurant } = item;
   const { addToast } = useToast();
   const router = useRouter();
 
-  const [clicked, setClicked] = useState({ id: id, isClicked: true });
+  const [clicked, setClicked] = useState({
+    id: restaurant.id,
+    isClicked: true,
+  });
 
   const accessToken = useRecoilValue(accessTokenAtom);
 
@@ -26,11 +29,11 @@ const Component = ({ item, isLast, isReview }) => {
   const handleFavorite = async () => {
     try {
       setClicked({
-        id: id,
+        id: restaurant.id,
         isClicked: !clicked.isClicked,
       });
       await postFavorite({
-        id: id,
+        id: restaurant.id,
         bool: !clicked.isClicked,
       });
       addToast({
@@ -72,7 +75,7 @@ const Component = ({ item, isLast, isReview }) => {
             {!isReview ? (
               <FavoriteButton onClick={() => handleFavorite()}>
                 <Image
-                  src={`/images/star_${clicked.isClicked && clicked.id === id ? 'filled' : 'gray'}.svg`}
+                  src={`/images/star_${clicked.isClicked && clicked.id === restaurant.id ? 'filled' : 'gray'}.svg`}
                   width={20}
                   height={20}
                   alt={'star'}
