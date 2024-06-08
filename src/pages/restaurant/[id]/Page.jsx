@@ -58,10 +58,10 @@ const Component = () => {
       label: '리뷰',
       value: 'review',
     },
-    {
-      label: '위치',
-      value: 'map',
-    },
+    // {
+    //   label: '위치',
+    //   value: 'map',
+    // },
   ];
 
   const reviewQueryOptions = [
