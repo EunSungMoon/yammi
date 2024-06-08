@@ -1,11 +1,15 @@
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Image from '@components/Image';
 
+import { accessTokenAtom } from '../../modules/auth/atom';
+
 const Component = () => {
   const router = useRouter();
+  const accessToken = useRecoilValue(accessTokenAtom);
 
   const BnbItems = [
     {
@@ -21,11 +25,11 @@ const Component = () => {
       icon: 'home',
     },
     {
-      link: '/favorites/bookmarks',
+      link: !!accessToken ? '/favorites/bookmarks' : '/login',
       icon: 'star',
     },
     {
-      link: '/my-page',
+      link: !!accessToken ? '/my-page' : '/login',
       icon: 'user',
     },
   ];

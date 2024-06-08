@@ -14,19 +14,31 @@ import { getRandomRestaurant } from '../../modules/board/fetch';
 export const getServerSideProps = async ({ req, query }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
-  const [randomRestaurant] = await Promise.all([
-    getRandomRestaurant({ category: query.category }, { accessToken }),
-  ]);
+  try {
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [randomRestaurant] = await Promise.all([
+      getRandomRestaurant({ category: query.category }, { accessToken }),
+    ]);
 
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.board.randomRestaurantAtom]: randomRestaurant.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.board.randomRestaurantAtom]: randomRestaurant,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
 };
 
 const Page = ({ initialData }) => {

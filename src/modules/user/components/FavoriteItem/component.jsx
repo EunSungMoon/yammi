@@ -38,7 +38,7 @@ const Component = ({ item, isLast, isReview }) => {
         appearance: 'success',
       });
       const response = await getMyBookmarkedList({}, { accessToken });
-      setMyBookmarkedList(response.data);
+      setMyBookmarkedList(response);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -66,7 +66,7 @@ const Component = ({ item, isLast, isReview }) => {
         </ImageWrapper>
         <Box>
           <Flex $justifyContent={'space-between'} $gap={'2px'}>
-            <Name onClick={() => router.push(`/restaurant/${id}`)}>
+            <Name onClick={() => router.push(`/restaurant/${restaurant.id}`)}>
               {restaurant.name}
             </Name>
             {!isReview ? (

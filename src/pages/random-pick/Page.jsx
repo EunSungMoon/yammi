@@ -40,7 +40,8 @@ const Component = () => {
       const response = await getRandomRestaurant({
         category: router.query.category,
       });
-      setRandomRestaurant(response.data);
+      setRandomRestaurant(response);
+      console.log('🚀 ~ handleClick ~ response:', response);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -48,12 +49,12 @@ const Component = () => {
           appearance: 'error',
         });
       } else {
+        console.log(err);
         addToast({
           title: '에러가 발생했습니다.',
           appearance: 'warn',
         });
       }
-      console.log(err);
     }
   };
 

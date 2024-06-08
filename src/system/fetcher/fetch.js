@@ -156,5 +156,5 @@ export default async function fetcher(url, options = {}) {
     logger(`SLEPT:\t\t\t${sleepMs}ms`, debugNetwork);
   }
 
-  return data;
+  return data.data;
 }

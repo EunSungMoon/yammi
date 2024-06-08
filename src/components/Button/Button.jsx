@@ -37,7 +37,12 @@ const Component = ({
         {label}
       </Label>
       {loading && (
-        <Spinner absoluteTop={true} size={'medium'} inverted={isInverted()} />
+        <Spinner
+          center
+          absoluteTop={true}
+          size={'medium'}
+          inverted={isInverted()}
+        />
       )}
     </StyledButton>
   );

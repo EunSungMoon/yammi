@@ -47,11 +47,11 @@ const Component = ({
     },
     {
       label: '즐겨찾기',
-      link: '/favorites/bookmarks',
+      link: !!accessToken ? '/favorites/bookmarks' : '/login',
     },
     {
       label: '마이페이지',
-      link: '/my-page',
+      link: !!accessToken ? '/my-page' : '/login',
     },
   ];
 

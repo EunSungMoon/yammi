@@ -25,23 +25,35 @@ export const getServerSideProps = async ({ req, query }) => {
   const { keyword } = query;
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
-  const [topSelectedRestaurantList, searchList, user] = await Promise.all([
-    getRestaurantListSearch({}, { accessToken }),
-    getSearchResult({ keyword: keyword }, { accessToken }),
-    getUser({ accessToken }),
-  ]);
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.board.topSelectedRestaurantListAtom]:
-          topSelectedRestaurantList.data,
-        [atomMapKey.board.searchResultListAtom]: searchList.data,
-        [atomMapKey.user.userAtom]: user.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+  try {
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [topSelectedRestaurantList, searchList, user] = await Promise.all([
+      getRestaurantListSearch({}, { accessToken }),
+      getSearchResult({ keyword: keyword }, { accessToken }),
+      getUser({ accessToken }),
+    ]);
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.board.topSelectedRestaurantListAtom]:
+            topSelectedRestaurantList,
+          [atomMapKey.board.searchResultListAtom]: searchList,
+          [atomMapKey.user.userAtom]: user,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
 };
 
 const Page = ({ initialData }) => {

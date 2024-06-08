@@ -39,7 +39,6 @@ const Component = ({ item, isLast }) => {
   } = item;
 
   const { addToast } = useToast();
-  const [clicked, setClicked] = useState(false);
   const {
     open: openDelete,
     close: closeDelete,
@@ -49,6 +48,8 @@ const Component = ({ item, isLast }) => {
     defaultValues: { comment: comment },
     resolver: ajvResolver(getReviewDto()),
   });
+
+  const [clicked, setClicked] = useState(false);
 
   const renderStar = useMemo(() => {
     let array = new Array(5 - star).fill(false);
@@ -67,7 +68,7 @@ const Component = ({ item, isLast }) => {
         appearance: 'success',
       });
       const response = await getReviewList({}, { accessToken });
-      setReviewList(response.data);
+      setReviewList(response);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
@@ -98,7 +99,7 @@ const Component = ({ item, isLast }) => {
         appearance: 'success',
       });
       const response = await getReviewList({}, { accessToken });
-      setReviewList(response.data);
+      setReviewList(response);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({

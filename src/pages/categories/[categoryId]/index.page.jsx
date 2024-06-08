@@ -16,22 +16,34 @@ import { getCategories } from '../../../modules/category/fetch';
 export const getServerSideProps = async ({ req, query }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
   const { categoryId } = query;
-  const [categories, restaurantList] = await Promise.all([
-    getCategories({}, { accessToken }),
-    getRestaurantList({ category: categoryId }, { accessToken }),
-  ]);
+  try {
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [categories, restaurantList] = await Promise.all([
+      getCategories({}, { accessToken }),
+      getRestaurantList({ category: categoryId }, { accessToken }),
+    ]);
 
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.category.categoriesAtom]: categories.data,
-        [atomMapKey.board.restaurantListAtom]: restaurantList.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.category.categoriesAtom]: categories,
+          [atomMapKey.board.restaurantListAtom]: restaurantList,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
 };
 
 const Page = ({ initialData }) => {

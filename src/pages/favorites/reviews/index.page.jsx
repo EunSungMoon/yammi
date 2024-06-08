@@ -14,21 +14,31 @@ import { getMyReviewList, getUser } from '../../../modules/user/fetch';
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
-  const [myReviewList, user] = await Promise.all([
-    getMyReviewList({}, { accessToken }),
-    getUser({ accessToken }),
-  ]);
+  try {
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [myReviewList, user] = await Promise.all([
+      getMyReviewList({}, { accessToken }),
+      getUser({ accessToken }),
+    ]);
 
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.user.myReviewedListAtom]: myReviewList.data,
-        [atomMapKey.user.userAtom]: user.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.user.myReviewedListAtom]: myReviewList,
+          [atomMapKey.user.userAtom]: user,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return { props: {} };
+  }
 };
 
 const Page = ({ initialData }) => {

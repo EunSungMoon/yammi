@@ -14,17 +14,31 @@ import { getCategories } from '../../modules/category/fetch';
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
-  const [categories] = await Promise.all([getCategories({}, { accessToken })]);
+  try {
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [categories] = await Promise.all([
+      getCategories({}, { accessToken }),
+    ]);
 
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.category.categoriesAtom]: categories.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.category.categoriesAtom]: categories,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
 };
 
 const Page = ({ initialData }) => {

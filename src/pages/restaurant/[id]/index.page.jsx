@@ -18,30 +18,43 @@ import { getRestaurant, getReviewList } from '../../../modules/board/fetch';
 export const getServerSideProps = async ({ req, query }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
   const { id } = query;
-  const [restaurant, reviewList] = await Promise.all([
-    getRestaurant(
-      {
-        id: id,
+  try {
+    let user = null;
+    let token = null;
+    if (isLoggedIn) {
+      token = accessToken;
+    }
+    const [restaurant, reviewList] = await Promise.all([
+      getRestaurant(
+        {
+          id: id,
+        },
+        { accessToken },
+      ),
+      getReviewList(
+        {
+          id: id,
+        },
+        { accessToken },
+      ),
+    ]);
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.board.restaurantDetailAtom]: restaurant,
+          [atomMapKey.board.reviewListAtom]: reviewList,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-      { accessToken },
-    ),
-    getReviewList(
-      {
-        id: id,
-      },
-      { accessToken },
-    ),
-  ]);
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.board.restaurantDetailAtom]: restaurant.data,
-        [atomMapKey.board.reviewListAtom]: reviewList.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
-      },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
 };
 
 const Page = ({ initialData }) => {

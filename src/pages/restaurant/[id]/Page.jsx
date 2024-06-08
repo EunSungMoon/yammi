@@ -1,4 +1,5 @@
 import { ajvResolver } from '@hookform/resolvers/ajv';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Element } from 'react-scroll';
@@ -15,6 +16,7 @@ import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 import withComma from '@system/stringUtils/withComma';
 
+import useConfirm from '../../../hooks/useConfirm';
 import { useToast } from '../../../hooks/useToast';
 import { accessTokenAtom } from '../../../modules/auth/atom';
 import {
@@ -33,7 +35,6 @@ const Component = () => {
   const form = useForm({
     resolver: ajvResolver(getReviewDto()),
   });
-
   const { addToast } = useToast();
 
   const reviewList = useRecoilValue(reviewListAtom);
@@ -44,8 +45,10 @@ const Component = () => {
 
   const slicedMenuList = restaurantDetail.menu.slice(0, 3);
   const slicedReviewList = reviewList.slice(0, 3);
+
   const [isMore, setIsMore] = useState(true);
   const [isMoreReview, setIsMoreReview] = useState(true);
+
   const tabList = [
     {
       label: '메뉴',
@@ -94,7 +97,7 @@ const Component = () => {
           { id: restaurantDetail.id },
           { accessToken },
         );
-        setReviewList(response.data);
+        setReviewList(response);
       }
     } catch (err) {
       if (err instanceof NetworkError) {

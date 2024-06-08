@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
@@ -7,13 +8,20 @@ import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 import withComma from '@system/stringUtils/withComma';
 
+import useConfirm from '../../../../hooks/useConfirm';
 import { useToast } from '../../../../hooks/useToast';
 import { accessTokenAtom } from '../../../auth/atom';
 import { postFavorite } from '../../../user/fetch';
 import { restaurantDetailAtom } from '../../atom';
 //gray, filled, filled_gray
 const Component = ({ reviewTotal }) => {
+  const {
+    open: openAuth,
+    close: closeAuth,
+    ConfirmModalWrapper: AuthConfirmModalWrapper,
+  } = useConfirm();
   const { addToast } = useToast();
+  const router = useRouter();
   const restuarant = useRecoilValue(restaurantDetailAtom);
   const accessToken = useRecoilValue(accessTokenAtom);
 
@@ -30,6 +38,7 @@ const Component = ({ reviewTotal }) => {
     menu,
     name,
   } = restuarant;
+
   const [clicked, setClicked] = useState(bookmark);
 
   const averageStar = Math.ceil(average_star);
@@ -43,18 +52,22 @@ const Component = ({ reviewTotal }) => {
 
   const handleBookmark = async () => {
     try {
-      setClicked(!clicked);
-      await postFavorite(
-        {
-          id: id,
-          bool: !clicked,
-        },
-        { accessToken },
-      );
-      addToast({
-        title: `맛집을 ${!clicked ? '저장' : '삭제'} 했습니다.`,
-        appearance: 'success',
-      });
+      if (!!accessToken) {
+        setClicked(!clicked);
+        await postFavorite(
+          {
+            id: id,
+            bool: !clicked,
+          },
+          { accessToken },
+        );
+        addToast({
+          title: `맛집을 ${!clicked ? '저장' : '삭제'} 했습니다.`,
+          appearance: 'success',
+        });
+      } else {
+        openAuth();
+      }
     } catch (err) {
       console.log(err);
       if (err instanceof NetworkError) {
@@ -69,6 +82,10 @@ const Component = ({ reviewTotal }) => {
         });
       }
     }
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
   };
 
   return (
@@ -144,6 +161,19 @@ const Component = ({ reviewTotal }) => {
           </Flex>
         </BottomSection>
       </Info>
+      <AuthConfirmModalWrapper
+        content={'로그인이 필요한 기능입니다. 로그인 하시겠습니까?'}
+        buttons={[
+          {
+            label: '닫기',
+            onClick: closeAuth,
+          },
+          {
+            label: '로그인 하러 가기',
+            onClick: () => handleLogin(),
+          },
+        ]}
+      />
     </Wrapper>
   );
 };

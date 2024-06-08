@@ -15,21 +15,33 @@ import { getUser } from '../modules/user/fetch';
 export const getServerSideProps = async ({ req }) => {
   const cookieGetter = new CookieGetter({ req });
   const accessToken = cookieGetter.get(Constant.USER_ACCESS_TOKEN);
+  const isLoggedIn = !!accessToken;
 
-  const [categories, user] = await Promise.all([
-    getCategories({}),
-    getUser({ accessToken }),
-  ]);
+  try {
+    let user = null;
+    let token = null;
+    const [categories] = await Promise.all([getCategories({})]);
 
-  return {
-    props: {
-      initialData: {
-        [atomMapKey.category.categoriesAtom]: categories.data,
-        [atomMapKey.user.userAtom]: user.data,
-        [atomMapKey.auth.accessTokenAtom]: accessToken,
+    if (isLoggedIn) {
+      user = await getUser({
+        accessToken,
+      });
+      token = accessToken;
+    }
+
+    return {
+      props: {
+        initialData: {
+          [atomMapKey.category.categoriesAtom]: categories,
+          [atomMapKey.user.userAtom]: user,
+          [atomMapKey.auth.accessTokenAtom]: token,
+        },
       },
-    },
-  };
+    };
+  } catch (err) {
+    console.log(err);
+    return { props: {} };
+  }
 };
 
 const Page = ({ initialData }) => {

@@ -5,7 +5,7 @@ import * as Fetch from './fetch';
 export const accessTokenAtom = atom({
   key: 'ACCESSTOKEN',
   default: {
-    accessToken: '',
+    accessToken: null,
   },
 });
 
