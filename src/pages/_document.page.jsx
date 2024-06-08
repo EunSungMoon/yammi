@@ -14,6 +14,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
           rel="stylesheet"
         ></link>
+        <link rel="icon" href="/images/favicon.svg" sizes="any" />
       </Head>
       <body>
         <Main />
