@@ -8,7 +8,8 @@ const Component = ({ category, onClick, clicked }) => {
     <CategoryItem onClick={onClick}>
       <CategoryImageWrapper $clicked={clicked}>
         <Image
-          src={category.image || 'https://picsum.photos/200'}
+          // src={category.image || 'https://picsum.photos/200'}
+          src={`/images/${category.name === '햄/피/치' ? '햄피치' : category.name}.svg`}
           fill
           alt={category.name}
         />
