@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { Element, Link } from 'react-scroll';
+import { forwardRef, useState } from 'react';
+import { Link } from 'react-scroll';
 import styled, { css } from 'styled-components';
 
 import Typography from '@components/Typography';
 
-const Component = ({ items, id, isRouter, isCenter }) => {
+const Component = ({ items, id, isRouter, isCenter }, ref) => {
   const router = useRouter();
   const queryName = router.query[id];
   const [isFocused, setIsFocused] = useState(
@@ -14,7 +14,7 @@ const Component = ({ items, id, isRouter, isCenter }) => {
 
   return (
     <Wrapper>
-      <Tabs $isCenter={isCenter}>
+      <Tabs $isCenter={isCenter} ref={ref}>
         {items.map(item => (
           <Link
             key={item.value}
@@ -42,7 +42,8 @@ const Component = ({ items, id, isRouter, isCenter }) => {
   );
 };
 
-export default Component;
+export default forwardRef(Component);
+
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral[0]};
 `;
@@ -80,7 +81,7 @@ const TabItem = styled.div`
           width: 100%;
           height: 2px;
           z-index: 2;
-          background-color: ${({ theme }) => theme.colors.primary[300]};
+          background-color: ${theme.colors.primary[300]};
         }
       `;
     }
