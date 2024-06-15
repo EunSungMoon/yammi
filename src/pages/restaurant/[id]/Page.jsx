@@ -1,6 +1,6 @@
 import { ajvResolver } from '@hookform/resolvers/ajv';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Element } from 'react-scroll';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -32,23 +32,6 @@ import { createReview, getReviewList } from '../../../modules/board/fetch';
 import getReviewDto from '../../../modules/board/models/ReviewValidation';
 
 const Component = () => {
-  const form = useForm({
-    resolver: ajvResolver(getReviewDto()),
-  });
-  const { addToast } = useToast();
-
-  const reviewList = useRecoilValue(reviewListAtom);
-  const restaurantDetail = useRecoilValue(restaurantDetailAtom);
-  const accessToken = useRecoilValue(accessTokenAtom);
-
-  const setReviewList = useSetRecoilState(setReviewListAtom);
-
-  const slicedMenuList = restaurantDetail.menu.slice(0, 3);
-  const slicedReviewList = reviewList.slice(0, 3);
-
-  const [isMore, setIsMore] = useState(true);
-  const [isMoreReview, setIsMoreReview] = useState(true);
-
   const tabList = [
     {
       label: '메뉴',
@@ -63,6 +46,26 @@ const Component = () => {
     //   value: 'map',
     // },
   ];
+
+  const form = useForm({
+    resolver: ajvResolver(getReviewDto()),
+  });
+  const { addToast } = useToast();
+  const menuRef = useRef(null);
+  const reviewRef = useRef(null);
+
+  const reviewList = useRecoilValue(reviewListAtom);
+  const restaurantDetail = useRecoilValue(restaurantDetailAtom);
+  const accessToken = useRecoilValue(accessTokenAtom);
+
+  const setReviewList = useSetRecoilState(setReviewListAtom);
+
+  const slicedMenuList = restaurantDetail.menu.slice(0, 3);
+  const slicedReviewList = reviewList.slice(0, 3);
+
+  const [isMore, setIsMore] = useState(true);
+  const [isMoreReview, setIsMoreReview] = useState(true);
+  const [focusTab, setFocusTab] = useState(tabList[0].value);
 
   const reviewQueryOptions = [
     {
@@ -121,15 +124,31 @@ const Component = () => {
     console.log(value);
   };
 
+  useEffect(() => {
+    if (typeof window === undefined) {
+      return;
+    }
+    window.addEventListener('scroll', event => {
+      let menuHeight = menuRef.current.offsetHeight;
+      let reviewHeight = reviewRef.current.offsetHeight;
+      let scrollTop = document.documentElement.scrollTop;
+      if (menuHeight >= scrollTop) {
+        setFocusTab(tabList[0].value);
+      } else if (reviewHeight >= scrollTop) {
+        setFocusTab(tabList[1].value);
+      }
+    });
+  }, []);
+
   return (
     <Wrapper>
       <RestuarantDetail reviewTotal={reviewList.length} />
       <Divider />
       <TabWrapper>
-        <Tab items={tabList} id={'detail'} isCenter />
+        <Tab items={tabList} id={'detail'} isCenter defaultValue={focusTab} />
       </TabWrapper>
       <Element name="menu">
-        <Content>
+        <Content ref={menuRef}>
           <Title>메뉴</Title>
           {restaurantDetail.menu.length > 0 ? (
             <>
@@ -156,7 +175,7 @@ const Component = () => {
       <Divider />
       <Element name={'review'}>
         {/* TODO: 인기순, 최근순 */}
-        <Content>
+        <Content ref={reviewRef}>
           <Title>리뷰 {withComma(reviewList.length)}개</Title>
           {reviewList.length > 0 ? (
             <>

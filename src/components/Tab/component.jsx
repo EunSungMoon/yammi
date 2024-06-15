@@ -1,16 +1,22 @@
 import { useRouter } from 'next/router';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
 import styled, { css } from 'styled-components';
 
 import Typography from '@components/Typography';
 
-const Component = ({ items, id, isRouter, isCenter }, ref) => {
+const Component = ({ items, id, isRouter, isCenter, defaultValue }, ref) => {
   const router = useRouter();
   const queryName = router.query[id];
   const [isFocused, setIsFocused] = useState(
     isRouter ? Number(queryName) || router.pathname : items[0].value,
   );
+
+  useEffect(() => {
+    if (defaultValue) {
+      setIsFocused(defaultValue);
+    }
+  }, [defaultValue]);
 
   return (
     <Wrapper>

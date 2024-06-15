@@ -41,7 +41,6 @@ const Component = () => {
         category: router.query.category,
       });
       setRandomRestaurant(response);
-      console.log('🚀 ~ handleClick ~ response:', response);
     } catch (err) {
       if (err instanceof NetworkError) {
         addToast({
