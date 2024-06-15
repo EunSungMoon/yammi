@@ -7,7 +7,7 @@ import Typography from '../Typography';
 /**
  *
  * @param {object} props
- * @param {'primary' | 'subtle' | 'ghost'} props.appearance
+ * @param {'primary' | 'subtle'} props.appearance
  * @returns
  */
 const Component = ({
@@ -21,8 +21,7 @@ const Component = ({
   isLink,
   ...buttonProps
 }) => {
-  const isInverted = () =>
-    appearance === 'gray' || appearance === 'subtle' ? false : true;
+  const isInverted = () => (appearance === 'primary' ? true : false);
 
   return (
     <StyledButton
@@ -37,12 +36,7 @@ const Component = ({
         {label}
       </Label>
       {loading && (
-        <Spinner
-          center
-          absoluteTop={true}
-          size={'medium'}
-          inverted={isInverted()}
-        />
+        <Spinner center absoluteTop={true} size={'s'} inverted={isInverted()} />
       )}
     </StyledButton>
   );

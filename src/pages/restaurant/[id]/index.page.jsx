@@ -21,7 +21,6 @@ export const getServerSideProps = async ({ req, query }) => {
   const isLoggedIn = !!accessToken;
   const { id } = query;
   try {
-    let user = null;
     let token = null;
     if (isLoggedIn) {
       token = accessToken;
@@ -37,6 +36,7 @@ export const getServerSideProps = async ({ req, query }) => {
         {
           id: id,
         },
+        { orderby: 'star' },
         { accessToken },
       ),
     ]);

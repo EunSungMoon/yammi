@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 
@@ -39,7 +39,7 @@ const Component = ({ reviewTotal }) => {
     name,
   } = restuarant;
 
-  const [clicked, setClicked] = useState(bookmark);
+  const [clicked, setClicked] = useState(restuarant.bookmark);
 
   const averageStar = Math.ceil(average_star);
 
@@ -87,6 +87,9 @@ const Component = ({ reviewTotal }) => {
   const handleLogin = () => {
     router.push('/login');
   };
+  useEffect(() => {
+    setClicked(restuarant.bookmark);
+  }, [restuarant]);
 
   return (
     <Wrapper>
@@ -185,6 +188,7 @@ const BannerWrapper = styled.div`
   width: 100%;
   img {
     aspect-ratio: 375/211;
+    object-fit: contain;
   }
 `;
 

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -47,6 +48,7 @@ export const getServerSideProps = async ({ req, query }) => {
 };
 
 const Page = ({ initialData }) => {
+  const router = useRouter();
   const setCategories = useSetRecoilState(setCategoriesAtom);
   const setRestaurantList = useSetRecoilState(setRestaurantListAtom);
   const setAccessToken = useSetRecoilState(setAccessTokenAtom);
@@ -55,7 +57,7 @@ const Page = ({ initialData }) => {
     setCategories(initialData[atomMapKey.category.categoriesAtom]);
     setRestaurantList(initialData[atomMapKey.board.restaurantListAtom]);
     setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
-  }, []);
+  }, [router]);
 
   return (
     <Wrapper>

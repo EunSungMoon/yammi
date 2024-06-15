@@ -16,7 +16,7 @@ import {
 import SearchItemList from '../../modules/board/components/SearchItemList';
 import TopSelectedRestaurantItemList from '../../modules/board/components/TopSelectedRestaurantItemList';
 
-const Component = () => {
+const Component = ({ handleSaveSearchKeyword }) => {
   const router = useRouter();
   const topSelectedRestaurantList = useRecoilValue(
     topSelectedRestaurantListAtom,
@@ -36,7 +36,7 @@ const Component = () => {
     } else {
       return true;
     }
-  }, [router, searchResult]);
+  }, [keyword, searchResult]);
 
   const handleDeleteSearchHistories = item => {
     const defaultValue = JSON.stringify([]);
@@ -54,6 +54,16 @@ const Component = () => {
   const handleDeleteAll = () => {
     localStorage.setItem(LOCAL_STORAGE_SEARCH_HISTORIES, []);
     setSearchHistories([]);
+  };
+
+  const handleClickSearchHistory = data => {
+    handleSaveSearchKeyword(data);
+    router.push({
+      pathname: '/search',
+      query: {
+        keyword: data,
+      },
+    });
   };
 
   return (
@@ -83,7 +93,8 @@ const Component = () => {
               <TagWrapper>
                 <Tags
                   list={searchHistories}
-                  onClick={item => handleDeleteSearchHistories(item)}
+                  handleDelete={item => handleDeleteSearchHistories(item)}
+                  onClick={item => handleClickSearchHistory(item)}
                 />
               </TagWrapper>
               <Divider />

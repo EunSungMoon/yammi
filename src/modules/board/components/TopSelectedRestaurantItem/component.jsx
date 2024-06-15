@@ -25,11 +25,7 @@ const Component = ({ item, isLast, rank }) => {
         <InfoBox>
           <Flex $gap={'8px'}>
             <ImageWrapper>
-              <Image
-                src={image || 'https://picsum.photos/200'}
-                fill
-                alt={name}
-              />
+              <Image src={image || '/images/전체.svg'} fill alt={name} />
             </ImageWrapper>
             <Box>
               <Name>{name}</Name>

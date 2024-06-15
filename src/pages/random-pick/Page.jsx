@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -15,6 +16,7 @@ import {
   setRandomRestaurantAtom,
 } from '../../modules/board/atom';
 import { getRandomRestaurant } from '../../modules/board/fetch';
+import Loading from '../../modules/common/Loading';
 
 const Component = () => {
   const router = useRouter();
@@ -22,6 +24,7 @@ const Component = () => {
 
   const randomRestaurant = useRecoilValue(randomRestaurantAtom);
   const setRandomRestaurant = useSetRecoilState(setRandomRestaurantAtom);
+  const [isLoading, setIsLoaing] = useState(false);
 
   const {
     id,
@@ -57,8 +60,17 @@ const Component = () => {
     }
   };
 
+  const handleRandomPick = async () => {
+    setIsLoaing(true);
+    setTimeout(() => {
+      handleClick();
+      setIsLoaing(false);
+    }, [1500]);
+  };
+
   return (
     <Wrapper>
+      {isLoading && <Loading />}
       <InfoBox>
         <FiAlertCircle size={20} />
         <InfoLabel>사진을 클릭하면 해당 가게 페이지로 이동합니다.</InfoLabel>
@@ -66,7 +78,7 @@ const Component = () => {
       <RestaurantBox>
         <ImageWrapper onClick={() => router.push(`/restaurant/${id}`)}>
           <Image
-            src={image || 'https://picsum.photos/200'}
+            src={image || '/images/전체.svg'}
             width={1}
             height={1}
             layout="responsive"
@@ -94,7 +106,7 @@ const Component = () => {
         label={'다시 뽑기'}
         appearance="primary"
         block
-        onClick={handleClick}
+        onClick={handleRandomPick}
       />
     </Wrapper>
   );
@@ -134,6 +146,7 @@ const ImageWrapper = styled.div`
     aspect-ratio: 1/1;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[400]}`};
     border-radius: 8px;
+    object-fit: contain;
   }
 `;
 

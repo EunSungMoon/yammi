@@ -51,11 +51,11 @@ const atomMap = {
 };
 
 const atomHydrator = ({ initialData, recoilSetter }) => {
-  Object.keys(atomMap).forEach(key => {
-    if (initialData[key] !== undefined) {
-      recoilSetter(atomMap[key], initialData[key]);
-    }
-  });
+  // Object.keys(atomMap).forEach(key => {
+  //   if (initialData[key] !== undefined) {
+  //     recoilSetter(atomMap[key], initialData[key]);
+  //   }
+  // });
 };
 
 export { atomHydrator, atomMapKey };

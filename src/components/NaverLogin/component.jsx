@@ -34,7 +34,7 @@ const Component = ({ render, clientId, callbackUrl, onSuccess, onFailure }) => {
 
       naverLogin.init();
       naverLogin.getLoginStatus(status => {
-        if (status && window.opener) {
+        if (status && window.opener !== null) {
           // 로그인 된 이후
           window.opener.naver.successCallback({
             ...naverLogin.user,

@@ -72,6 +72,7 @@ const ImageWrapper = styled.div`
   img {
     border-radius: 8px;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[200]}`};
+    object-fit: contain;
   }
 `;
 

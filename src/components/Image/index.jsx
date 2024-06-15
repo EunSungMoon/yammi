@@ -6,7 +6,7 @@ const Image = ({ alt, src, noS3 = false, ...props }) => {
   const assembledSrc =
     src?.startsWith('http') || src?.startsWith('/images') || noS3
       ? src
-      : `${s3Host}/${src}`;
+      : `${s3Host}${src}`;
 
   return (
     <NextImage className="lazyimage" src={assembledSrc} {...props} alt={alt} />

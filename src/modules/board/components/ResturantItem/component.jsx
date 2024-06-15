@@ -23,7 +23,7 @@ const Component = ({ item, isLast }) => {
     <Wrapper $isLast={isLast} onClick={() => router.push(`/restaurant/${id}`)}>
       <Flex $gap={'16px'}>
         <ImageWrapper>
-          <Image src={image || 'https://picsum.photos/200'} fill alt={''} />
+          <Image src={image || '/images/전체.svg'} fill alt={''} />
         </ImageWrapper>
         <Box>
           <Flex $gap={'4px'}>
@@ -67,6 +67,7 @@ const ImageWrapper = styled.div`
   img {
     border-radius: 8px;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[200]}`};
+    object-fit: contain;
   }
 `;
 

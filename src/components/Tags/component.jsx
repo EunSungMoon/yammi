@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import Icon from '../Icon';
 import Typography from '../Typography';
 
-const Component = ({ list, onClick }) => {
+const Component = ({ list, onClick, handleDelete }) => {
   return (
     <Wrapper>
       {list.map(item => (
         <Tag key={item}>
-          <TagLabel>{item}</TagLabel>
+          <TagLabel onClick={() => onClick(item)}>{item}</TagLabel>
           <Icon
             reactIconSrc={<FiX size={16} />}
-            onClick={() => onClick(item)}
+            onClick={() => handleDelete(item)}
           />
         </Tag>
       ))}
@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 8px;
   flex-flow: row wrap;
+  cursor: pointer;
 `;
 const Tag = styled.div`
   padding: 5px 8px;

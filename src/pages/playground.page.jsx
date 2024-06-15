@@ -29,7 +29,7 @@ export default function Home({ initialData }) {
     // const { id, email, nickname, mobile, gender, name } = data;
     // const newPn = mobile.replaceAll('-', '');
     try {
-      console.log('🚀 ~ handleNaverLogin ~ data:', data);
+      // console.log('🚀 ~ handleNaverLogin ~ data:', data);
       // await snsLogin({
       //   snsId: id,
       //   snsProvider: SnsProviderType.NAVER,
@@ -91,7 +91,7 @@ export default function Home({ initialData }) {
       </Form>
       <NaverLogin
         clientId={naverLoginClientId}
-        callbackUrl={'http://localhost:3000'}
+        callbackUrl={'http://localhost:3000/playground'}
         render={({ onClick }) => <div onClick={onClick}>네이버로 로그인</div>}
         onSuccess={res => handleNaverLogin(res)}
         onFailure={res => console.error('failure >>> ', res)}

@@ -32,14 +32,18 @@ export const getServerSideProps = async ({ req, query }) => {
 
   try {
     let token = null;
+    let searchList = { results: [] };
     if (isLoggedIn) {
       token = accessToken;
     }
-    const [topSelectedRestaurantList, searchList, user] = await Promise.all([
+    if (keyword !== undefined) {
+      searchList = await getSearchResult({ keyword: keyword }, { accessToken });
+    }
+    const [topSelectedRestaurantList, user] = await Promise.all([
       getRestaurantListSearch({}, { accessToken }),
-      getSearchResult({ keyword: keyword }, { accessToken }),
       getUser({ accessToken }),
     ]);
+
     return {
       props: {
         initialData: {
@@ -70,12 +74,12 @@ const Page = ({ initialData }) => {
   const setAccessToken = useSetRecoilState(setAccessTokenAtom);
   const setSearchHistories = useSetRecoilState(setSearchHistoriesAtom);
 
-  const handleSearch = async data => {
+  const handleSaveSearchKeyword = data => {
     const defaultValue = JSON.stringify([]);
     const resultItem = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_SEARCH_HISTORIES) || defaultValue,
     );
-    const set = new Set([data.keyword, ...resultItem]);
+    const set = new Set([data, ...resultItem]);
     const unique = [...set];
     let slicedArray = [];
 
@@ -89,6 +93,10 @@ const Page = ({ initialData }) => {
       LOCAL_STORAGE_SEARCH_HISTORIES,
       JSON.stringify(slicedArray),
     );
+  };
+
+  const handleSearch = async data => {
+    handleSaveSearchKeyword(data.keyword);
     router.push({
       pathname: '/search',
       query: {
@@ -103,7 +111,7 @@ const Page = ({ initialData }) => {
     );
     setSearchResult(initialData[atomMapKey.board.searchResultListAtom]);
     setAccessToken(initialData[atomMapKey.auth.accessTokenAtom]);
-  }, []);
+  }, [router.query.keyword]);
 
   useEffect(() => {
     const storedSearchHistories =
@@ -117,7 +125,7 @@ const Page = ({ initialData }) => {
       <Form form={form} onSubmit={form.handleSubmit(handleSearch)}>
         <Gnb isSearch isMenu searchName={'keyword'} />
       </Form>
-      <PageComponent />
+      <PageComponent handleSaveSearchKeyword={handleSaveSearchKeyword} />
     </Wrapper>
   );
 };

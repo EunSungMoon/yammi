@@ -33,3 +33,45 @@ export const setAccessTokenAtom = selector({
     set(accessTokenAtom, newValue);
   },
 });
+
+export const setSaveTokenAtom = selector({
+  key: 'SET_TOKEN',
+  get: ({ get }) => {},
+  set: ({ set }, newValue) => {},
+});
+
+// export const loginAtom = atom(null, async (get, set, data) => {
+//   try {
+//     set(isLoadingAtom, true);
+//     const { username, password } = data;
+//     const { accessToken, idToken } = await Fetch.login({
+//       username,
+//       password,
+//     });
+//     const decodedIdToken = await jwtDecode(idToken);
+//     const decodedAccessToken = await jwtDecode(accessToken);
+
+//     const maxAge = (decodedAccessToken.exp - decodedAccessToken.iat) * 1000;
+
+//     const setter = new CookieSetter();
+//     setter.set(Constant.USER_ACCESS_TOKEN, accessToken, {
+//       maxAge,
+//     });
+
+//     setter.set(
+//       Constant.USER_STRINGIFIED_PROFILE,
+//       JSON.stringify(decodedIdToken),
+//       {
+//         maxAge,
+//       }
+//     );
+
+//     set(accessTokenAtom, accessToken);
+//     set(decodedAccessTokenAtom, decodedAccessToken);
+//     set(decodedIdTokenAtom, decodedIdToken);
+//     localStorage.setItem('recentLoginAccount', data.username);
+//     localStorage.removeItem('snsProvider');
+//   } finally {
+//     set(isLoadingAtom, false);
+//   }
+// });

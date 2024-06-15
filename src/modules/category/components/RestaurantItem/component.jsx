@@ -11,11 +11,7 @@ const Component = ({ item, isLast }) => {
     <Wrapper $isLast={isLast}>
       <Flex $gap={'16px'}>
         <ImageWrapper>
-          <Image
-            src={item.image || 'https://picsum.photos/200'}
-            fill
-            alt={item.name}
-          />
+          <Image src={item.image || '/images/전체.svg'} fill alt={item.name} />
         </ImageWrapper>
         <Box>
           <Flex $gap={'4px'}>
@@ -74,6 +70,7 @@ const ImageWrapper = styled.div`
   img {
     border-radius: 8px;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[200]}`};
+    object-fit: contain;
   }
 `;
 

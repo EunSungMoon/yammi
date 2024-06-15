@@ -199,6 +199,7 @@ export const setSearchResultLisAtom = selector({
   key: 'SET__SEARCH_RESULT_LIST',
   get: ({ get }) => {},
   set: ({ get, set }, newValue) => {
+    console.log('🚀 ~ newValue:', newValue);
     set(searchResultListAtom, newValue);
   },
 });

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -57,12 +57,19 @@ const Component = ({ item, isLast, isReview }) => {
     }
   };
 
+  useEffect(() => {
+    setClicked({
+      id: restaurant.id,
+      isClicked: true,
+    });
+  }, [restaurant]);
+
   return (
     <Wrapper $isLast={isLast}>
       <Flex $gap={'16px'}>
         <ImageWrapper>
           <Image
-            src={restaurant?.image || 'https://picsum.photos/200'}
+            src={restaurant?.image || '/images/전체.svg'}
             fill
             alt={restaurant.name}
           />
@@ -138,6 +145,7 @@ const ImageWrapper = styled.div`
   img {
     border-radius: 8px;
     border: ${({ theme }) => `1px solid ${theme.colors.neutral[200]}`};
+    object-fit: contain;
   }
 `;
 

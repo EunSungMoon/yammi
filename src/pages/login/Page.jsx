@@ -1,53 +1,55 @@
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Image from '@components/Image';
 import NaverLogin from '@components/NaverLogin';
 import Typography from '@components/Typography';
+import { Constant, CookieSetter } from '@system/cookie';
+import { NetworkError } from '@system/fetcher';
+
+import { useToast } from '../../hooks/useToast';
+import { setAccessTokenAtom } from '../../modules/auth/atom';
+import { login } from '../../modules/auth/fetch';
 
 const Component = () => {
+  const router = useRouter();
+  const { addToast } = useToast();
   const { naverLoginClientId } = getConfig().publicRuntimeConfig;
+  const setAccessToken = useSetRecoilState(setAccessTokenAtom);
 
   const handleNaverLogin = async data => {
-    // const { id, email, nickname, mobile, gender, name } = data;
-    // const newPn = mobile.replaceAll('-', '');
+    const { id, email } = data;
     try {
-      console.log('🚀 ~ handleNaverLogin ~ data:', data);
-      // await snsLogin({
-      //   snsId: id,
-      //   snsProvider: SnsProviderType.NAVER,
-      //   username: email,
-      //   displayName: nickname,
-      //   deviceType: deviceType,
-      //   name: name,
-      //   phoneNumber: mobile ? newPn : null,
-      //   gender: gender === 'M' ? '남성' : gender === 'F' ? '여성' : null,
-      // });
-      // addToast({
-      //   appearance: 'success',
-      //   title: '로그인 성공했습니다.',
-      // });
-      // localStorage.setItem('snsProvider', SnsProviderType.NAVER);
-      // localStorage.removeItem('recentLoginAccount');
-      // window.location.href = '/';
+      const { token } = await login({
+        code: id,
+        email: email,
+      });
+
+      const setter = new CookieSetter();
+      setter.set(Constant.USER_ACCESS_TOKEN, token, { expries: '' });
+      setAccessToken(token);
+
+      addToast({
+        appearance: 'success',
+        title: '로그인 성공했습니다.',
+      });
+
+      router.push('/');
     } catch (err) {
-      console.log('err>>>>>>>', err);
-      // if (err instanceof NetworkError) {
-      //   if (err.code === 'E4010006') {
-      //     setSnsErrorMessage(err.message);
-      //     snsLoginErrorOpen();
-      //   } else {
-      //     addToast({
-      //       appearance: 'error',
-      //       title: err.message,
-      //     });
-      //   }
-      // } else {
-      //   addToast({
-      //     appearance: 'error',
-      //     title: '로그인에 실패했습니다.',
-      //   });
-      // }
+      if (err instanceof NetworkError) {
+        console.log('err>>>>>>>', err);
+        addToast({
+          appearance: 'error',
+          title: err.message,
+        });
+      } else {
+        addToast({
+          appearance: 'error',
+          title: '로그인에 실패했습니다.',
+        });
+      }
     }
   };
   return (
@@ -58,7 +60,7 @@ const Component = () => {
       </TopSection>
       <NaverLogin
         clientId={naverLoginClientId}
-        callbackUrl={'http://localhost:3000'}
+        callbackUrl={'http://localhost:3000/login'}
         render={({ onClick }) => (
           <NaverButton onClick={onClick}>
             <Image

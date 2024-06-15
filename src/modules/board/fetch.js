@@ -37,11 +37,12 @@ export const getRestaurantListSearch = async (query, option) => {
   return fetchRes;
 };
 
-export const getReviewList = async (params, option) => {
+export const getReviewList = async (params, query, option) => {
   const { id } = params;
   const fetchRes = await fetcher(`/board/review_list/${id}`, {
     ...option,
     method: 'GET',
+    querystring: query,
   });
   return fetchRes;
 };

@@ -1,28 +1,42 @@
 import Lottie from 'lottie-react';
+import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
-import LoaderIntervedLogo from './loader-inverted.json';
-import LoaderLogo from './loader.json';
+import DefaultLoader from './defaultLottie.json';
+import LoaderIntervedLogo from './invertDefaultLottie.json';
+import LoaderLogo from './lottie.json';
 import { renderClipLoaderSize } from './style';
 
 /**
  *
  * @param {object} props
- * @param {'smallest' | 'small' | 'medium' | 'big' | 'biggest'} props.size
+ * @param {'s' | 'm' | 'l' } props.size
+ * @param {'default' | 'primary'  } props.type
  * @returns
  */
 
 const Component = ({
-  size = 'smallest',
+  size = 's',
   inverted = false,
   absoluteTop = false,
   center = false,
-  noStyle = false,
+  type = 'default',
 }) => {
+  const renderAnimation = useMemo(() => {
+    if (type === 'default') {
+      if (inverted) {
+        return LoaderIntervedLogo;
+      } else {
+        return DefaultLoader;
+      }
+    } else {
+      return LoaderLogo;
+    }
+  }, [type, inverted]);
   return (
-    <Wrapper absoluteTop={absoluteTop} isCenter={center} noStyle={noStyle}>
+    <Wrapper absoluteTop={absoluteTop} isCenter={center}>
       <Lottie
-        animationData={inverted ? LoaderIntervedLogo : LoaderLogo}
+        animationData={renderAnimation}
         loop
         autoplay
         style={{
@@ -35,34 +49,33 @@ const Component = ({
 };
 
 const Wrapper = styled.div`
-  ${({ noStyle }) =>
-    noStyle
-      ? css``
-      : css`
-          ${({ absoluteTop }) =>
-            absoluteTop &&
-            css`
-              top: 0;
-              display: flex;
-              justify-content: center;
-            `};
-          ${({ isCenter }) =>
-            isCenter &&
-            css`
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            `}
-          left: 0;
-          right: 0;
+  left: 0;
+  right: 0;
 
-          margin-left: auto;
-          margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 
-          position: absolute;
-          z-index: 999;
-          height: 100%;
-        `}
+  position: absolute;
+  z-index: 999;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  ${({ absoluteTop }) => {
+    if (absoluteTop) {
+      return css`
+        top: 0;
+      `;
+    }
+  }}
+  ${({ isCenter }) => {
+    if (isCenter) {
+      return css`
+        align-items: center;
+        top: 0%;
+      `;
+    }
+  }}
 `;
 
 export default Component;

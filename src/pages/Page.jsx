@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -10,6 +11,7 @@ import Typography from '@components/Typography';
 
 import { categoriesAtom } from '../modules/category/atom';
 import CategorySelector from '../modules/category/components/CategorySelector';
+import Loading from '../modules/common/Loading';
 
 const Component = () => {
   const router = useRouter();
@@ -21,8 +23,23 @@ const Component = () => {
   const queryCategory =
     valueCategory?.length > 0 ? { category: valueCategory.join(', ') } : null;
 
+  const [isLoading, setIsLoaing] = useState(false);
+
+  const handleRandomPick = () => {
+    setIsLoaing(true);
+    setTimeout(() => {
+      router.push({
+        pathname: '/random-pick',
+        query: queryCategory,
+      });
+      setIsLoaing(false);
+    }, [1500]);
+  };
+
   return (
     <Wrapper>
+      {isLoading && <Loading />}
+
       <Banner>
         <Image
           src={'/images/CardBanner.png'}
@@ -44,12 +61,7 @@ const Component = () => {
           label="뽑기"
           appearance="primary"
           block
-          onClick={() => {
-            router.push({
-              pathname: '/random-pick',
-              query: queryCategory,
-            });
-          }}
+          onClick={() => handleRandomPick()}
         />
       </RandomPickWrapper>
     </Wrapper>

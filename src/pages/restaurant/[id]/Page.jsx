@@ -16,7 +16,6 @@ import Typography from '@components/Typography';
 import { NetworkError } from '@system/fetcher';
 import withComma from '@system/stringUtils/withComma';
 
-import useConfirm from '../../../hooks/useConfirm';
 import { useToast } from '../../../hooks/useToast';
 import { accessTokenAtom } from '../../../modules/auth/atom';
 import {
@@ -66,13 +65,14 @@ const Component = () => {
   const [isMore, setIsMore] = useState(true);
   const [isMoreReview, setIsMoreReview] = useState(true);
   const [focusTab, setFocusTab] = useState(tabList[0].value);
+  const [isReviewCreateLoading, setIsReviewCreateLoading] = useState(false);
 
   const reviewQueryOptions = [
     {
       label: '인기순',
-      value: 'favorite',
+      value: 'star',
     },
-    { label: '최근순', value: 'desc' },
+    { label: '최근순', value: 'date' },
   ];
 
   const handleCreateReview = async data => {
@@ -83,6 +83,7 @@ const Component = () => {
           appearance: 'warn',
         });
       } else {
+        setIsReviewCreateLoading(true);
         await createReview(
           {
             star: data.star,
@@ -101,8 +102,10 @@ const Component = () => {
           { accessToken },
         );
         setReviewList(response);
+        setIsReviewCreateLoading(false);
       }
     } catch (err) {
+      console.log(err);
       if (err instanceof NetworkError) {
         addToast({
           title: err.message,
@@ -120,8 +123,31 @@ const Component = () => {
     }
   };
 
-  const handleQuery = value => {
-    console.log(value);
+  const handleQuery = async value => {
+    try {
+      const res = await getReviewList(
+        {
+          id: restaurantDetail.id,
+        },
+        {
+          orderby: value,
+        },
+        { accessToken },
+      );
+      setReviewList(res);
+    } catch (err) {
+      if (err instanceof NetworkError) {
+        addToast({
+          title: err.message,
+          appearance: 'error',
+        });
+      } else {
+        addToast({
+          title: '에러 발생',
+          appearance: 'warn',
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -129,8 +155,8 @@ const Component = () => {
       return;
     }
     window.addEventListener('scroll', event => {
-      let menuHeight = menuRef.current.offsetHeight;
-      let reviewHeight = reviewRef.current.offsetHeight;
+      let menuHeight = menuRef?.current?.offsetHeight;
+      let reviewHeight = reviewRef?.current?.offsetHeight;
       let scrollTop = document.documentElement.scrollTop;
       if (menuHeight >= scrollTop) {
         setFocusTab(tabList[0].value);
@@ -155,17 +181,19 @@ const Component = () => {
               <MenuItemList
                 list={isMore ? slicedMenuList : restaurantDetail.menu}
               />
-              <Button
-                label={
-                  <>
-                    <ButtonLabel>메뉴</ButtonLabel>{' '}
-                    {isMore ? '더보기' : '숨기기'}
-                  </>
-                }
-                block
-                appearance="subtle"
-                onClick={() => setIsMore(!isMore)}
-              />
+              {restaurantDetail.menu.length > 3 && (
+                <Button
+                  label={
+                    <>
+                      <ButtonLabel>메뉴</ButtonLabel>{' '}
+                      {isMore ? '더보기' : '숨기기'}
+                    </>
+                  }
+                  block
+                  appearance="subtle"
+                  onClick={() => setIsMore(!isMore)}
+                />
+              )}
             </>
           ) : (
             <EmptyState title={'메뉴가 없습니다.'} />
@@ -174,7 +202,6 @@ const Component = () => {
       </Element>
       <Divider />
       <Element name={'review'}>
-        {/* TODO: 인기순, 최근순 */}
         <Content ref={reviewRef}>
           <Title>리뷰 {withComma(reviewList.length)}개</Title>
           {reviewList.length > 0 ? (
@@ -189,17 +216,19 @@ const Component = () => {
               <ReviewItemList
                 list={isMoreReview ? slicedReviewList : reviewList}
               />
-              <Button
-                label={
-                  <>
-                    <ButtonLabel>리뷰</ButtonLabel>{' '}
-                    {isMoreReview ? '더보기' : '숨기기'}
-                  </>
-                }
-                block
-                appearance="subtle"
-                onClick={() => setIsMoreReview(!isMoreReview)}
-              />
+              {reviewList.length > 3 && (
+                <Button
+                  label={
+                    <>
+                      <ButtonLabel>리뷰</ButtonLabel>{' '}
+                      {isMoreReview ? '더보기' : '숨기기'}
+                    </>
+                  }
+                  block
+                  appearance="subtle"
+                  onClick={() => setIsMoreReview(!isMoreReview)}
+                />
+              )}
             </>
           ) : (
             <EmptyState
@@ -209,7 +238,7 @@ const Component = () => {
             />
           )}
 
-          {accessToken ? (
+          {accessToken && !reviewList.some(item => item.owner) ? (
             <>
               <Title $marginTop={'14px'}>리뷰 작성하기</Title>
               <Form form={form} onSubmit={handleCreateReview}>
@@ -224,6 +253,7 @@ const Component = () => {
                     appearance="primary"
                     minWidth={'60'}
                     type={'submit'}
+                    loading={isReviewCreateLoading}
                   />
                 </Flex>
               </Form>
